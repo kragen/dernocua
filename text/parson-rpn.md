@@ -337,13 +337,17 @@ semantics.  For example:
 * $n decimal integer with no sign
 * $r either carriage return, linefeed, or carriage return and then linefeed
 * $R the rest of the line: /.*/ $r
-* $x hexadecimal integer with no sign and no 0x
+* $x hexadecimal digit
 * $f possibly signed decimal floating-point number
-* $s C-style double-quoted string with \-escaping of doublequotes and \\
+* $c C-style double-quoted string with \-escaping of doublequotes and \\
 * $e Elisp-style double-quoted string with \-escaping and possible
   embedded newlines
 * $q SQL-style apostrophe-quoted string with doubling of embedded apostrophes
 * $# comment to end of line introduced with #
+* $^ ASCII control characters in general, including carriage returns,
+  newlines, tab, and delete, but not including the ISO-8859-1 control
+  characters after delete, the other Unicode control characters like
+  ZWNJ, or space (ASCII 32)
 
 Such an arsenal of preloaded ammunition allows us to reduce the above
 expression grammar to 62 characters, about 25%:
@@ -366,9 +370,70 @@ matching technology.  If so, parens help:
 
     ,(<_ $s, $#> $w "=" <e "(" <e> ")", $n, $w; "*", "/"; "+", "-"> ";";)
 
-You might want to add more tags and regex captures to enable semantic
-actions:
+If we define a lowest-precedence `@@` operator which discards its
+right argument, we could write this perhaps more readably as
+
+    ,($w "=" <e> ";";)
+    @@
+        <_ $s, $#>
+        <e "(" <e> ")", $n, $w; "*", "/"; "+", "-">
+
+Using apostrophes instead of doublequotes:
+
+    ,($w '=' <e> ';';)
+    @@
+        <_ $s, $#>
+        <e '(' <e> ')', $n, $w; '*', '/'; '+', '-'>
+
+JSON might be (from memory) something like
+
+    <v "[" <_ $s> (,(v; ",")) "]"
+     , "{" (,(<s $c> ":" <v>; ",")) "}"
+     , ("true", "false", "null") !!$s
+     , $f
+     >
+
+Hmm, I just checked, and JSON has a slightly more complex string
+syntax, and doesn’t actually require whitespace after the keywords as
+I claimed above.  And my definition above of $s happens to be perfect
+for JSON.
+
+    <v '[' <_ $s> (,(<v>; ',')) ']'
+     , 'true', 'false', 'null'
+     , <s '"' 
+        (
+            !'"' !'\\' !$^ $u,
+            '\\' ('"', '\\', '/', 'b', 'f', 'n', 'r', 't', 'u' $x $x $x $x)
+         ;) '"'>
+     , '{' (,(<s> ':' <v>; ',')) '}'
+     , $f
+     >
+
+You might want to add more tags and regex captures to help with
+semantic actions:
 
     ,(<_ $s, $#> <s $w> "=" <e <t "(" <e> ")", <k $n>, <f $w>;
                                <m /([*/])/>; <a /([-+])/>>";";)
 
+An alternative to `;` might be `|`, as in Haskell list comprehensions,
+though that looks awkward without extra whitespace:
+
+    ,(<_ $s, $#> $w "=" <e "(" <e> ")", $n, $w | "*", "/" | "+", "-"> ";" | )
+
+Or `:`, since we aren't using that for anything else and it's less
+jarring than `|` in the absence of whitespace:
+
+    ,(<_ $s, $#> $w "=" <e "(" <e> ")", $n, $w: "*", "/": "+", "-"> ";":)
+
+Or `*` of course, although that visually binds more tightly than ",":
+
+    ,(<_ $s, $#> $w "=" <e "(" <e> ")", $n, $w * "*", "/" * "+", "-"> ";" *)
+
+An alternative to <x y> would be x: y.  This would reduce the `;`
+version to
+
+    ,(<_ $s, $#> $w "=" e: "(" e ")", $n, $w; "*", "/"; "+", "-". ";";)
+
+An alternative use of `.` would be for canned primitives:
+
+    ,(<_ .s, .#> .w "=" e: "(" e ")", .n, .w; "*", "/"; "+", "-". ";";)
