@@ -141,3 +141,98 @@ of inlining the implementation of native operators (integer addition,
 etc.) with a conditional jump to an exception handler for cases where
 an operator is overridden.  But this is to some extent orthogonal to
 the question of the caching strategy!
+
+Simple compilation
+------------------
+
+In simple cases, the strategy is:
+
+1. Topologically sort the variables.
+
+2. Assign each variable a memory location, not necessarily in
+   sequence.
+
+3. Generate the code snippet to compute each variable from the other
+   variables, fetching from memory and storing into memory as
+   necessary.
+
+4. Divide the topologically-sorted sequence into “basic blocks”
+   approximating some fixed granularity, say, 256 clock cycles.
+
+5. Assign each basic block a memory location for a flag that indicates
+   whether its results are valid (up-to-date) or not.
+
+6. For each basic block, emit a conditional checking to see whether
+   its results are valid, and if not, executing the concatenated code
+   snippets for its variables, then setting the flag to indicate that
+   its results are indeed valid.
+
+7. Peephole-optimize each basic block.
+
+8. Eliminate memory allocations no longer read after
+   peephole-optimization, unless they’re final outputs.
+
+9. Concatenate the basic blocks.
+
+So for a full computation from scratch, you clear all the validity
+flags, set the inputs, and jump to the beginning of the first basic
+block.  In cases where you've changed some input, you clear some of
+the flags (following the transitive closure of dependency relations
+between the blocks) and jump to the beginning of the first one whose
+validity flag isn’t set there’s a granularity tradeoff where making
+the blocks bigger also increases the amount of redundant computation
+they do: you may recompute a variable that didn’t need recomputing
+because it was in the same basic block as one that did using larger
+basic blocks privileges worst-case computation time (where nothing is
+cached), while using smaller ones privileges best-case incremental
+update time.
+
+There’s no particular reason that this honking chunk of compiled code
+can’t accept a base address argument off which to find its variables
+and validity flags, nor, for that matter, two different base addresses
+off which to find variables and validity flags that vary differently.
+And these “base addresses” can as easily be array indices.  For
+example, you might have some set of variables that vary by day, and
+other variables that are global across all days.  The basic blocks for
+the per-day variables would use the day index to index into an array
+of validity flags, one flag per day per basic block, as well as arrays
+of variable values to compute; the basic blocks for the non-per-day
+variables would not.
+
+In the simplest case, the per-day variables are all computed from the
+non-per-day variables and not vice versa, but once reductions,
+quantifiers, and indexing are involved, the picture gets more
+complicated: you might have non-per-day variables computed from some
+of the per-day variables, more per-day variables computed from those,
+and so on.  This affects how you can bundle them into basic blocks
+efficiently.
+
+(Is Datalog-style stratified inference applicable to this problem?)
+
+Transactional arrayification
+----------------------------
+
+Suppose you populate memory with some indepdendent-variable values and
+run a hunk of machine code in some kind of valgrind-like monitoring
+mode that monitors what memory locations it reads and writes.  After
+it completes, you can check to see which of your input values it read;
+you can then infer that the locations that it *wrote* depend at least
+on the independent variables that it *read*.  For example, if it read
+*x* and *y* but not *z*, and wrote *a* and *b*, you can conclude that
+*a* and *b* are dependent on *x* and *y*, but maybe not *z*.
+
+If you have a set of possibilities in mind for *x* and *y*, you can
+write each of the possibilities into the *x* and *y* memory locations
+and rerun the code, thus deriving *a* and *b* values for each (*x*,
+*y*) pair.  At some point you may or may not observe a dependency on
+*z* as well; if so, you might have to try all the *z* values as well.
+
+You may be able to provide *x*, *y*, *z*, *a*, and *b* as closures
+rather than memory locations, in which case efficiently noting that
+they are being accessed, without slowing down the rest of the
+computation, becomes easy.  This is the approach taken by, for
+example, Meteor and Adapton.  Moreover, depending on the degree to
+which local memory writes can be controlled, you may be able to use
+such thunks to save backtracking state — if *x* is consulted some time
+before *y*, it may be worthwhile to just roll back the computation to
+the first consultation of *y* to try different *y* values.
