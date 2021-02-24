@@ -1,5 +1,5 @@
-A significant fraction of global silver production is used for solar
-cells, and this accounts for something like 10% of their cost, and
+A significant fraction of global silver production is used for photovoltaic
+modules, and this accounts for something like 10% of their cost, and
 something like 10% of global silver production, at present, a number
 which is likely to grow.  The [USGS’s silver report] doesn’t mention
 photovoltaics, but of course photovoltaics aren’t being produced in

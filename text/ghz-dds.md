@@ -310,7 +310,7 @@ AT25SF041B-SSHB-B][26].
 Taking the GigaDevice device as typical, [we find in its
 datasheet][27] that it not only permits bit-serial writing, it
 requires it.  Puzzlingly it claims to permit reads at 160Mbps but a
-100MHz clock (see below).  It holds half a gibibit of data, divided
+100MHz clock (see below).  It holds half a mebibit of data, divided
 into 16-page sectors of 256-byte pages.  The data-rate doubling is
 implemented by making its serial input pin bidirectional.
 

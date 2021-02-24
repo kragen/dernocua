@@ -103,7 +103,15 @@ They are clearly designed for use with inverse video (^[[7m in ANSI).
 This is particularly useful for bar plots, as provided by
 [UnicodePlots.jl][5], where the blocks divided left to right can
 provide 640 pixels of horizontal precision for your bars on an
-80-character screen.
+80-character screen.  This includes stacked bars in which different
+colors divide a bar horizontally and may include inline legends.
+However, experimentation seems to show that my terminal here renders
+them incorrectly, with some unfilled space above them in the character
+cell:
+
+    ▊▋▌▍▎▏▐
+    ▊▋▌▍▎▏▐
+    ▊▋▌▍▎▏▐
 
 [5]: https://github.com/Evizero/UnicodePlots.jl
 
@@ -139,6 +147,45 @@ font I’m using at the moment, it doesn’t fit:
 
 The proposed “legacy computing” characters would augment these with,
 among other things, 8-position horizontal and vertical lines.
+
+Edge box drawing
+----------------
+
+As sort of noted above, the characters `⎹` U+23B9 and `⎺` U+23BA link
+up:
+
+    ⎹⎺⎹⎺⎹⎺⎺⎺⎺⎺⎺⎺
+      ⎹⎺⎹⎺⎹⎺⎺⎺⎺⎺⎺⎺⎺
+
+In my current font, successive rows of `⎹` don’t quite link up the way
+they’re supposed to, but successive columns of `⎺` do.  From the
+“eighth blocks” area we have another couple of characters (or actually
+various pairs of characters) that can potentially be applied in the
+same way:
+
+    ▁▏▁▁▏▁▁▏▁▁▏
+    ▁▏▁▏▁▏▁▏▁▏
+
+These also fail to link up from one line to the next in my current
+font.
+
+The aforementioned “Graphics for Legacy Computing” proposal includes
+more such characters, including four corners intended to link up with
+the above “eighth blocks”:
+
+(loop for i from #x1fb7c to #x1fb7f do (insert i))
+
+    🭼🭽🭾🭿
+
+In theory, with three printable characters like this plus a space, you
+could lay out a grid of thin lines with the resolution of the
+character grid, with the lines beginning and ending at, say, the upper
+left-hand corner of each character cell.  This would be potentially
+more parsimonious than the box-drawing characters we *did* get, which
+can end and join at the center of each character cell, but be
+interrupted at half-character-cell intervals, a relatively useless
+ability.  But for this ability we need 15 graphics characters (for a
+single line width) rather than 3.
 
 Shade characters
 ----------------
