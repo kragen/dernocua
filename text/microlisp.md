@@ -1,14 +1,16 @@
 I skimmed [Bobrow’s 01966 “The Structure of a Lisp System using
-Two-Level Storage”][0] yesterday, and I was struck by his claim that
-BBN LISP was fast enough to be usable, even on an 18-bit PDP-1 with a
+Two-Level Storage”][0] the other day, and I was struck by his claim
+that BBN LISP was fast enough to be usable, even on an 18-bit
+[PDP-1][9] (one of 53 ever made!  And possibly the first!)  with a
 17–33 *milli*second drum memory (5–10 μs per word sequential read) and
-a 16-kibiword core memory (5 μs per random word access), even for 2–3
-concurrent users.  This is about half the speed of a Commodore 64 and
-only 36 KiB of RAM, but the drum was 88 kibiwords and much faster than
-a Commodore floppy.  I thought I’d go back and read it in greater
-depth to see how this was possible.
+a 16-kibiword core memory (5 μs per random word access, four times the
+standard size), even for 2–3 concurrent users.  This is about half the
+speed of a Commodore 64 and only 36 KiB of RAM, but the drum was 88
+kibiwords and much faster than a Commodore floppy.  I thought I’d go
+back and read it in greater depth to see how this was possible.
 
 [0]: https://apps.dtic.mil/dtic/tr/fulltext/u2/647601.pdf
+[9]: https://en.wikipedia.org/wiki/PDP-1
 
 Review of Bobrow’s paper
 ------------------------
@@ -17,7 +19,7 @@ He allocated 4 KiW of core to compiled code (mostly in a 3400-word
 “ring buffer”), 4 KiW to the system (“supervisor and permanent code”,
 divided into six overlays), and the other 8 KiW to the stack and heap,
 and used two-word CONS cells.  When paging a 256-word page of compiled
-Lisp in from the drum, the system linked it.
+Lisp in from the drum, the system linked (“relocated”) it.
 
 It seems like the system could manage at most some 6000 calls per
 second:
@@ -105,9 +107,28 @@ memory available for “list structure”.
 However, their “additional scheme for dumping onto secondary storage
 (magnetic tape)” does maybe seem to have done the full CDR-coding
 thing.  This is referenced to “Storage Management in LISP”, Bobrow, in
-preparation, Proc. IFIP Conf. on Symbol Manipulation Languages, and “A
+preparation, Proc. IFIP Conf. on Symbol Manipulation Languages, and [“A
 LISP Garbage Collector Algorithm Using Serial Secondary Storage”,
-Minsky, AIM-58, 01963.
+Minsky, AIM-58, 01963][1].
+
+[1]: https://dspace.mit.edu/bitstream/handle/1721.1/6080/AIM-058.pdf
+
+Minsky’s paper seems to be scanned in full but with the page order
+askew; it contains the longest program I’ve ever seen written in the
+M-expression dialect of LISP, which is not very long at all: 27 lines
+of code.  It focuses on writing a sequence of (x, y, z) triples out
+onto the drum, which, when read back in, put the dotted pair `(y . z)`
+into register (memory location) `x`.  So a linked list of 20 addresses
+stored in the cars of 20 consecutive dotted pairs will need *60* words
+on the drum, even more than in BBN LISP.  Minsky comments:
+
+> *Collect* has the additional feature that all *cdr* sequences end up
+> linearly packed!  There are probably some important applications of
+> this.
+
+But I think compaction was his main focus, and I don't think of that
+as a hard problem, so I haven’t taken the time to grok *collect* in
+fullness.
 
 Prospects for microcontroller systems
 -------------------------------------
@@ -194,15 +215,53 @@ Paging out a dirty page to NAND would also take about 400 μs.
 
 At this rate you could do 2500 minor page faults (plus evictions and
 pageouts) or 6700 major page faults per second, but the first would
-cost 10 mW and the second would cost 110 mW.
+cost 10 mW and the second would cost 110 mW.  2500 page faults is
+about 20 times what you can do on spinning rust.
 
-(Uh, but actually these SPIs are only good up to 18 Mbit/s... maybe
-parallel memory isn’t such a bad option?)
+(Uh, but actually the SPIs on this MCU are only good up to
+18 Mbit/s... maybe parallel memory isn’t such a bad option?  Or a
+beefier chip?)
+
+Bigger microcontrollers
+-----------------------
+
+The STM32F103C8 mentioned above [costs US$5 in the usual venues][2]
+when it’s not out of stock, though evidently the Blue Pill makers have
+found cheaper chips.  But 20 KiB of internal SRAM is small enough to
+be restrictive.  What about bigger STM32F chips, or maybe an ESP32?
+The STM32F line goes up to 512KiB SRAM.  Beefier chips might also help
+to speed up off-chip communication and thus get it over with faster,
+perhaps saving energy.
+
+[2]: https://www.digikey.com/en/products/detail/stmicroelectronics/STM32F103C8T6TR/2122442
+
+<table>
+<tr><th>Chip           <th>SRAM size <th>Price    <th>Power draw at 72MHz
+<tr><th>STM32F103C8T6  <td>20 KiB    <td>US$5     <td>20 mA?
+<tr><th><a href="https://www.digikey.com/en/products/detail/stmicroelectronics/STM32F410C8U6/6166913">STM32F410C8U6</a>
+                       <td>32 KiB    <td>US$3.50  <td>8 mA?
+<tr><th><a href="https://www.digikey.com/en/products/detail/stmicroelectronics/STM32F401RCT6TR/5268281">STM32F401RCT6TR</a>
+                       <td>64 KiB    <td>US$5.50  <td>9 mA?
+<tr><th><a href="https://www.digikey.com/en/products/detail/stmicroelectronics/STM32F730V8T6/9453365">STM32F730V8T6</a>
+                       <td>256 KiB   <td>US$6     <td>28 mA?
+<tr><th><a href="https://www.digikey.com/en/products/detail/stmicroelectronics/STM32F765IGT6/6137836">STM32F765IGT6</a>
+                       <td>512 KiB   <td>US$15    <td>28 mA?
+<tr><th><a href="https://www.digikey.com/en/products/detail/microchip-technology/ATSAMG53N19B-AU/5057262">ATSAMG53N19B-AU</a>
+                       <td>96 KiB    <td>US$1.50  <td>7.2 mA (but only goes up to 48MHz)
+<tr><th><a href="https://www.digikey.com/en/products/detail/cypress-semiconductor-corp/CY9AF156NPMC-G-JNE2/7362398">CY9AF156NPMC-G-JNE2</a>
+                       <td>64 KiB    <td>US$2     <td>⸘no datasheet‽
+<tr><th><a href="https://www.digikey.com/en/products/detail/nuvoton-technology-corporation-of-america/M481ZE8AE/12337367">M481ZE8AE</a>
+                       <td>64 KiB    <td>US$2.50  <td>⸘no datasheet‽
+</table>
+
+Some of these, like the STM32F730 and STM32F765, have built-in memory
+controllers designed to interface to external SRAM, SDRAM (!!), NOR
+Flash, and even NAND Flash.
 
 CDR-coding stacks
 -----------------
 
-What I originally thought when I skimmed Moses’s paper was that he was
+What I originally thought when I skimmed Bobrow’s paper was that he was
 going to CDR-code lists in something like the following fashion.  When
 some datum z produced by (cons x y) is placed on a page different from
 its cdr, it gets allocated a shortish buffer, with a counter and
@@ -270,15 +329,109 @@ standard approach:
 If we initially allow such buffers (“obstacks”?  “arenas”?) to extend
 to the end of their page, only capping them off at a bit over their
 current capacity when we want to allocate something else, we can
-reduce the number of spills.  For example, when parsing this Scheme
-through recursive descent:
+reduce the number of spills.  For example, consider parsing this
+Scheme into lists through recursive descent:
 
     (define (freq-update vec n)
       (let ((vec (vector-grow-init vec (1+ n) 0)))
         (vector-set! vec n (1+ (vector-ref vec n)))
         vec))
 
-the first cons we do is of `vec` onto `'()`, creating a new buffer:
+Here’s the conventional dotted-pair representation:
+
+![(diagram of dotted pairs of the above Scheme)](dottedpairs.png)
+
+In Graphviz:
+
+    digraph fu {
+            node [shape=record, label="<car>|<cdr>"]
+            {
+                    rank=same;
+                    1 [label="define|<cdr>"];
+                    1:cdr -> 2;
+                    2:cdr -> 6;
+                    6 [label="<car>|Λ"];
+            }
+            2:car -> 3;
+            {
+                    rank=same;
+                    3 [label="freq-update|<cdr>"];
+                    4 [label="vec|<cdr>"];
+                    5 [label="n|Λ"];
+                    3:cdr -> 4;
+                    4:cdr -> 5;
+            }
+            6:car -> 7;
+            {
+                    rank=same;
+                    7 [label="let|<cdr>"];
+                    7:cdr -> 8;
+                    8:cdr -> 10;
+                    10:cdr -> 12;
+                    12 [label="vec|Λ"];
+            }
+            8:car -> 9;
+            9 [label="<car>|Λ"];
+            9:car -> 13;
+            {
+                    rank=same;
+                    13 [label="vec|<cdr>"];
+                    13:cdr -> 14;
+                    14 [label="<car>|Λ"];
+            }
+
+            14:car -> 15;
+            {
+                    rank=same;
+                    15 [label="vector-grow-init|<cdr>"];
+                    15:cdr -> 16;
+                    16 [label="vec|<cdr>"];
+                    16:cdr -> 17;
+                    17:cdr -> 18;
+                    18 [label="0|Λ"];
+            }
+
+            17:car -> 19;
+            {
+                    rank=same;
+                    19 [label="1+|<cdr>"];
+                    19:cdr -> 20;
+                    20 [label="n|Λ"];
+            }
+
+            10:car -> 21;
+            {
+                    rank=same;
+                    21 [label="vector-set!|<cdr>"];
+                    21:cdr -> 22;
+                    22 [label="vec|<cdr>"];
+                    22:cdr -> 23;
+                    23 [label="n|<cdr>"];
+                    23:cdr -> 24;
+                    24 [label="<car>|Λ"];
+            }
+
+            24:car -> 25;
+            {
+                    rank=same;
+                    25 [label="1+|<cdr>"];
+                    25:cdr -> 26;
+                    26 [label="<car>|Λ"];
+            }
+
+            26:car -> 27;
+            {
+                    rank=same;
+                    27 [label="vector-ref|<cdr>"];
+                    27:cdr -> 28;
+                    28 [label="vec|<cdr>"];
+                    28:cdr -> 11;
+                    11 [label="n|Λ"];
+            }
+    }
+
+With recursive descent, the first cons we do is of `vec` onto `'()`,
+creating a new buffer:
 
     |-----------+-----+-----
     | NIL/1/256 | vec | ... 
@@ -310,6 +463,10 @@ performance.
 Alternative memory representations
 ----------------------------------
 
+How could we improve on that?
+
+### A depth list ###
+
 A maybe more interesting representation of the above S-expression
 might annotate a flat list of atoms with their depths:
 
@@ -318,6 +475,8 @@ might annotate a flat list of atoms with their depths:
 
 but of course this is not only just as many words of memory, it does
 not contain enough information to reconstruct the S-expression!
+
+### An RPN operation stream ###
 
 An RPN approach to reconstructing it might intersperse a series of
 N-ary operators on the symbol list:
@@ -341,6 +500,8 @@ than 28 conses and thus 56 words, but at the cost of pushing most of
 the arity information into the symbols instead of the conses, which
 makes it quite awkward to compute with.
 
+### Algebraic data types, or variant records ###
+
 In the particular case that what you want to represent is something
 analogous to Scheme source code, a structier approach may work better,
 using ML-like pattern-matching and constructors, but Golang-like
@@ -353,6 +514,8 @@ case one of the first and two of the second; and a function call takes
 a function expression and some number of argument expressions.
 
 Here’s a thing that might look like in Graphviz:
+
+![(diagram of directed graph)](records.png)
 
     digraph x {
             node [shape=record]
@@ -386,8 +549,6 @@ Here’s a thing that might look like in Graphviz:
             zz:rands-> zrands:head;
             zrands [label="<head>2|vec|n"];
     }
-
-![(diagram of directed graph)](records.png)
 
 It looks better rendered with Graphviz dot, but Graph::Easy manages a
 crude ASCII-art rendition which I’ve cleaned up here:
@@ -447,14 +608,16 @@ reduces the space cost to 31 words.
 referenced directly from a rands field rather than by way of a
 1-element vector.  This makes 44 46, 37 39, and 31 32.)
 
-32 memory words is 43% less space than 56.  The ASCII version, which
-is inconvenient for computation, is 133 bytes, while 32 32-bit words
-is slightly smaller at 128 bytes — not counting the print-names of the
-symbols, which are shared with all of their other occurrences.
+32 memory words is 43% less space than 56.  The ASCII Scheme version,
+which is inconvenient for computation, is 133 bytes, while 32 32-bit
+words is slightly smaller at 128 bytes — not counting the print-names
+of the symbols, which are shared with all of their other occurrences.
 
 I think this sort of thing, inspired by ML ADTs, is likely to actually
 be *more* convenient for programming than S-expressions, as well as
 more space-efficient.
+
+#### BIBOP tagging for variant record tags ####
 
 A possible BIBOP-alternative approach to handling type-tags, which
 still doesn’t require wasting an entire word in every object, is to
@@ -483,3 +646,296 @@ one-argument calls; 512 bytes (32 objects) of two-argument calls; and
 512 bytes (25 objects) of three-argument calls.  This allows you to
 minimize fragmentation and still do type-tests without faulting any
 pages in or limiting your number of types.
+
+### An immutable vector per list ###
+
+A different memory representation, much closer to the Lisp approach,
+would be to just replace lists with vectors.  You can see that the
+Scheme code contains 10 lists and 19 atom references, for a total of
+28 conses; here’s the code again:
+
+    (define (freq-update vec n)
+      (let ((vec (vector-grow-init vec (1+ n) 0)))
+        (vector-set! vec n (1+ (vector-ref vec n)))
+        vec))
+
+(Or you can calculate it with this dumb code:
+
+    (define (atom-count sexp)
+      (cond ((null? sexp) 0)
+            ((pair? sexp) (+ (atom-count (car sexp))
+                             (atom-count (cdr sexp))))
+            (#t 1)))
+
+    (define (cons-count sexp)
+      (cond ((null? sexp) 0)
+            ((pair? sexp) (+ 1 
+                             (cons-count (car sexp))
+                             (cons-count (cdr sexp))))
+            (#t 0)))
+
+    (define (nil-count sexp)
+      (cond ((null? sexp) 1)
+            ((pair? sexp) (+ (nil-count (car sexp))
+                             (nil-count (cdr sexp))))
+            (#t 0)))
+
+)
+
+If you were to replace each list with a counted vector, these 28
+conses in 10 lists would be only 38 words:
+
+    |---+-------------+-----+---+   +---+----+---|
+    | 3 | freq-update | vec | n |   | 2 | 1+ | n |
+    |---+-------------+-----+---+   +---+----+---|
+    
+And if you were to segregate these vectors or tuples into pages or
+subpages by size, you could then omit the count fields (except on
+vectors too long to belong to a whole category of same-sized vectors,
+which would still need counts).  Then instead of 38 words they would
+be 28 words.  Optimal!  All we had to sacrifice was mutability and
+tail sharing.
+
+A Graphviz visualization looks like this:
+
+![(visualization of the whole function)](bibopvecs.png)
+
+    digraph fu {
+            node [shape=record, style=filled, fillcolor=white, color="#7f7f7f"]
+            graph [style=filled, fillcolor=lightgrey, color="#7f7f7f"]
+            root [shape=oval];
+            root -> 6;
+
+            subgraph cluster_1 {
+                    label="1-tuple space";
+                    5 [label="<0>"];
+            }
+
+            subgraph cluster_2 {
+                    label="2-tuple space";
+                    2 [label="{1+|n}"];
+                    4 [label="{vec|<1>}"];
+                    9 [label="{1+|<1>}"];
+            }
+
+            subgraph cluster_3 {
+                    label="3-tuple space";
+                    1 [label="{freq-update|vec|n}"];
+                    6 [label="{define|<1>|<2>}"];
+                    10 [label="{vector-ref|vec|n}"];
+            }
+
+            subgraph cluster_4 {
+                    label="4-tuple space";
+                    3 [label="{vector-grow-init|vec|<2>|0}"];
+                    7 [label="{let|<1>|<2>|vec}"];
+                    8 [label="{vector-set!|vec|n|<3>}"];
+
+            }
+
+            3:2 -> 2;
+            4:1 -> 3;
+            5:0 -> 4;
+            6:1 -> 1;
+            6:2 -> 7;
+            7:1 -> 5;
+            7:2 -> 8;
+            8:3 -> 9;
+            9:1 -> 10;
+    }
+
+An astonishing thing is that these 28 words are *smaller* than the 32
+words taken up by the ML-like data structure outlined above, and under
+much less dubious assumptions.
+
+#### Several approaches to efficiently CDRing down such vectors ####
+
+First, we could use ordinary pointers into the vectors as the iterator
+states.  Unsafe cdr would then just be a pointer increment, but the
+null test would then require decoding the pointer’s bit representation
+and doing some kind of lookup to figure out what size the vector was,
+and maybe doing a modulo by the vector size (3 or 5 or something) to
+find the offset into the vector.  This sounds like it would make
+cdring down a list spectacularly slow.
+
+Second, we could use some kind of fat-pointer representation of
+iterators/ranges, like a base pointer and an offset, or an iterator
+pointer and an upper-bound pointer.  CDR and NULL? are then fast but
+their argument no longer fits in a register; it needs two registers.
+(And, in the case of CDR, the result.)  This has the additional
+advantage that you can efficiently refer to any range of a list, not
+just suffixes.  With a Lua-like calling convention this isn’t
+necessarily a big practical problem for programming but it does add
+complexity, and you need list→iter and perhaps iter→list functions of
+some kind.  list→iter in particular has to figure out how big the list
+is, through the kinds of pointer decoding and lookup that NULL? would
+have had to do in the previous option, but fortunately without the
+division operation.
+
+Third, we could try to cram the fat-pointer representation into a
+single word somehow.  For example, we could 8-byte-align all our
+vector pointers and use the three low-order bits to indicate an offset
+from 0 to 7, and chain together vectors to make lists of more than 8
+items.
+
+Fourth, we could maybe burst the vector into a conventional pile of
+dotted pairs when we start iterating over it, in some kind of very
+cheap garbage collection nursery or something.  This obviously
+sacrifices mutability, which we already sort of did, but also
+damages EQ on lists.
+
+Fifth, we could use a stateful generator coroutine, which is in some
+sense another version of “fat pointers”.
+
+Incrementing a pointer in a loop, testing it against an end pointer,
+to do a linear search for a key, looks like this in reformatted GCC
+listing output for amd64, with the loop preamble removed:
+
+      25 0010 4883C708      .L8:    addq    $8, %rdi      # increment pointer
+      27 0014 4839FE                cmpq    %rdi, %rsi    # compare against end pointer
+      28 0017 7405                  je      .L2           # (fused with previous) exit loop
+      31 0019 483907        .L6:    cmpq    %rax, (%rdi)  # compare against search key in %rax
+      32 001c 75F2                  jne     .L8           # loop while not found
+      33                    .L2:
+
+So it’s about 3–5 RISC instructions or micro-ops — and *zero* data
+memory accesses! — per loop iteration.
+
+A context switch to a stateful generator coroutine can be as simple as
+an indirect jump or call, followed by another indirect jump or return
+later; but more generally you should expect to pay nearly the usual
+procedure entry/exit cost, because a lower cost would imply
+partitioning the register file between the generator and the consumer.
+Whatever registers the consumer clobbers aren’t available to maintain
+generator state, and whatever registers the generator clobbers aren’t
+available to maintain consumer state.  The generator can keep its
+stack frame around from one yield to the next, but it still has to
+save any relevant callee-saved registers upon resuming and restore
+them on yielding, and vice versa for caller-saved registers.
+
+#### Building such packed-tuple vectors ####
+
+The usual kind of Lisp code doesn’t know in advance how big a list
+it’s building, and knowing would make it more complicated.  Consider
+this example (part of my solution to an exercise from Essentials of
+Programming Languages):
+
+    (define (set-subtract includes excludes)
+      (cond ((null? includes) '())
+            ((member (car includes) excludes) (set-subtract (cdr includes) excludes))
+            (#t (cons (car includes) (set-subtract (cdr includes) excludes)))))
+
+You could quibble with the crude coding style and the O(MN) algorithm,
+but I think it’s fair to say that writing recursive definitions of
+that sort and having them run with reasonable efficiency is a big part
+of the appeal of Lisp.  But how do you write such a recurrence in this
+natural way, without losing the space-efficiency benefits of the
+packed vector representation?
+
+One thing you could of course do is have a function that converts
+explicitly from the unpacked chain-of-dotted-pairs form into the
+packed form, and invoke it after the final recursive call:
+
+    (define (set-subtract includes excludes)
+      (list->packed
+            (let recur ((includes includes))
+              (cond ((null? includes) '())
+                    ((memb (ca includes) excludes) (recur (cd includes)))
+                    (#t (cons (ca includes) (recur (cd includes))))))))
+
+Exposing the difference to the user in this way would eliminate the
+necessity for the ordinary functions `car` and at least `cdr` and so
+on to handle both vector iterators (whatever their form) and
+dotted-pair iterators, which might make them run faster.  (However, if
+they’re doing a run-time safety check, I think the extra cost to fall
+back to a more general dispatch when the expected-type check fails is
+probably insignificant.)
+
+Alternatively, you could let the garbage collector take care of it:
+when it copies a linked list of immutable dotted pairs out of the
+nursery, it can count its length and copy it as a packed tuple into
+the appropriate packed tuple bucket, instead of copying the dotted
+pairs individually.  This does require `cdr` to check which
+representation is in use at any given moment, though.
+
+As a third alternative you might consider explicit *mutability*:
+
+    def set_subtract(includes, excludes):
+        result = []
+        for item in includes:
+            if item not in excludes:
+                result.append(item)
+
+        return result
+
+But this doesn’t really help with the problem at hand; CPython has to
+preallocate a bunch of extra slack space for `result`, probably
+several times, and the last time most of it never gets used.  If you
+say `return tuple(result)` you eliminate this space waste at the cost
+of an extra copy, similar to the `list->packed` approach.
+
+It sure is a lot less fucking code, though, isn’t it?
+
+In this particular case an additional angle on the problem is to
+consider `set-subtract` as a potentially lazy sequence transformer,
+usable for example as a generator coroutine:
+
+    def set_subtract(includes, excludes):
+        for item in includes:
+            if item not in excludes:
+                yield item
+
+If you want to materialize it, though, that still doesn’t help; the
+consumer of the generated sequence can do whatever they want with it,
+including packing it into a vector, but *they* don’t know in advance
+how big it is either!
+
+Compressed oops
+---------------
+
+So far everything described has use “words”, but I think the “Large
+Object-Oriented Memory” approach may be suitable for this kind of
+microcontroller system.  [Load and store instructions to internal SRAM
+on ARM Cortex-M3 microcontrollers commonly take 2 clock cycles][2],
+though sometimes this can be pipelined, so I’m guessing this would be
+28 ns on the STM32F103C8 at 72 MHz, or 7 ns per byte.  This is around
+8–32 times faster than the access times to any of the other memories
+considered above, and consumes almost proportionally less energy, so
+avoiding off-chip access as much as possible would seem to be
+paramount.
+
+[2]: https://community.arm.com/developer/ip-products/processors/f/cortex-m-forum/5177/instruction-timings---arm-cortex-m3
+
+The LOOM Smalltalk paper used 32-bit ordinary object pointers (“oops”)
+on disk, but 16-bit “compressed oops” in RAM.  An in-RAM object table
+kept track of the correspondence.  Such an approach could probably
+nearly double the effective capacity of the 20-KiB RAM on such a
+microcontroller.  20 KiB is enough to hold 20480 bytes, 10240 16-bit
+compressed oops, or 5120 32-bit oops or two-element vectors of 16-bit
+compressed oops.  Moreover, for the NAND Flash sizes I was talking
+about above, you might want 40-bit or 48-bit uncompressed oops!
+
+Even the largest low-power microcontrollers considered above have only
+96 KiB of on-chip SRAM: 98304 bytes, 49152 compressed oops, 24576
+dotted pairs or two-element vectors made of compressed oops, or 12288
+32-bit oops.  So clearly a 16-bit field is enough to address all the
+objects that will fit into SRAM at a time.
+
+Compare these to the 4096 symbols and 0o140_000 = 49152 words devoted
+to compiled code and list structure in Bobrow’s paper: that’s also
+24576 dotted pairs!  But shared only with compiled code, not with
+symbols and integers and whatnot.  We can take some comfort in being
+able to page things in 6000 times a second instead of 30 times a
+second — but in proportion to CPU speed this swapping rate is actually
+much slower.  Bobrow’s 17-ms average rotational latency was only about
+1000–2000 machine instructions, while 150 μs is about *ten* thousand
+instructions for our CPU.  However, we can expect even much faster
+performance than that: Bobrow was only getting 6000 subroutine calls
+per second, about 15 instructions per call, which he attributes to the
+weaknesses of the PDP-1’s instruction set, but we ought to be able to
+get something like two or three times that amount.
+
+LOOM supposedly paged objects in and out one at a time, but I can’t
+imagine that working very well for things like disk or NAND.  Evicting
+individual objects would be fine for things like external SRAM, and
+faulting *in* individual objects would be fine for things like NOR.
