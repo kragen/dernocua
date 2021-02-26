@@ -12,6 +12,18 @@ back and read it in greater depth to see how this was possible.
 [0]: https://apps.dtic.mil/dtic/tr/fulltext/u2/647601.pdf
 [9]: https://en.wikipedia.org/wiki/PDP-1
 
+Having read it,
+I think a number of modern techniques, particularly compressed oops,
+index registers, lexical scoping, bytecode, JIT compilation, and generational garbage
+collection, should make it possible to build a system with
+considerably more bang per computron than Bobrow had to settle for.
+Also, modern low-power microcontrollers have amounts of RAM comparable
+to the PDP-1’s, but are on the order of 1000 times faster, and have on
+the order of 1000 times more secondary storage available, which is
+about 100 times faster than the PDP-1’s; this should allow real,
+comfortable self-hosting microcontroller development.  All of this can
+run on about ten milliwatts.
+
 Review of Bobrow’s paper
 ------------------------
 
@@ -258,8 +270,17 @@ Some of these, like the STM32F730 and STM32F765, have built-in memory
 controllers designed to interface to external SRAM, SDRAM (!!), NOR
 Flash, and even NAND Flash.
 
-CDR-coding stacks
------------------
+Compact in-memory representations
+---------------------------------
+
+The NAND Flash discussed above is huge compared to everything else;
+the only penalty for bloated data representations in it is power usage
+and memory bandwidth usage.  But for storing data in the
+microcontroller’s RAM, it’s crucial to represent it efficiently.  Lisp
+data is pretty convenient to compute on but takes up a lotta fricking
+bytes.
+
+### Backwards CDR-coding stacks occurred to me, but that’s probably dumb ###
 
 What I originally thought when I skimmed Bobrow’s paper was that he was
 going to CDR-code lists in something like the following fashion.  When
@@ -460,11 +481,6 @@ Then we cap off that entire list and cons it onto `'()` followed by
 So far we have 6 conses in 12 words, which is a singularly uninspiring
 performance.
 
-Alternative memory representations
-----------------------------------
-
-How could we improve on that?
-
 ### A depth list ###
 
 A maybe more interesting representation of the above S-expression
@@ -485,7 +501,8 @@ N-ary operators on the symbol list:
 
 which at least compresses the six conses above down to 7 words instead
 of 12.  For functions of fixed arity the N-ary operators are, strictly
-speaking, unnecessary, and you could imagine representing that
+speaking, unnecessary — forward Polish notation is sufficient,
+so you could imagine representing that
 S-expression with the following whitespace-separated tokens:
 
     define( freq-update vec n ){
@@ -647,7 +664,7 @@ one-argument calls; 512 bytes (32 objects) of two-argument calls; and
 minimize fragmentation and still do type-tests without faulting any
 pages in or limiting your number of types.
 
-### An immutable vector per list ###
+### An immutable vector, or packed tuple, per list ###
 
 A different memory representation, much closer to the Lisp approach,
 would be to just replace lists with vectors.  You can see that the
@@ -730,7 +747,6 @@ A Graphviz visualization looks like this:
                     3 [label="{vector-grow-init|vec|<2>|0}"];
                     7 [label="{let|<1>|<2>|vec}"];
                     8 [label="{vector-set!|vec|n|<3>}"];
-
             }
 
             3:2 -> 2;
@@ -748,6 +764,12 @@ An astonishing thing is that these 28 words are *smaller* than the 32
 words taken up by the ML-like data structure outlined above, and under
 much less dubious assumptions.
 
+This is clearly a broadly applicable data representation for things
+like syntax trees, binary search trees, and hash tables; and because
+you can do random access within the counted array it’s a reasonable
+structure for things like binary search and (non-in-place, because
+immutable) quicksort as well.
+
 #### Several approaches to efficiently CDRing down such vectors ####
 
 First, we could use ordinary pointers into the vectors as the iterator
@@ -764,7 +786,8 @@ pointer and an upper-bound pointer.  CDR and NULL? are then fast but
 their argument no longer fits in a register; it needs two registers.
 (And, in the case of CDR, the result.)  This has the additional
 advantage that you can efficiently refer to any range of a list, not
-just suffixes.  With a Lua-like calling convention this isn’t
+just suffixes, and algorithms like binary search in the list also become
+more natural to express.  With a Lua-like calling convention this isn’t
 necessarily a big practical problem for programming but it does add
 complexity, and you need list→iter and perhaps iter→list functions of
 some kind.  list→iter in particular has to figure out how big the list
@@ -782,7 +805,7 @@ Fourth, we could maybe burst the vector into a conventional pile of
 dotted pairs when we start iterating over it, in some kind of very
 cheap garbage collection nursery or something.  This obviously
 sacrifices mutability, which we already sort of did, but also
-damages EQ on lists.
+damages EQ on lists, and it adds to the load on the GC.
 
 Fifth, we could use a stateful generator coroutine, which is in some
 sense another version of “fat pointers”.
@@ -813,9 +836,21 @@ stack frame around from one yield to the next, but it still has to
 save any relevant callee-saved registers upon resuming and restore
 them on yielding, and vice versa for caller-saved registers.
 
+#### *Not* CDRing down packed vectors ####
+
+Many lists — though few in the above example — are used as fixed-arity
+tuples rather than variable-length lists, and for these lists we’re
+probably most interested in pattern-matching them against patterns of
+the same arity, rather than iterating over their members.  This is
+clearly much more efficient to do with these packed tuples than with
+linked lists of dotted pairs.
+
 #### Building such packed-tuple vectors ####
 
-The usual kind of Lisp code doesn’t know in advance how big a list
+If you knew how many things are going to be in your output list, you
+could maybe preallocate it.  MAPCAR, for example, could do this.
+
+But the usual kind of Lisp code doesn’t know in advance how big a list
 it’s building, and knowing would make it more complicated.  Consider
 this example (part of my solution to an exercise from Essentials of
 Programming Languages):
@@ -856,7 +891,18 @@ when it copies a linked list of immutable dotted pairs out of the
 nursery, it can count its length and copy it as a packed tuple into
 the appropriate packed tuple bucket, instead of copying the dotted
 pairs individually.  This does require `cdr` to check which
-representation is in use at any given moment, though.
+representation is in use at any given moment, though.  And sometimes
+it’s important for both space and time to preserve some tail sharing
+(though you can always restructure algorithms to do their sharing via
+the `car`).
+
+Such approaches were inconceivable before the invention of
+generational garbage collection in the mid-01980s.
+
+(It might even be worthwhile to include the list length in the dotted
+pairs when you create them; although this fills up the nursery faster,
+it means the GC doesn’t have to pretraverse the list to count its
+length before packing it.)
 
 As a third alternative you might consider explicit *mutability*:
 
@@ -874,7 +920,7 @@ several times, and the last time most of it never gets used.  If you
 say `return tuple(result)` you eliminate this space waste at the cost
 of an extra copy, similar to the `list->packed` approach.
 
-It sure is a lot less fucking code, though, isn’t it?
+It sure is a lot less fucking code than the Scheme, though, isn’t it?
 
 In this particular case an additional angle on the problem is to
 consider `set-subtract` as a potentially lazy sequence transformer,
@@ -939,3 +985,154 @@ LOOM supposedly paged objects in and out one at a time, but I can’t
 imagine that working very well for things like disk or NAND.  Evicting
 individual objects would be fine for things like external SRAM, and
 faulting *in* individual objects would be fine for things like NOR.
+
+Bytecode
+--------
+
+Zork, old Macintosh versions of Excel, GNU Emacs, and Smalltalk
+systems get a lot of mileage out of bytecode virtual machines, which
+allow them to squeeze a lot more code into very small computers than
+you would think possible.  This command from my .emacs is 16 lines of
+code, but it compiles to 44 bytes of Elisp bytecode, plus some tables
+of constants and external references (literals, symbols):
+
+    (defun markdown-tt-word ()
+      "Hit N times to enclose previous N chunks of nonwhitespace in `` (for Markdown)."
+      (interactive)
+      (if (looking-back "`")
+          (save-excursion
+            (backward-char)
+
+            (search-backward "`")
+            (delete-char 1)
+
+    ;; (backward-word) previously
+            (search-backward-regexp "\\S-")
+            (search-backward-regexp "\\s-")
+            (forward-char)
+
+            (insert "`"))
+        (progn
+          (insert "`")
+          (save-excursion
+            (backward-word) ; should this use the same simpler approach?
+            (insert "`")))))
+
+I think it’s atypically dense to get just 3 bytes of bytecode per line
+of code; 6 bytes per line is probably closer.
+
+Here’s a disassembly of the 44 bytes.  You can see that they use a
+stack bytecode with a single operand — usually packed into the same
+byte, much like Smalltalk bytecode, but in the case of `goto-if-nil`
+it seems to have a two-byte immediate operand following the bytecode.
+The operands packed into constant and varref bytecodes are indexes
+into pools of such things, again as in Smalltalk.  Specific opcodes
+are allocated to popular Emacs operations like `save-excursion`,
+`forward-char`, and `forward-word`.
+
+    byte code for markdown-tt-word:
+      args: nil
+     interactive: nil
+    0       constant  looking-back
+    1       constant  "`"
+    2       call      1
+    3       goto-if-nil 1
+    6       save-excursion 
+    7       constant  -1
+    8       forward-char 
+    9       discard   
+    10      constant  search-backward
+    11      constant  "`"
+    12      call      1
+    13      discard   
+    14      constant  delete-char
+    15      constant  1
+    16      call      1
+    17      discard   
+    18      constant  search-backward-regexp
+    19      constant  "\\S-"
+    20      call      1
+    21      discard   
+    22      constant  search-backward-regexp
+    23      constant  "\\s-"
+    24      call      1
+    25      discard   
+    26      constant  nil
+    27      forward-char 
+    28      discard   
+    29      constant  "`"
+    30      insert    
+    31      unbind    1
+    32      return    
+    33:1    constant  "`"
+    34      insert    
+    35      discard   
+    36      save-excursion 
+    37      constant  -1
+    38      forward-word 
+    39      discard   
+    40      constant  "`"
+    41      insert    
+    42      unbind    1
+    43      return    
+
+Let’s see how our example code from earlier fares:
+
+    (define (freq-update vec n)
+      (let ((vec (vector-grow-init vec (1+ n) 0)))
+        (vector-set! vec n (1+ (vector-ref vec n)))
+        vec))
+
+In Elisp that’s spelled:
+
+    (defun freq-update (vec n)
+      (let ((vec (vector-grow-init vec (1+ n) 0)))
+        (aset vec n (1+ (aref vec n)))
+        vec))
+
+Emacs compiles the code part of this to 18 bytes of bytecode, 4½ per
+line; this is a lot less than 28 compressed oops (56 bytes).
+
+    byte code for freq-update:
+      args: (vec n)
+    0       constant  vector-grow-init
+    1       varref    vec
+    2       varref    n
+    3       add1      
+    4       constant  0
+    5       call      3
+    6       dup       
+    7       varbind   vec
+    8       varref    n
+    9       varref    vec
+    10      varref    n
+    11      aref      
+    12      add1      
+    13      aset      
+    14      discard   
+    15      varref    vec
+    16      unbind    1
+    17      return    
+
+It’s a little bit unfair not to count the argument list and constants
+vector here, because they allow the references to `vec` and `n` and
+`vector-grow-init` to fit into a few bits of a byte, while normally
+they would require 8 bytes, as the elements of the argument list and
+constants vector do.  Only a little unfair, though.
+
+PICBIT was a bytecoded Scheme for PIC microcontrollers, but its
+bytecode was an order of magnitude fatter than the 6 bytes per line of
+code I suggested above; it was a successor to the slimmer BIT, which
+fit the R4RS Scheme library into under 8000 bytes of bytecode.
+
+It’s probably worthwhile to burn large amounts of bytecode into the
+microcontroller’s Flash and interpret it from Flash; that way you
+don’t have to spend precious RAM on code.  (128 KiB would hold about
+20,000 lines of high-level code by the above estimate — the whole VPRI
+STEPS complexity budget — but of course the system has to use some
+memory too.)  It’s probably okay for loading a new application to take
+a good fraction of a second if that frees up RAM for data.  Most
+modern microcontrollers support pagewise reprogramming of their
+internal (NOR, painfully slow) Flash during operation, so this kind of
+thing should be acceptable even for exploratory interactive
+development.
