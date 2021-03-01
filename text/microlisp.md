@@ -41,11 +41,19 @@ second:
 > the poor set of operation codes on the machine, and the lack of an
 > index register).
 
+Also, p. 16 (20/26) characterizes performance; it says the “cache hit
+rate” for RAM was about 97.5%, with only 2.5% of CAR and CDR
+operations going to the drum.  This consumed only 10% of system time,
+presumably because all parts of the system were unbelievably slow: 31k
+CONSes and 150k CDR and CARs in 35 minutes, thus about 5000 of these
+operations per minute or 90 per second.
+
 This seems to have been the paper that first published shallow binding
 (though in a strange way that uses pointers into the call stack),
 tagged pointers for small integers (“offset by 300,000 octal”, both
-positive and negative), CDR-coding, and a form of BIBOP typing.  Of
-these I thought CDR-coding was the most interesting.
+positive and negative) and a form of BIBOP typing.  I thought it also
+used CDR-coding, which I thought was the most interesting, but it
+doesn’t really.
 
 The primary objective of the BIBOP typing was to avoid having to reach
 out to the drum for type tests, especially for symbols (where both of
