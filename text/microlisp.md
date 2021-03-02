@@ -1,3 +1,12 @@
+I’ve been thinking a lot about how to do low-power computing systems,
+like around 10 mW (see file `energy-autonomous-computing.md`), and I
+think I have a handle on how to do a reasonable interactive computing
+environment in that energy budget.  This note mostly focuses on
+prospects for fitting reasonable *software* into the hardware
+constraints of such low power.  See file
+`energy-autonomous-computing.md` for details on other aspects of the
+issue.
+
 I skimmed [Bobrow’s 01966 “The Structure of a Lisp System using
 Two-Level Storage”][0] the other day, and I was struck by his claim
 that BBN LISP was fast enough to be usable, even on an 18-bit
@@ -41,7 +50,8 @@ second:
 > the poor set of operation codes on the machine, and the lack of an
 > index register).
 
-Also, p. 16 (20/26) characterizes performance; it says the “cache hit
+Also, p. 16 (20/26) characterizes performance; it says that
+what we might now call the “cache hit
 rate” for RAM was about 97.5%, with only 2.5% of CAR and CDR
 operations going to the drum.  This consumed only 10% of system time,
 presumably because all parts of the system were unbelievably slow: 31k
@@ -59,7 +69,7 @@ The primary objective of the BIBOP typing was to avoid having to reach
 out to the drum for type tests, especially for symbols (where both of
 the usual predicates can be answered without waiting for a drum
 reference, namely ATOM and EQ) and so a contiguous chunk of the 17-bit
-(!)  virtual address space was assigned to almost every type: value
+(!) virtual address space was assigned to almost every type: value
 cells† starting at 0o150_000, property list cells†, full words (large
 integers), pushdown list (the call stack) starting at 0o200_000,
 function cells†, print-name pointers†, print-names, and “hash table”,
@@ -74,7 +84,9 @@ pointer from a CONS, perhaps code pointers as such weren’t first-class
 values.
 
 (A secondary benefit not mentioned is that CONS cells occupied two
-words instead of three, because they don’t need a type tag.)
+words instead of three, because they don’t need a type tag, but I
+guess devoting an entire word to type tags for dotted pairs was not
+considered as an option.)
 
 He says this static allocation is preferred to “provid[ing] an in-core
 map of storage areas” because it reduces resident memory pressure (at
@@ -102,7 +114,8 @@ computation.  4096 words is 16 256-word pages, so I guess you’d page
 in a sixteenth of the symbols’ value cells or function cells or
 whatever at a time.
 
-\* They did also consider numbers to be “atoms”.
+\* They did also consider numbers to be “atoms”, just not “literal
+atoms”.
 
 Aha, here’s the resolution to the dilemma above about overlapping
 memory areas: although the call stack starts at 0o200_000, followed by
@@ -124,9 +137,10 @@ per-page free list and an in-core map of per-page free lists, which I
 suppose must have used 192 words (!!) for the 49152 words of virtual
 memory available for “list structure”.
 
-However, their “additional scheme for dumping onto secondary storage
-(magnetic tape)” does maybe seem to have done the full CDR-coding
-thing.  This is referenced to “Storage Management in LISP”, Bobrow, in
+They also mention an “additional scheme for dumping onto secondary storage
+(magnetic tape)” which I thought might have done the full CDR-coding
+thing, but it doesn’t seem to have done so.
+This is referenced to “Storage Management in LISP”, Bobrow, in
 preparation, Proc. IFIP Conf. on Symbol Manipulation Languages, and [“A
 LISP Garbage Collector Algorithm Using Serial Secondary Storage”,
 Minsky, AIM-58, 01963][1].
@@ -156,10 +170,14 @@ Prospects for microcontroller systems
 An STM32F103C8 as used in a Blue Pill runs about 72 MIPS, 64 or
 usually 128 KiB of Flash, and 20 KiB of SRAM; the preassembled board
 costs about US$2.  This chip uses about 1.5 nJ per 32-bit instruction
-and can run ARM code from SRAM.  But 20 KiB isn’t a lot of space, so
+(32.8 mA at 72 MHz, mostly one instruction per cycle, at 2.5 V, is
+83 mW, or 1.1 nJ per clock cycle; but this is the datasheet’s *max*
+current consumption at 85° with all peripherals disabled; and lower
+voltages and higher clock speeds may be doable),
+and it can run ARM code from SRAM.  But 20 KiB isn’t a lot of space, so
 you need some external memory.
 
-As mentioned in file `energy-autonomous-computing.md`, and file
+As mentioned in file `energy-autonomous-computing.md` and file
 `ghz-dds.md`, you can get a variety of memory chips to interface to
 the STM32; a rough outline of chips I think may be representative
 follows:
@@ -206,18 +224,22 @@ for the cost of writing it into the NOR.
 
 So, suppose we have a system consisting of an STM32F103C8
 microcontroller, a 23LC1024 QSPI SRAM, and a GD5F1GQ4 QSPI NAND chip.
-When idle it’s using 0.54 μA at 2.5 V in the MCU, 4 μA at 2.5 V in the
+When idle it’s using 20 μA at 2.5 V in the MCU, 4 μA at 2.5 V in the
 23LC1024, and 90 μA at 1.8 V in the NAND unless we turn it off with a
-transistor — 162 μW for the Flash and another 11 μW for the rest of
+transistor — 162 μW for the Flash and another 60 μW for the rest of
 the system.  A 2048-byte major page fault would initially take 114 μs
 at 72 mW in the Flash, working out to 8200 nJ, and about 34 μs at, I
-don't know, 20 mA and 2.5 V in the MCU, so 50 mW and another 1700 nJ,
+don’t know, 20 mA and 2.5 V in the MCU, so 50 mW and another 1700 nJ,
 total about 9900 nJ.  At that point it’s occupying one of the 10 page
 slots in the MCU’s internal SRAM.  Evicting that page to the SRAM (you
 might want to evict a subpage instead) would take another 200 μs and
 10 000 nJ in the CPU, plus 2000 nJ in the SRAM, which brings up the
 very interesting point that low-power SPI SRAM stops being so
 low-power if it keeps the CPU busy longer!
+
+(The above numbers may be too optimistic about the MCU; it’s more like
+30 mA at full speed than 20 mA, according to the datasheet, though
+that’s the worst case at 85°.)
 
 A tiny QSPI controller like the Raspberry Pi Pico’s “pioasm”
 coprocessors that allowed the CPU to page while continuing to compute
@@ -251,13 +273,14 @@ found cheaper chips.  But 20 KiB of internal SRAM is small enough to
 be restrictive.  What about bigger STM32F chips, or maybe an ESP32?
 The STM32F line goes up to 512KiB SRAM.  Beefier chips might also help
 to speed up off-chip communication and thus get it over with faster,
-perhaps saving energy.
+perhaps saving energy.  To my surprise, many of them also use less
+power!
 
 [2]: https://www.digikey.com/en/products/detail/stmicroelectronics/STM32F103C8T6TR/2122442
 
 <table>
 <tr><th>Chip           <th>SRAM size <th>Price    <th>Power draw at 72MHz
-<tr><th>STM32F103C8T6  <td>20 KiB    <td>US$5     <td>20 mA?
+<tr><th>STM32F103C8T6  <td>20 KiB    <td>US$5     <td>30 mA?
 <tr><th><a href="https://www.digikey.com/en/products/detail/stmicroelectronics/STM32F410C8U6/6166913">STM32F410C8U6</a>
                        <td>32 KiB    <td>US$3.50  <td>8 mA?
 <tr><th><a href="https://www.digikey.com/en/products/detail/stmicroelectronics/STM32F401RCT6TR/5268281">STM32F401RCT6TR</a>
@@ -277,6 +300,98 @@ perhaps saving energy.
 Some of these, like the STM32F730 and STM32F765, have built-in memory
 controllers designed to interface to external SRAM, SDRAM (!!), NOR
 Flash, and even NAND Flash.
+
+Full context switching and deep power down
+------------------------------------------
+
+Suppose that we want to save the whole RAM state of the
+microcontroller in stable memory, like the NAND Flash, either because
+we want to shut the whole system down or because we want to switch to
+a totally different task.  (Maybe we don’t even want to save, just
+reboot.)  How expensive is that?
+
+Using the STM32F103C8 and the S34MS01G2 numbers above, writing 20 KiB
+at 160 ns per byte and 4.4 nJ per byte is 3.2768 milliseconds and
+90 μJ.  Reading it at 45 ns per byte and 1.2 nJ is 900 μs and 24 μJ.
+The S34MS01G2 claims 10 μA “typical standby current”.  The STM32F103C8
+uses another 20 μA at idle (not “standby”!  “Stop,” with the RTC.)  So
+you can drop power usage by 95% by powering off the NAND but not the
+microcontroller.  Saving the microcontroller’s state this way might
+cost 9 seconds of the NAND’s standby energy usage, or 3 minutes of the
+processor “stopped”, which is 3 milliseconds of running the processor
+flat out at 30 mW or so.
+
+So it should be energy-affordable to checkpoint the microcontroller’s
+state this way on the order of 20 times per second during continuous
+computation, if that’s a useful thing to do.  And it might make sense
+to cut power to the NAND when it’s okay for it to be unresponsive for
+a while — it claims to need 5 ms to get back to operational when you
+power it back on, and 3 ms to erase a page, so it might make sense to
+power it down with a MOSFET whenever it’s been idle for tens of
+milliseconds, thus cutting power use by a third and extending battery
+life by 50%.
+
+When you’re handling 90wpm keystrokes, we’re talking about like 110 ms
+on average between keystrokes.  If we need 48000 instructions per
+keystroke, which seems grossly excessive, that’s 1 millisecond of
+computation, so about a 1% duty cycle.  This might add 500 μW of power
+usage, 50 μJ per keystroke, which is strikingly close to the cost of
+reloading the microcontroller’s entire state from the NAND!  Still,
+it’s probably better to leave the NAND powered down most of the time.
+
+The STM32F103C8 has a lower-power shutdown mode called, confusingly,
+“standby”, where it uses two or three μA instead of the 20 in the
+“stop” mode discussed above, which would extend idle battery life by a
+factor of 6–10.  It’s harder to wake from, it takes 65 μs to wake
+instead of 5 μs, and the SRAM loses its contents, so if you go into
+standby mode you *do* have to reload the whole system from NAND or
+whatever.  This seems reasonable for events like keystrokes where 6 ms
+is an acceptable response time, but still, rebooting could cost tens
+of microjoules if it involves reloading the full context.  The 30 μW
+“stop mode” uses this much about once a second, so when keystrokes are
+coming in more frequently than that, it’s cheaper to just stop and not
+reboot for every keystroke.
+
+For handling 1kHz mouse movements (125 Hz is a more typical mouse
+sampling rate) these deep power-down modes clearly don’t make sense.
+
+The STM32L line includes microcontrollers like the STM32L011x3/4 with
+even lower power usage: 0.54 μA in “stop” mode rather than 20, and at
+full speed, 1950 μA at full speed (though that’s only 16 MHz) instead
+of 29000 μA.  It might make sense to use a processor like this as a
+“supervisor” processor for the whole system, always on, and powering
+the other hardware up only when needed.  That chip in particular has
+only 2KiB of SRAM, but to the extent that that’s sufficient for a user
+interaction, the rest of the system could remain turned off.
+
+The 23LC1024 SRAM, if present, uses another 4 μA of standby current.
+It’s 128 KiB, so saving it to the NAND Flash (in preparation for
+unplugging it) would take almost 600 μJ and 21 ms at 4.4 nJ and 160 ns
+per byte.  Leaving it unplugged for a minute (at 4 μA and 2.5 V) would
+pay back that energy cost, so unplugging it that way is only
+worthwhile when its idle time, or potential idle time, is up in the
+tens of seconds to minutes.
+
+The upshot of all this is that it should be possible to reduce the
+system’s idle power consumption from some 35 μA (and nearly 100 μW)
+down to 20 μA with just the STM32F103C8, or down to 0.54 μA with an
+STM32L011, while keeping latency-to-full-responsiveness well under
+10 ms.  Even when actively editing text or browsing hypertext, it
+should be possible to stay below 500 μW, only leaping up to the full
+83000 μW figure mentioned earlier when you’re actually computing
+something new, and maybe when you have the thing plugged in.
+
+<table>
+<tr><th>Power store                     <th>1 μW       <th>50 μW     <th>100 μW   <th>500 μW     <th>83000 μW
+<tr><th>2 J supercap                    <td>23 days    <td>11 hours  <td>5 hours  <td>67 minutes <td>24 seconds
+<tr><th>25 J pull on a pullstring       <td>10 months  <td>6 days    <td>3 days   <td>14 hours   <td>5 minutes
+<tr><th>2.2 kJ CR2032 coin cell         <td>70 years†  <td>17 months <td>8 months <td>7 weeks    <td>7 hours
+<tr><th>4250 mAh Li-ion 20700 (57 kJ)   <td>1800 years†<td>36 years† <td>18 years†<td>43 months  <td>8 days
+<tr><th>2-kg 7Ah 12V lead-acid (300 kJ) <td>9500 years†<td>190 years†<td>95 years†<td>19 years†  <td>6 weeks
+</table>
+
+† A CR2032 or 20700 only has a shelf life of about 10 years, so it
+will not last 18 years, much less 9500.
 
 Compact in-memory representations
 ---------------------------------
@@ -366,7 +481,17 @@ Scheme into lists through recursive descent:
         (vector-set! vec n (1+ (vector-ref vec n)))
         vec))
 
-Here’s the conventional dotted-pair representation:
+Here’s the conventional dotted-pair representation, as outlined for
+example in [“A Command Structure for Complex Information Processing”
+from 01958][3] (p. 11, 13/54):
+
+> Each word is divided into two parts, a *symbol* and a
+> *link*. ... The link is an address; if the link of a word *a* is the
+> address of word *b*, then *b is adjacent to a*.  That is, the link
+> of a word in a simple list is the address of the next word in the
+> list.
+
+(See file `ipl-vi.md` for more notes on this amazing paper.)
 
 ![(diagram of dotted pairs of the above Scheme)](dottedpairs.png)
 
@@ -723,7 +848,7 @@ tail sharing.
 
 A Graphviz visualization looks like this:
 
-![(visualization of the whole function)](bibopvecs.png)
+![(visualization of the whole function as such packed vectors)](bibopvecs.png)
 
     digraph fu {
             node [shape=record, style=filled, fillcolor=white, color="#7f7f7f"]
@@ -944,6 +1069,35 @@ consumer of the generated sequence can do whatever they want with it,
 including packing it into a vector, but *they* don’t know in advance
 how big it is either!
 
+Locality through duplication
+----------------------------
+
+The packed-tuple representations above eliminate tail sharing by
+duplicating the shared list tails, which is valid for immutable
+structures; the only question is whether it is more or less wasteful
+than representing the lists with materialized dotted pairs (in the
+words of [“A Command Structure for Complex Information Processing”
+from 01958][3]:
+
+> A list structure can be established in computer memory by
+> associating with each word in memory an address that determines what
+> word is adjacent to it, so far as all the operations of the computer
+> are concerned.  We pay the price in memory space of an additional
+> address associated with each word, so that we can change the
+> adjacency relation as quickly as we can change a word of memory.
+
+[3]: http://bitsavers.org/pdf/rand/ipl/P-1277_A_Command_Structure_For_Complex_Information_Processing_Aug58.pdf
+
+One of the benefits of copying these shared tails is that it ensures
+that each list is on the same memory page as its tail, so no
+additional page faults are incurred in walking down the list.  But
+this is not the only relevant locality criterion; we would also like
+the contents of the list to be on the same page, as BBN LISP’s
+allocation strategy attempts (see above about “CDR-coding”).  With
+immutable list contents and the gigantic resources of NAND, we can
+achieve this to a significant extent by peremptorily copying immutable
+referents when we construct lists.
+
 Compressed oops
 ---------------
 
@@ -994,10 +1148,171 @@ imagine that working very well for things like disk or NAND.  Evicting
 individual objects would be fine for things like external SRAM, and
 faulting *in* individual objects would be fine for things like NOR.
 
+### Compressed oops in secondary storage ###
+
+You might also be able to use the compressed-oop approach
+advantageously within memory pages in NAND storage.  With 40-bit
+uncompressed oops, a 2048-byte NAND page can contain only 409
+pointers, or 204 dotted pairs, enough for a list of 204 things, or a
+counted vector of 408 things.  Suppose that we allocate 1024 bytes of
+the page to a “link table” of 204 uncompressed oops, and the other
+1024 bytes to 682 12-bit ultracompressed oops, organized into up to
+682 tuples of various sizes, plus a little metadata.  The 4096 slots
+in the 12-bit address space for these ultracompressed oops are divided
+among the 204 external pointers, the 682 or less internal objects,
+small integers, other popular objects like nil, and perhaps some
+objects cataloged on other “indirect pages”.  We can still make a list
+of 204 external things, occupying a counted packed tuple in 206 of
+these 1024 bytes, but we can also represent quite complex data
+structures within this space.  In a near-typical case where it’s
+entirely allocated to 3-item packed tuples mostly pointing within the
+page, the 409 uncompressed oops would have bought us 136 of them, but
+this compressed layout buys us 227 of them, a 67% increase in
+capacity, or from another point of view, a 40% decrease in the number
+of pages required.  This 40% reduction in bulk reduces the number of
+page faults to fault in a given set of objects by some amount less
+than 40%, but that depends on the locality with which the objects are
+allocated: in the extreme case of no locality of reference, you still
+have one page fault per object, but in the extreme case of purely
+sequential access, you’d have a 40% reduction in page faults.
+
+(Weirder representations are plausible too, like variable-size link
+tables and 10-bit ultracompressed oops; you could imagine, say, a page
+with 512 3-item packed tuples on it, packed 10 bits per
+ultracompressed oop, and a table of 25 uncompressed oops.)
+
+Remember that faulting in this 2048-byte NAND page costs us around
+10 μJ, which is worth around 7000 instructions at 1.5 nJ per
+instruction.  We also another 10 nJ or so to write it back if we dirty
+it.  So decreasing the number of pages needed by 40%, and the number
+of page *faults* by, say, 20%, is worth spending a fair number of
+instructions on decompression, though only 5 instructions or so per
+object.
+
+In the microcontroller’s SRAM, it isn’t useful to try to maintain this
+ultracompressed representation, because the expense of maintaining
+three copies of each oop (uncompressed, ultracompressed, and 16-bit
+compressed) is greater than the savings from the ultracompressed
+version; moreover, the uncompressed oops are likely to be duplicated
+between pages in the working set.
+
+By promiscuously duplicating immutable list structure onto such
+ultracompressed pages, we can both conserve their uncompressed-oop
+slots and improve locality of reference further; probably this is a
+very difficult problem to solve optimally, but admits robust
+heuristics that very frequently do much better than a totally naïve
+algorithm.  Greedy depth-first packing, for example.  This potentially
+also permits glomming objects together into a page in whatever order
+is convenient for paging things out, rather than along with whatever
+objects they previously shared a page with, thus perhaps improving the
+write-amplification problem common to all paging systems.
+
+One variant of such an ultracompressed page containing the
+`freq-update` definition used above as an example might look like this
+in hex, using 8-bit indices instead of 12-bit for ease of reading and
+understanding:
+
+    09 00               ; link table of 9 40-bit uncompressed oops
+    01 01 00            ; followed by one 1-tuple, starting at index 9
+    02 03 00            ; three 2-tuples, starting at index 0a
+    03 03 00            ; three 3-tuples, starting at index 0d
+    04 03 00            ; three 4-tuples, starting at index 10
+    00                  ; and nothing else
+    f0 ad 55 27 ff      ; uncompressed oop for symbol `define` (index 0)
+    20 ae 55 27 ff      ; uncompressed oop for symbol `freq-update`
+    50 ae 55 27 ff      ; vec
+    80 ae 55 27 ff      ; n
+    b0 ae 55 27 ff      ; vector-ref, index 4
+    e0 ae 55 27 ff      ; let
+    80 b0 55 27 ff      ; vector-grow-init
+    20 b1 55 27 ff      ; vector-set!
+    b0 b1 55 27 ff      ; 1+, index 8
+    0a                  ; 1-tuple at index 9 refers to first 2-tuple
+    02 10               ; 2-tuple at index 0a refers to symbol vec and first 4-tuple
+    08 0d               ; 1+ and first 3-tuple
+    08 03               ; 1+ n, index 0c
+    04 02 03            ; first 3-tuple: vector-ref vec n
+    00 0f 11            ; second 3-tuple: define <last 3-tuple> <second 4-tuple>
+    01 02 03            ; last 3-tuple: freq-update vec n
+    06 02 0c f0         ; first 4-tuple: vector-grow-init vec <third 2-tuple> 0, index 10
+    05 09 12 02         ; let <1-tuple> <last 4-tuple> vec
+    07 02 03 0b         ; vector-set! vec n <second 2-tuple>
+
+If I haven’t screwed this up, this is a 15-byte header, a 45-byte link
+table of uncompressed oops, and 28 bytes of list structure, which
+would be 42 bytes in the 12-bit representation suggested above.
+15+45+42 = 102 bytes, about 3.6 bytes per oop or per cons.  In SRAM
+the list structure might occupy 56 bytes of 16-bit compressed oops, if
+we’re content to forget about the origin of each packed tuple, but if
+not, we might need an additional 50-byte-or-more chunk of the in-SRAM
+uncompressed oop table to remember where each of these 10 vectors came
+from.
+
+This last consideration suggests that such compressed pages should
+list not only *outgoing* references in a link table, but also “labels”
+for *incoming* references.  The idea is that labeled objects in the
+compressed page would be assigned an uncompressed oop so they could be
+referenced from outside the page, while unlabeled objects (necessarily
+immutable) can only be copied, not referenced.  This might also allow
+us to use multi-gigabyte Flash effectively with uncompressed oops
+weighing only 32 bits rather than 40.
+
+Consider a 256-gibibyte SD card, containing 2³⁸ bytes, which is
+currently near the ceiling for what’s easily available as an SD card
+(though 512 gibibytes isn’t unheard of, even 256 gibibytes costs
+US$40, 32 gibibytes is more common at around US$5, and 16 gibibytes is
+now under US$3 at retail).  If our uncompressed oops were only 32
+bits, the average object size would have to be 64 bytes, which is too
+big for cons cells or 3-tuples.  If it’s divided into 2048-byte pages,
+it has 2²⁷ pages; 32-bit uncompressed oops would give us 32 labels per
+page.  (You might want some kind of extra layer of indirection
+somewhere so that the oop numbers don’t directly give you physical
+block numbers, though).  It’s easily plausible that you could get down
+to 32 externally-referenced atoms or chunks of list structure per
+2048-byte page.
+
 Bytecode
 --------
 
-Zork, old Macintosh versions of Excel, GNU Emacs, and Smalltalk
+Bobrow doesn’t mention bytecode at all.  Given the killer advantages
+of bytecode for what he’s doing, this surprised me, but apparently
+compiling to bytecode interpreters started with [Wirth and Weber’s
+EULER in 01965][4], where it was presented not as a hack to reduce
+memory usage but an alternative to the λ-calculus for formally
+defining programming-language semantics, so it wasn’t a well-known
+technique at the time (p. 56):
+
+> The definition of the *compiling* system consists of the parsing
+> algorithm, given in paragraph III.B.1., a set of syntactic rules,
+> and a set of corresponding interpretation rules by which an EULER >
+> text is transformed into a polish string.  The definition of the
+> *executing* system consists of a basic interpreting mechanism with a
+> rule to interpret each symbol in the polish string.
+
+[4]: http://i.stanford.edu/pub/cstr/reports/cs/tr/65/20/CS-TR-65-20.pdf "Euler: a Generalization of Algol, and Its Formal Definition, Niklaus Wirth and Helmut Weber, Stanford CS department Technical Report CS20, April 27, 01965"
+
+Where introduced, the “bytecode” in question didn’t have a defined
+representation as a sequence of bits or numbers, so it’s maybe okay to
+call it “p-code” but not than “bytecode”; however, the appendices of
+the TR do include a full program listing in Burroughs B5500 Extended
+Algol, evidently written by Wirth and Bill McKeeman† in 01964 and
+01965.  Stanford’s scan is badly corrupted, and I’m not sure my
+understanding is entirely correct, but it doesn’t seem to try to pack
+operands into bytecode bytes, or indeed even pack operators into
+single bytes.  (The family resemblance to the current Oberon compiler
+is remarkably close!)  I may be misunderstanding something but it
+looks like the “bytecode” was actually an array of records named
+`PROGRAM` with record fields named `AFIELD`, `BFIELD` and `CFIELD`.
+`BFIELD` was used for “immediate operands” for loading numbers and
+symbols onto the stack.  These seem to be defined as follows, making
+me think they may be bitfields in the B5500’s 48-bit words:
+
+    DEFINE AFIELD=[39:9]#,BFIELD=[9:30]#,CFIELD=[1:8]#;
+
+So, as implemented, it wasn’t so much a bytecode as a “wordcode”.
+
+However, Zork, old versions of Multiplan and Excel (especially on the Macintosh),
+GNU Emacs, and Smalltalk
 systems get a lot of mileage out of bytecode virtual machines, which
 allow them to squeeze a lot more code into very small computers than
 you would think possible.  This command from my .emacs is 16 lines of
@@ -1033,7 +1348,7 @@ Here’s a disassembly of the 44 bytes.  You can see that they use a
 stack bytecode with a single operand — usually packed into the same
 byte, much like Smalltalk bytecode, but in the case of `goto-if-nil`
 it seems to have a two-byte immediate operand following the bytecode.
-The operands packed into constant and varref bytecodes are indexes
+The operands packed into `constant` and `varref` bytecodes are indexes
 into pools of such things, again as in Smalltalk.  Specific opcodes
 are allocated to popular Emacs operations like `save-excursion`,
 `forward-char`, and `forward-word`.
@@ -1128,12 +1443,55 @@ vector here, because they allow the references to `vec` and `n` and
 they would require 8 bytes, as the elements of the argument list and
 constants vector do.  Only a little unfair, though.
 
+It is surely not at all coincidental that the ultracompressed-oop
+stuff in the previous section looks very much like this bytecode
+structure.  The argument list and constants vector are very similar to
+the “link table” for a page, but the link table is shared among the
+several hundred ultracompressed oops on that page, rather than just
+the several dozen bytecodes of an Emacs function.
+
+There exists previous work on this.
 PICBIT was a bytecoded Scheme for PIC microcontrollers, but its
 bytecode was an order of magnitude fatter than the 6 bytes per line of
 code I suggested above; it was a successor to the slimmer BIT, which
 fit the R4RS Scheme library into under 8000 bytes of bytecode.
 
-It’s probably worthwhile to burn large amounts of bytecode into the
+*Immutable* list structure can be productively represented by a sort
+of bytecode as well, but this probably isn’t worthwhile.  Given the
+same “link table” vector of 9 atoms as above in the section on
+“compressed oops in secondary storage”, in Elisp notation `[define
+freq-update vec n vector-ref let vector-grow-init vector-set! 1+]`, we
+could represent our example Scheme definition as the 39-byte string
+“(0(123)(5((2(62(83)@)))(723(8(423)))2))”.  Here “(” is the “nest”
+bytecode, “)” is the “nil” bytecode which terminates a list, the ASCII
+digits are indices into the link table, and “@” is the small-integer
+0; pointers into the list structure are represented by pointers before
+its bytes.  `null?` is straightforward (is a pointer pointing before a
+“)”?) and `car` either decodes the byte following the pointer or, in
+the case of “(“, returns an incremented pointer, which is the same
+distinction `atom?` must make.  Only `cdr` is tricky, since it must
+increment the pointer past either an atom or an arbitrary-length list.
+A table of minimal nesting depth per 8-byte chunk would probably make
+this adequately efficient by enabling `cdr` to rapidly skip over
+large, deeply-nested chunks:
+
+    (0(123)(  0
+    5((2(62(  2
+    83)@)))(  2
+    723(8(42  2
+    3)))2))   1
+
+You could assign better bytes, but this is probably not worthwhile.
+Not counting the link table, this bytecoded list structure uses 39
+bytes (as opposed to the 18 bytecode bytes for the compiled code), 44
+including the skip table, while in its packed-tuple form it occupies
+only 28 oops: 56 bytes in the 16-bit case, 42 bytes in the 12-bit
+case.  If we were to use 8-bit compressed oops (as the above bytecode
+implicitly does), limiting the bytecode to only 256 referents, they
+would be 28 bytes, which is less than 39.  Also, the packed tuples are
+more efficient to traverse and can support mutation.
+
+It probably *is* worthwhile to burn large amounts of bytecode into the
 microcontroller’s Flash and interpret it from Flash; that way you
 don’t have to spend precious RAM on code.  (128 KiB would hold about
 20,000 lines of high-level code by the above estimate — the whole VPRI
@@ -1144,3 +1502,175 @@ modern microcontrollers support pagewise reprogramming of their
 internal (NOR, painfully slow) Flash during operation, so this kind of
 thing should be acceptable even for exploratory interactive
 development.
+
+† McKeeman also evidently invented peephole optimization in 01965,
+differential testing in 01998, and was Hehner’s advisor’s advisor, but
+he wasn’t credited in the TR.
+
+JIT compilation
+---------------
+
+In a memory-constrained environment, it’s surely worthwhile to compile
+all code to bytecode like the above, rather than interpreting directly
+from dotted pairs as BBN LISP did (or from packed tuples).  Compiling
+into machine code is a more dubious proposition, since machine code
+tends to be much bulkier than bytecode, but the typical interpretive
+slowdown is a factor of 10–40, which in this case could translate to
+10–40 times shorter battery life for compute-bound tasks.
+
+Ur-Scheme uses a very simple and dumb compilation scheme (the same one
+as Bigforth, the one Crenshaw uses in “Let’s Make a Compiler”) for
+expressions, and open-codes the common cases of built-in operations,
+preceded by a dynamic type check (typically provided by “millicode”,
+though I didn't know the name at the time).  The consequence is that
+it compiles its own 1553 lines of Scheme into 90168 bytes of i386 code
+(plus 45K of data, mostly read-only), almost 60 bytes of machine code
+per source line, doing things like this:
+
+            call *%ebx
+            pop %eax
+            push %eax
+            movl $2 + 256<<2, %eax   # Ur-Scheme’s representation of nil
+            .section .rodata
+            # align pointers so they end in binary 00
+            .align 4
+    _parse_eofP_9:        # in-memory read-only representation of string
+            .long 0xbabb1e
+            .long 3
+            .ascii " ()"
+            .text
+            push %eax
+            movl $_parse_eofP_9, %eax
+            # get procedure
+            push %eax
+            movl (_parse_string_1), %eax
+            # apply procedure
+            call ensure_procedure
+            movl 4(%eax), %ebx
+            movl $1, %edx                               # argument count
+            call *%ebx
+            # get procedure
+            push %eax
+            movl (_emit_malloc_n_4), %eax
+
+This compiles to something like the following:
+
+     805d9f4:       ff d3                   call   *%ebx
+     805d9f6:       58                      pop    %eax
+     805d9f7:       50                      push   %eax
+     805d9f8:       b8 02 04 00 00          mov    $0x402,%eax
+     805d9fd:       50                      push   %eax
+     805d9fe:       b8 48 2f 06 08          mov    $0x8062f48,%eax
+     805da03:       50                      push   %eax
+     805da04:       a1 74 95 06 08          mov    0x8069574,%eax
+     805da09:       e8 58 a7 fe ff          call   8048166 <ensure_procedure>
+     805da0e:       8b 58 04                mov    0x4(%eax),%ebx
+     805da11:       ba 01 00 00 00          mov    $0x1,%edx
+     805da16:       ff d3                   call   *%ebx
+     805da18:       50                      push   %eax
+     805da19:       a1 24 94 06 08          mov    0x8069424,%eax
+
+These 40 bytes of machine code in 14 instructions (one invoking a
+millicode routine) are *part of* the compilation results from this
+line of code, which invokes no macros:
+
+    (assert-equal (parse-string " ()") '())
+
+It’s easy to do a little better than this with peephole optimization,
+but I think doing much better requires not just register allocation
+(at least in an extremely stupid form) but also some kind of static
+type system so we can avoid the endless type tests.  I mean you could
+imagine the above getting compiled to the following:
+
+        movl $_parse_eofP_9, %eax   # load string pointer
+        call _parse_string_2
+        xor %ecx, %ecx              # load nil
+
+And that would be 12 bytes instead of 40, and 3 instructions instead
+of 14 (plus the 5 instructions in `ensure_procedure`).  But for that
+you’d have to know statically that parse-string was a procedure (and
+not a closure or, say, an integer) and that it took one argument.  To
+avoid additional redundant checks inside of it, you’d also need to
+know that that argument was a string.
+
+By contrast, the source code would be four oops of list structure, and
+it compiles to 4 bytes of Elisp bytecode out of these 7:
+
+    byte code for test-assert-equal-parse-string:
+      args: nil
+    0       constant  assert-equal
+    1       constant  parse-string
+    2       constant  " ()"
+    3       call      1
+    4       constant  nil
+    5       call      2
+    6       return    
+
+As a very crude sort of estimate:
+
+<table>
+<tr><th>form                 <th>weight
+<tr><td>unoptimized i386 code<td>40 bytes
+<tr><td>source text          <td>25 bytes
+<tr><td>dotted pairs, 16 bit <td>16 bytes
+<tr><td>optimized i386 code  <td>12 bytes
+<tr><td>packed tuples, 16 bit<td>8 bytes
+<tr><td>packed tuples, 12 bit<td>6 bytes
+<tr><td>bytecode             <td>4 bytes (plus constant vectors, etc.)
+</table>
+
+I haven’t tried it on ARM or RISC-V but I think the results will
+probably be about the same as i386, maybe a bit smaller.  So we should
+expect easily generated machine code to be around 4 times the size of
+the list-structure source code, reasonable machine code to be about
+the same size as the source code, and bytecode to be smaller than that
+by a factor of 2–4.
+
+When compiled with itself, Ur-Scheme, despite the slowdown factor of
+4–8 evident in the above code, executes only 678,737,113 userland
+instructions to compile itself a second time (180 ms, only ⅔ in
+userland), about 437 instructions per line of source code.  The
+executable contains 29355 instructions, so generating each output
+instruction takes about 23 instructions.  Presumably it would be about
+30 kilobytes of code and 8000 instructions, and need to run about 128
+instructions per source line, if it were compiled with a decent
+compiler — but also generate a smaller amount of output code, so the
+23-instruction ratio stays the same.  *Being* such a decent compiler
+might slow it back down to 512 instructions per source line or, say,
+128 instructions per output instruction.  (Then again, it might speed
+it up.)
+
+This suggests that, when you can execute from RAM, the iteration count
+at which a JIT compilation pays off timewise is on the order of 4–32.
+If you have a straight-line chunk of bytecode that can be JIT-compiled
+to a sequence of 32 instructions, then doing that compilation (at 128
+compiler instructions per output instruction) might cost you 4096
+instructions.  Each time you interpret the bytecode at an
+interpretation slowdown of 16×, you spend 512 instructions on
+interpretation, so after 8 repetitions you’ve wasted the 4096
+instructions you could have used on compiling it.  If it’s possible to
+cut the compilation time down to 24 compiler instructions executed per
+compiled instruction output, then the breakeven point is 1½
+iterations!
+
+So, particularly if decent static type information is available, you’d
+get a pretty good reduction in battery usage by compiling most
+bytecode to machine code, even if you had to discard the compiled
+machine code after a small number of executions.  It might even be
+worthwhile to *always* JIT-compile the bytecode.  This approach, in
+turn, reduces the pressure on bytecode to be fast to unpack, so you
+can use bytecode representations that require more computation to
+understand, enabling you to fit more bytecode in RAM at once.  For
+example, you could use variable-length instruction and operand
+encodings.
+
+Compiled machine code that is executed many times is a good candidate
+for promotion to the microcontroller’s flash to free up RAM.  Since
+this is NOR, we can expect to pay on the order of 2000 nJ per byte to
+erase and program it, so “many times” means something on the order of
+4096 = 2¹² times — but perhaps it should also outweigh whatever
+compiled code must be evicted to make room for it, since we can only
+erase and reprogram Flash pages 100k ≈ 2¹⁷ times or so.  Otherwise we
+are going to wear out a Flash that can hold 2¹⁶ instructions after
+something like 2<sup>12+17+16</sup> = 2⁴⁵ instruction executions.
+That’s about an hour.

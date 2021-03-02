@@ -1,5 +1,7 @@
 I spent some time trying to figure out what it would take to be able
-to read, write, and 
+to read, write, and interactively compute, without a connection to a
+power grid, with maximal autonomy.  See also file `microlisp.md` for
+thoughts on how to design a software environment.
 
 Lead-acid batteries: 9–36 kJ/US$ at retail, mostly around 20 kJ/US$
 -------------------------------------------------------------------
