@@ -1101,7 +1101,8 @@ referents when we construct lists.
 Compressed oops
 ---------------
 
-So far everything described has use “words”, but I think the “Large
+So far everything described has been described in terms of
+“words”, but I think the “Large
 Object-Oriented Memory” approach may be suitable for this kind of
 microcontroller system.  [Load and store instructions to internal SRAM
 on ARM Cortex-M3 microcontrollers commonly take 2 clock cycles][2],
@@ -1241,7 +1242,9 @@ understanding:
 If I haven’t screwed this up, this is a 15-byte header, a 45-byte link
 table of uncompressed oops, and 28 bytes of list structure, which
 would be 42 bytes in the 12-bit representation suggested above.
-15+45+42 = 102 bytes, about 3.6 bytes per oop or per cons.  In SRAM
+15+45+42 = 102 bytes, about 3.6 bytes per oop or per cons,
+10 bytes per list, a number which should go down as the number of oops
+in a page rises from 28 up to 300–600.  In SRAM
 the list structure might occupy 56 bytes of 16-bit compressed oops, if
 we’re content to forget about the origin of each packed tuple, but if
 not, we might need an additional 50-byte-or-more chunk of the in-SRAM
