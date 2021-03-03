@@ -106,6 +106,26 @@ Argentina][17].
 [16]: https://articulo.mercadolibre.com.ar/MLA-741554734-bateria-lipo-zippy-compact-2200mah-3s-25c-111v-xt60-_JM
 [17]: https://oscarliang.com/lipo-battery-c-rating/
 
+Lithium thionyl chloride batteries might last decades
+-----------------------------------------------------
+
+[Lithium thionyl chloride batteries][79] are really good at low
+self-discharge (0.5%–1% per year, self-discharging about 20% in 9
+years — according to their plot, if you discharge their battery in
+1500 hours at 2 mA, you get 2.6 Ah, and if you discharge it at 25 μA,
+it takes 80000 hours, or 9 years, and yields 2.1 Ah, so about 20% of
+its capacity was lost to self-discharge) and high energy density
+(710 Wh/kg).  About 0.175% of them fail each year, according to
+[Tadiran’s brochure][80].  “High cost and safety concerns limit use in
+civilian applications. Can explode when shorted. Underwriters
+Laboratories require trained technician for replacement of these
+batteries,” says Wikipedia.
+
+[79]: https://www.jauch.com/blog/en/advantages-and-special-features-of-lithium-thionyl-chloride-batteries/
+[80]: https://tadiranbatteries.de/pdf/Technical-Brochure-LTC-Batteries.pdf
+
+Sadly, it seems that they are not available on MercadoLibre.
+
 Laptops need tens of watts and often run off old 18650s
 -------------------------------------------------------
 
