@@ -17,13 +17,15 @@ I looked at random bits of code in 12 languages.
 Central (Java) 234, PyPI 217, nuget (.NET) 181, Packagist (PHP) 102,
 crates.io (Rust) 58, and RubyGems 19.  Everything else is below 10 new
 modules per day.  I sampled the top three of these, plus another 9
-that aren’t hip, so hopefully I’m getting a pretty broad range of
-programming styles.  [TIOBE][1] gives C, Java, Python, C++, C# (.NET),
+that aren’t hip.  [TIOBE][1] gives C, Java, Python, C++, C# (.NET),
 Visual Basic (.NET), JS, PHP, SQL, and assembly as its top 10; I
 included five of these including the top four; [GitHub][2] ranks JS,
 Python, Java, TypeScript, C#, PHP, C++, C, shell, and Ruby, and I
-included six of these, including the top three.  PHP and C# are the
-big omissions.
+included six of these, including the top three.  (PHP and C# are the
+big omissions.)
+
+So, hopefully I’m getting a pretty broad range of programming styles,
+although all these languages except m4 are pretty similar.
 
 [0]: http://www.modulecounts.com/
 [1]: https://www.tiobe.com/tiobe-index/
@@ -503,12 +505,88 @@ variable is kind of nonessential.  However, since it’s almost purely a
 sequence, mutation is the only way for it to do anything useful.
 
 Tcl and shell are both very easy to get started with, like keyboard
-macros, but very bug-prone and kind of hard to understand.
+macros, but very bug-prone and kind of hard to understand.  Part of
+the problem is that much of their semantics is based on string
+interpolation.
 
 ### m4 ###
 
-Speaking of which, what does typical m4 look like?  Here’s part of the
-autoconfig script for an old version of libart:
+Speaking of which, what does typical m4 look like?  Dennis Ritchie’s
+m4 is a Turing-complete macro language, in which (unlike in bash and
+Tcl, like in Make) the results of macro substitution are subject to
+further macro substitution, which allows you to write a loop by
+writing a macro that conditionally expands to invoke itself.  For
+example, although it has a built-in `len` operation that gives the
+length of a string, we can also define a new one recursively in terms
+of its built-in `ifelse`, `incr`, and `substr` operations:
+
+    define(`length',`ifelse(,$1,0,`incr(length(substr($1,1)))')')
+
+I adapted this from this example found on [the Softpanorama page about
+m4][7]:
+
+    define(len,`ifelse($1,,0,`eval(1+len(substr($1,2)))')')
+
+[7]: http://www.softpanorama.org/Tools/m4.shtml
+
+This definition, however, has a bug in it: the `2` should be `1`, a
+bug introduced in an earlier version of this example in Kernighan and
+Plauger’s _Software Tools_ in 01976 (p. 280).  It took me quite a
+while to debug it because the definition line doesn’t quote `len`, so
+my attempts to redefine it were (apparently) silently ignored; I was
+instead defining a macro named `0`:
+
+    $ m4
+    define(len,`ifelse($1,,0,`eval(1+len(substr($1,2)))')')len(wotcha)
+    3
+    len(half)
+    2
+    define(len,`ifelse($1,,0,`eval(1+len(substr($1,1)))')')len(wotcha)
+    3
+    len(huh)
+    2
+    len(why does nothing make sense)
+    13
+    define(`len',`ifelse($1,,0,`eval(1+len(substr($1,1)))')')len(wotcha)
+    6
+
+The built-in `len` macro, by contrast, doesn’t get substituted unless
+you offer it arguments (though this behavior is a GNU extension),
+which permitted the first definition to succeed.
+
+This accidentally-defined macro `0` can't be invoked by normal means
+because its name isn’t “a word”, but it does exist:
+
+    0(wibbling)
+    0(wibbling)
+    indir(0,wibbling)
+    5
+
+The output can build up macro names through concatenation, either
+intentionally or unintentionally, which means that both the input† and
+the output of the macro are subject to macro expansion.  I think that
+is actually sufficient to construct conditionals without the `ifelse`
+builtin, but I haven’t figured out how.
+
+    define(foo,l$1)foo(en)(something)
+    9
+    foo(e)n(something)
+    9
+
+In _Software Tools_ (p. 281) Kernighan and Plauger warn:
+
+> As you can see this is not the most transparent programming language
+> in the world.  ...you get the hang of it.  But beware of becoming
+> too clever with macros.  In principle, `macro` [the early version of
+> m4 presented in the book] is capable of performing any computing
+> task, but it is all too easy to write unreadable macros that cause
+> more trouble than they save work.
+
+Hopefully this gives some flavor of both m4’s capabilities and its
+nightmarish bug-proneness.
+
+Most current use of m4 is by way of autoconf.  Here’s part of the
+autoconf script for an old version of libart:
 
     dnl AM_PATH_LIBART([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
     dnl Test for LIBART, and define LIBART_CFLAGS and LIBART_LIBS
@@ -532,8 +610,53 @@ programming language.  Unfortunately I don’t know enough about
 autoconf to know what those ugly names mean and how they work
 together.
 
-I probably *should* have included PHP but I don’t have anything that I
+Here’s an excerpt from [what claims to be a typical 02005 use of m4
+for configuring Sendmail][6], which is a lot closer to vanilla m4.
+You’ll note that it has a lot of `dnl` invocations; these are to
+prevent spurious newlines from being emitted, but they are completely
+unnecessary in this case because of the leading `divert(-1)`; it’s
+just cargo-cult code:
+
+    divert(-1)
+    include(`/usr/share/sendmail-cf/m4/cf.m4')
+    VERSIONID(`linux setup for my Linux dist')dnl
+    OSTYPE(`linux')
+    define(`confDEF_USER_ID',``8:12'')dnl
+    undefine(`UUCP_RELAY')dnl
+    undefine(`BITNET_RELAY')dnl
+    define(`PROCMAIL_MAILER_PATH',`/usr/bin/procmail')dnl
+    define(`ALIAS_FILE', `/etc/aliases')dnl
+    define(`UUCP_MAILER_MAX', `2000000')dnl
+
+[6]: https://www.ibm.com/developerworks/library/l-metaprog1/index.html
+
+D. Robert Adams gives [this motivating example][8] in his introduction
+to m4, sometime prior to 02006:
+
+    define(`PAGE_HEADER',
+    `<table border="0" background="steel.jpg" width="100%">
+      <tr>
+        <td align="left">$1</td> 
+        <td align="right">$2</td>
+      </tr>                                
+    </table>
+    <div align=right>
+      Last Modified: esyscmd(`date')
+    </div>
+    ')
+
+[8]: https://web.archive.org/web/20060907073945/www.csis.gvsu.edu/~adams/Blosxom/Scholarship/Papers/m4.asc
+
+I probably *should* have included PHP, another templating language with
+dangerous delusions of grandeur, but I don’t have anything that I
 think is “typical PHP” code handy.
+
+† Macro argument are macro-expanded by default, but you can quote
+them.  Kernighan and Plauger make this change in the middle of their
+chapter in _Software Tools_ about m4, saying, “for common uses like
+replacing symbolic parameters, the two methods produce the same
+result,” and it contributes considerably to m4’s already impressive
+bug-proneness.
 
 ### Forth ###
 

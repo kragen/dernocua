@@ -326,8 +326,8 @@ semantics.  For example:
 
 * $a one or more upper and lowercase letters
 * $A one or more uppercase letters
-* $w one or more digits, upper and lowercase letters, and underscores,
-  starting with a non-digit
+* $w one or more digits, upper and lowercase ASCII letters, and
+  underscores, starting with a non-digit
 * $s zero or more spaces, tabs, carriage returns, or newlines (but not
   vertical tabs!)
 * $S zero or more Unicode whitespace characters, including $s
@@ -345,7 +345,7 @@ semantics.  For example:
 * $q SQL-style apostrophe-quoted string with doubling of embedded apostrophes
 * $# comment to end of line introduced with #
 * $^ ASCII control characters in general, including carriage returns,
-  newlines, tab, and delete, but not including the ISO-8859-1 control
+  linefees, tab, and delete, but not including the ISO-8859-1 control
   characters after delete, the other Unicode control characters like
   ZWNJ, or space (ASCII 32)
 
@@ -369,6 +369,11 @@ number of times, which may or may not be a problem depending on your
 matching technology.  If so, parens help:
 
     ,(<_ $s, $#> $w "=" <e "(" <e> ")", $n, $w; "*", "/"; "+", "-"> ";";)
+
+Because `;x` matches zero or more `x`es, we can rewrite this without
+any parens at all:
+
+    ; <_ $s, $#> $w "=" <e "(" <e> ")", $n, $w; "*", "/"; "+", "-"> ";"
 
 If we define a lowest-precedence `@@` operator which discards its
 right argument, we could write this perhaps more readably as
@@ -401,10 +406,10 @@ for JSON.
     <v '[' <_ $s> (,(<v>; ',')) ']'
      , 'true', 'false', 'null'
      , <s '"' 
-        (
+        (;
             !'"' !'\\' !$^ $u,
             '\\' ('"', '\\', '/', 'b', 'f', 'n', 'r', 't', 'u' $x $x $x $x)
-         ;) '"'>
+        ) '"'>
      , '{' (,(<s> ':' <v>; ',')) '}'
      , $f
      >
