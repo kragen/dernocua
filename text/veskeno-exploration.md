@@ -1127,6 +1127,9 @@ instructions:
     ;      DAC:       02               BYTE #X02                  ; OBJECT-NOT-LIST-ERROR
     ;      DAD:       55               BYTE #X55                  ; RCX
 
+(See file `open-coded-primitives.md` for a more complete dissection of
+some SBCL output.)
+
 I’m not quite sure where to start with this.  This looks like a type
 test, with the type tag 7 in the low four bits of a pointer, and the
 place it’s jumping to claims to signal an “OBJECT-NOT-LIST-ERROR”:

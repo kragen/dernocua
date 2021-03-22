@@ -1,0 +1,290 @@
+From Project Gutenberg’s edition of “War and Peace”, we get
+etaonihsrdlucmwfgypbvkxqzj, which is pretty close to the
+etaonrishdlfcmug...qz I remember from Zim’s “Codes and Secret Writing”
+and the etaoinshrdlu of the Linotype.  Interestingly, capital letters
+are ITAPHNBMRSWECDFOGYKVLXJUZQ, a quite different distribution.
+
+    perl -lne '$f{$&}++ while /./g; END {for (sort {$f{$b} <=> $f{$a}} keys %f) { print "$_ $f{$_}" }}' war-and-peace-2600.txt
+      514911
+    e 312990
+    t 219591
+    a 199239
+    o 191245
+    n 180561
+    i 166351
+    h 163027
+    s 159906
+    r 145373
+    d 116274
+    l 95814
+    u 65180
+    c 59520
+    m 58395
+    w 56319
+    f 52950
+    g 50024
+    y 45000
+    , 39891
+    p 39014
+    b 31052 
+    . 30805
+    v 25970
+    k 19230
+    " 17970
+    I 7933
+    ' 7529
+    T 6817
+    A 6575
+    P 6519
+    - 6308
+    H 4378
+    ! 3923
+    x 3711
+    N 3614
+    B 3606
+    M 3251
+    ? 3137
+    R 3057
+    S 2987
+    W 2888
+    q 2295
+    z 2280
+    j 2266
+    E 2259
+    C 2107
+    D 2017
+    F 1946
+    O 1635
+    G 1303
+    Y 1265
+    K 1201
+    ; 1145
+    V 1116
+    : 1015
+    L 713
+    X 673
+    ) 670
+    ( 670
+    1 392
+    J 308
+    * 300
+    U 254
+    8 193
+    0 179
+    2 147
+    Z 108
+    3 61
+    6 57
+    5 55
+    7 40
+    Q 35
+    9 35
+    / 29
+    4 23
+    $ 2
+    = 2
+    @ 2
+    [ 1
+    % 1
+    # 1
+    ] 1
+
+The first version of this Perl used `for` instead of `while` and
+consequently got the wrong answer.
+
+It occurs to me that you could represent a pretty reasonable language
+model by dividing a suffix array of War and Peace into some 1024 to
+16384 equal bins and listing the boundary elements of the bins.
+
+If you break the letters down by binary order of magnitude in
+frequency, you get etaonihs rdl ucmwfgy pbv k ' x qzj.  Lower-case
+letters in etaonihs are about 3–4 bits of entropy; letters in rdl are
+about 4–5; ucmwfgy, 5–6; pbv, 6–7; k, 7–8; x, 9–10; qzj, 10–11.  For
+capital letters, it’s ITAPH NBMRSWECD FOGYKV LX JU 0 Z Q, I presumably
+being frequent because of its use in Roman numerals.  The intersection
+of the least common 13 in both groups is fgyvkxqzj.
+
+Generating novel strings for identifiers
+----------------------------------------
+
+This suggests that if you want to generate a sequence of letters that
+rarely occurs in English, letters like X and K buy you almost twice as
+much entropy as letters like C and D.  However, it isn’t enough to
+just say “qqqq”, because although that’s very unlikely to occur in
+English, it’s fairly likely under other language models.  And, for
+example, in base64-encoded gzipped data, “xzqj” occurs in one out of
+every 2²⁴ positions, just like every other four-byte string consisting
+of valid base64 characters, rather than once every 2⁴⁰ positions as
+the above naïve character frequency model would predict, or the even
+lower frequency a more accurate English model would predict.
+
+Including digits and punctuation is a time-honored way of increasing
+apparent randomness, especially higher digits — though “8” and “0” in
+this corpus occur more often, because it has a lot of dates in the
+early 1800s, both “7” and “9” occur nearly an order of magnitude less
+commonly than “1”, which is itself six times less common than any
+lowercase letter.  Digits, though, also occur in base64 with frequency
+equal to that of letters.  Including a punctuation character (other
+than `+` and `/`, the final two base64 digits, or `,` as in RFC3501,
+or `-` and `_` as in RFC4648 §5) can avoid collisions in these cases,
+even if search engines aren’t good at picking them up.  The least
+objectionable candidates would seem to be `.`, `:` and `!`, though all
+of these are used by uuencode.
+
+If there were 10 billion monkeys in the world constantly banging away
+on typewriters at 10 keystrokes per second each, evenly distributed
+over a 32-letter alphabet including our chosen glyphs, how long would
+it take them on average to produce a chosen string of any given
+length?  That’s 10 picoseconds per character:
+
+<table>
+<tr><th>length<th>probability<th>occurs every <th>example             <th>existing meaning
+<tr><th>1     <td>2⁻⁵        <td>320 ps       <td>y                   <td>years, a combinator, etc.
+<tr><th>2     <td>2⁻¹⁰       <td>10240 ps     <td>yg                  <td>rapper, Korean record label, etc.
+<tr><th>3     <td>2⁻¹⁵       <td>0.0003 ms    <td>ygf                 <td>graph format, record label, Yamaha guitar, etc.
+<tr><th>4     <td>2⁻²⁰       <td>0.01 ms      <td>ygf6                <td><a href="https://www.roxy.com/tropical-vibe-printed-beach-bag-ERJBT03097.html">“yellow swim stormy flower”</a> beach bag
+<tr><th>5     <td>2⁻²⁵       <td>0.34 ms      <td>ygf6v               <td>occurs in uuencoded EDGAR filings and leaked email
+<tr><th>6     <td>2⁻³⁰       <td>10.7 ms      <td>ygf6vq              <td>occurs in one EDGAR filing in 02018 and some URLs
+<tr><th>7     <td>2⁻³⁵       <td>340 ms       <td>ygf6vq6             <td>an autogenerated email address
+<tr><th>8     <td>2⁻⁴⁰       <td>11.0 s       <td>ygf6vq62            <td>a spammer domain
+<tr><th>9     <td>2⁻⁴⁵       <td>6 minutes    <td>ygf6vq624           <td>no results
+<tr><th>10    <td>2⁻⁵⁰       <td>3.1 hours    <td>ygf6vq6244
+<tr><th>12    <td>2⁻⁶⁰       <td>130 days     <td>ygf6vq624483
+<tr><th>14    <td>2⁻⁷⁰       <td>370 years    <td>ygf6vq624483.v
+<tr><th>15    <td>2⁻⁷⁵       <td>12000 years  <td>ygf6vq624483.v2
+</table>
+
+In practice, we seem to escape from the existing human universe in
+this case around three or four characters, so we ought to be able to
+generate unique identifiers pretty reliably with four letters chosen
+from, say, “dfogykvlxjuzq”, a digit that isn’t 1, and a punctuation
+character chosen from “.:!”.  We have to be careful not to generate
+too many digits, because although digits occur at less than one in
+8192 in my sample text above, they occur at 1 in 10 in other contexts,
+and so any five-digit number will occur in many places.  In Python:
+
+    [m[:q] + random.choice('234567890') + m[q:]
+     for _ in range(8)
+     for m in [l[:p] + random.choice('.:!') + l[p:]
+               for l in [''.join(random.choice('dfogykvlxjuzq')
+                         for _ in range(5))]
+               for p in [random.randrange(1, len(l))]]
+     for q in [random.randrange(1, len(m))]]
+
+This generates for example ['uly2q:k', 'k:9jzok', 'j!xjx9y',
+'z9l!qjy', 'uoj5:dq', 'kd0:quy', 'xg!k6ou', 'gf!x2xj'].  These do
+indeed seem to be unique, but search engines like Google and
+Startpage.com find false hits for them because they treat the
+punctuation as a word separator and find documents that spuriously
+contain each of the two “words”.  So a better approach for search
+engines is to put the punctuation always at the beginning:
+
+    [m[:q] + random.choice('234567890') + m[q:]
+     for _ in range(8)
+     for m in [random.choice('.:!') + l
+               for l in [''.join(random.choice('dfogykvlxjuzq')
+                         for _ in range(5))]]
+     for q in [random.randrange(1, len(m))]]
+
+This yields [':dxg0uj', '.2glqud', '!2qkvdf', '.k0yokg', '!xv8gdl',
+'.g3llgl', '.yd4uxu', ':vg2zqy'].  Some of these yield no
+search-engine results, while others yield a small number of obviously
+spurious results; none of them can occur in base64 with the
+punctuation, and none of the search results have the punctuation
+either.  The code as written can only produce 3×5×9×13⁵ = 50 124 555
+different identifiers, so it’s not particularly random!  You sure
+wouldn’t want to use this to choose passwords.  And if you use it to
+choose six or seven thousand identifiers, it’ll probably produce a
+collision, thanks to the birthday paradox.
+
+But evidently even four such letters and a digit are enough to escape
+from the universe of already-chosen global names:
+
+    [m[:q] + random.choice('234567890') + m[q:]
+     for _ in range(4)
+     for m in [random.choice('.:!') + l
+               for l in [''.join(random.choice('dfogykvlxjuzq')
+                         for _ in range(4))]]
+     for q in [random.randrange(1, len(m)+1)]]
+
+This yields ['.k5zyy', '!f2zxx', '.fyf9d', ':guu6x'] none of which
+seem to have an existing meaning.
+
+If you want *pronounceable* random strings, the easiest approach is
+probably CV syllables, and you probably need a third vowel, such as
+`u`, and you probably want to eliminate `k` and `g` as possibly
+sounding the same as `q` and `j`:
+
+    [''.join(c+v for _ in range(n)
+             for c in [random.choice('dfyvlxjzq')]
+             for v in [random.choice('uoi')])
+     for n in range(5)]
+
+This has only 30 possible syllables, but yields ‘zi’ (master
+philosopher, ZoomInfo, zero infrastructure, a dozen different
+Wikipedia articles, etc.), ‘jiji’ (a Spanish laugh, a Nigerian
+classifieds site, a Taiwanese hostel system), 'vuqojo' (no
+occurrences, though there's a guy in Uganda named Pius Vukojo),
+'qivufozo' (no occurrences found), and 'qiyilifizi' (no occurrences
+found).  This suggests that three or four syllables of this form is
+enough to generate a unique name on most runs of this approach.
+
+A slight improvement here might be to expand the consonants slightly
+and use `g` rather than `j`:
+
+    [''.join(c+v for _ in range(n)
+             for c in [random.choice('wdfgypvlxzq')]
+                       for v in [random.choice('uoi')])
+     for n in range(5)]
+
+This yields ‘yu’ (arrows, English second-person singular pronoun, and
+dozens of other meanings), ‘qufo’ (an Italian food retailer; also,
+there’s an Albanian TV channel named Çufo), ‘yiyogu’ (the nickname of
+a person on Facebook, Yiyo Gu), ‘qupizuqi’ (apparently unique), and
+‘qilixopoqi’ (apparently unique).  This approach easily generates many
+somewhat-pronounceable apparently-unique names like `quzodupogu`,
+`zofopu`, `voxopidi`, `poyodipi`, `gopiwixu`, and `xiwoyifo`.  Many of
+the three-syllable names it generates are taken, but few of the
+four-syllable names.
+
+If we add an easy nasal syllable coda in some cases, we might get more
+unique names at three syllables:
+
+    [''.join(c+v+(random.choice('nm') if not random.randrange(3) else '')
+             for _ in range(3)
+             for c in [random.choice('wdfgypvlxzq')]
+               for v in [random.choice('uoi')])
+     for _ in range(5)]
+
+This yields ‘qozuqu’ (apparently a Tajik and Georgian word), ‘xinfowo’
+(unique), ‘donxowom’ (unique), ‘lolomyom’ (unique, though there’s a
+tumor called a “lolomyoma”, which I imagine is less amusing than it
+sounds), and ‘dolonwu’ (unique).  (Some of these do appear in lists of
+randomly or exhaustively generated words similar to the above.)
+
+Adding V syllables (with no onset) gives us:
+
+    [''.join(c+v+(random.choice('nm') if not random.randrange(3) else '')
+             for _ in range(3)
+             for c in [random.choice([''] + list('wdfgypvlxzq'))]
+               for v in [random.choice('uoi')])
+     for _ in range(5)]
+
+This produces ‘impufu’ (a hill in South Africa and also a YouTuber),
+‘xonvulu’ (unique), ‘quqifin’ (a village in Syria), ‘zoliom’ (“zona
+libre ordenanzas municipales”), and ‘zinvixi’ (unique).  So this
+change seems to be counterproductive, perhaps unsurprising as it not
+only shortens the words but also increases the relative frequency of
+vowels in them, which are generally higher-frequency letters.
+
+If we use a somewhat more difficult set of codas, we get
+
+    [''.join(random.choice('wdfgypvlxzq')
+            +random.choice('uoi')
+            +(random.choice('mfz') if not random.randrange(3) else '')
+             for _ in range(3))
+     for _ in range(5)]
+
+This gives us ‘xiqilo’ (a brand of blinking sneakers), ‘lofwili’
+(unique), ‘yimlugu’ (unique), ‘figimzu’ (unique), and ‘gizxiwu’
+(unique but unpronounceable).

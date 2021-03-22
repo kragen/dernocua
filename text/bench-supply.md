@@ -59,8 +59,13 @@ The actual flyback converter itself is four components: an npn
 darlington grounding one end of the primary of a transformer, a
 schottky, and a capacitor.  Well, and a base resistor for the
 darlington if the input signal is voltage-mode PWM instead of
-current-mode PWM, so that’s five components.  Here’s the values I chose
-in the above simulation:
+current-mode PWM, so that’s five components.  (Horowitz & Hill suggest
+a zener snubber across the primary to limit the voltage spike from the
+primary leakage inductance: a rectifier and a TVS zener, in opposite
+directions, so it’s more like seven.  But I didn’t simulate that.  In
+their example the leakage inductance is about 5% of the total.)
+
+Here’s the values I chose in the above simulation:
 
 - a 5-volt supply;
 - 40 kHz;
@@ -177,4 +182,82 @@ can generate an AC voltage on the output instead, with an arbitrary
 waveform limited only by the PWM frequency.  (You could just use a
 DC-blocking capacitor on the output, but then you could *only* use it
 as an AC supply, instead of changing mode under software control.)
+
+Here’s [a revised version][0] with 12V, 100kHz, leakage inductance
+simulation and protection, a higher-breakdown Schottky, and a MOSFET
+switch driven through an npn level-shifter:
+
+![(more elaborate schematic)](flyback2.png)
+
+    $ 1 3.0000000000000004e-9 2.008553692318767 46 5 43 5e-11
+    R -96 112 -96 80 0 0 40 5 0 0 0.5
+    a 0 192 80 192 9 5 0 1000000 2.986054403507636 4.678 100000
+    174 -96 112 -96 224 1 10000 0.06440000000000001 Voltage knob
+    w -80 176 0 176 0
+    368 80 192 80 112 0 0
+    R 320 -48 320 -112 0 0 40 12 0 0 0.5
+    T 352 96 416 -48 0 0.000004 1 -2.3850875119357795e-7 6.800005003526621e-10 0.999
+    34 power\sschottky 0 6.8e-10 12 1.003 150 0
+    d 464 -48 416 -48 2 power\sschottky
+    c 464 -48 464 96 0 0.0000022 -15.440326076997223 0.001
+    w 464 96 416 96 0
+    w 464 -48 528 -48 0
+    w 464 96 528 96 0
+    r 528 -48 528 96 0 100
+    w 528 -48 592 -48 0
+    w 528 96 592 96 0
+    p 592 96 592 -48 1 0 0
+    w 352 176 352 160 0
+    w 320 160 352 160 0
+    g 352 208 352 256 0 0
+    x -61 300 37 303 4 12 PWM\sgeneration
+    x 250 300 358 303 4 12 Flyback\sconverter
+    l 352 160 352 96 0 2.0000000000000002e-7 -2.38508751092964e-7 0
+    d 320 160 320 96 2 power\sschottky
+    34 fwdrop\q0.806 1 1.7143528192810002e-7 0 2.0000000000000084 50 1
+    z 320 16 320 96 2 fwdrop\q0.806
+    w 320 16 320 -48 0
+    w 80 192 128 192 0
+    x 408 134 576 137 4 12 primary\sleakage\sinductance
+    368 432 176 480 176 0 0
+    w 352 176 432 176 0
+    w 352 -48 320 -48 0
+    t 176 192 208 192 0 1 0.6242259399470127 0.7204676364540711 100 default
+    r 128 192 176 192 0 1000
+    w 208 96 256 96 0
+    w 256 96 256 192 0
+    f 256 192 352 192 32 3 0.4
+    r 208 16 208 96 0 100
+    c 256 192 256 240 0 3.7e-10 0.09624169650705836 0.001
+    g 256 240 256 256 0 0
+    x 269 236 296 239 4 12 gate
+    x 269 251 342 254 4 12 capacitance
+    x 367 209 410 212 4 12 IRF630
+    g 208 208 208 256 0 0
+    x 126 232 192 235 4 12 gate\sdriver
+    w 208 16 320 16 0
+    w 208 96 208 176 0
+    g -96 240 -96 256 0 0
+    w 0 208 0 224 0
+    R 0 224 -32 224 0 3 100000 2.5 2.5 0 0.5
+    b -144 48 106 280 0
+    b 112 -80 514 280 0
+    o 4 128 0 4099 20 12.8 0 2 4 3
+    o 15 128 0 4354 40 0.1 0 1
+    o 27 32 0 4099 320 204.8 1 2 27 3
+    o 34 32 7 xa1013 80 0.4 1 2 640 20 0 23 7 640 20 0
+
+[0]: https://tinyurl.com/yfgumxxy
+
+Pulling up the IRF630’s gate with a resistor makes it turn on somewhat
+slowly, but this is not really important, because its drain current
+ramps up slowly from zero anyway.  You could probably use a slower
+resistor and save some power.  The strong npn pulldown slams it off
+quickly, and that *may* be important, because when it turns off, it
+may be carrying 15 amps!  However, the IRF630 doesn’t have excellent
+on-resistance — even when fully turned on, at 15 amps, the ST
+datasheet says its Vds is about 7 volts, about half an ohm.  Beefier
+parts like the IRF540 would make that part of the circuit cooler, more
+efficient, and perhaps more reliable; so too would a GaN part like the
+EPC2036.
 
