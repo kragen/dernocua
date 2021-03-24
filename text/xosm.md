@@ -40,6 +40,9 @@ operationalizations:
 XXX maybe switch to 16-bit instruction words?  Then there would be
 fewer variable-length instructions and no pressure for 3-bit or 4-bit
 embedded operands, and 32-bit immediates would be half as unaligned.
+And there would be more space in the opcode byte to simplify
+instruction decoding logic.  The only disadvantage is that code
+density drops, maybe by 30%, which seems entirely reasonable.
 
 Operand registers
 -----------------

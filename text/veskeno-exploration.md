@@ -116,7 +116,7 @@ Here’s some slightly less normal code, from gpsd/json.c:
 	    if (isspace(*cp))
 		continue;
 
-I would have included the whole function, but it's 454 lines long.
+I would have included the whole function, but it’s 454 lines long.
 This includes three calls to a C macro, which invokes a variadic
 function called `json_trace`; a couple of character constants; a loop;
 a couple of integer constants; three string constants; an assignment;
