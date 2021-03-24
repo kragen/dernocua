@@ -1,7 +1,7 @@
 .xosm: experimental obvious stack machine
 =========================================
 
-This is an unfinished strawman outline of a simple computer — more
+This is an unfinished twigman outline of a simple computer — more
 complex than its inspiration Calculus Vaporis, but perhaps more
 practical.
 
@@ -11,8 +11,8 @@ practical.
 > bigger cups.
 
 The .xosm is a virtual machine design with byte-addressable RAM, eight
-32-bit architectural registers (X Y Z T PC CP S D), and a bytecoded
-instruction set. It is intended to be nearly as minimal as possible,
+32-bit architectural registers (X Y Z T PC CP S D), and 16-bit
+instruction words.  It is intended to be nearly as minimal as possible,
 but leave enough space at the top of the cup to avoid being penny-wise
 and pound-foolish, to mix a metaphor.  Here are some of the pitfalls
 I’m hoping to steer this ship between, to add two more incompatible
@@ -37,12 +37,21 @@ operationalizations:
   four times worse than handwritten bytecode.
 - It should not be too hard to debug programs for.
 
-XXX maybe switch to 16-bit instruction words?  Then there would be
-fewer variable-length instructions and no pressure for 3-bit or 4-bit
-embedded operands, and 32-bit immediates would be half as unaligned.
-And there would be more space in the opcode byte to simplify
-instruction decoding logic.  The only disadvantage is that code
-density drops, maybe by 30%, which seems entirely reasonable.
+16-bit instruction words are a compromise.  They occupy about 50% more
+space than 8-bit instructions (like Elisp or the 6502), but less than
+32-bit instructions (like MIPS, SPARC, Lua, ARM, or RISC-V without the
+C extension).  The instruction word consists of an opcode byte and an
+operand byte, but most opcodes do not use operands.
+
+Compared to 8-bit encoding, 16-bit encoding reduces the number of
+cases where an instruction is followed by an immediate operand, and it
+allows the use of 16-bit-wide memory without alignment efficiency
+concerns; 32-bit immediates can be fetched in two memory operations
+rather than the 4 that would be needed with 8-bit alignment.  The
+opcode byte can use a simpler encoding that simplifies instruction
+decode.
+
+Compared to 32-bit encoding, 16-bit encoding uses a lot less space.
 
 Operand registers
 -----------------
@@ -51,12 +60,12 @@ The .xosm has a four-register operand stack, whose registers are called X,
 Y, Z, and T (for time — introduced in the HP-35).  X can be usefully
 thought of as the CPU’s accumulator.  Most instructions take implicit
 arguments on this stack and return results there; for example, the `x +=
-y` instruction (0x2b) adds Y to X, and the `x -= y` instruction (0x2d)
+y` instruction (0x2b) adds Y to X, and the `x -= y` instruction
 subtracts Y from X.  Each of these instructions also pops the stack.
 Popping the stack consists of overwriting Y with Z and Z with T.  Oddly,
 T, rather than retaining its value as you would expect, gets the old
 value of X, as explained below in the section about reversibility.
-There is a `;` instruction (0x3b) that just pops the stack without doing
+There is a `;` instruction that just pops the stack without doing
 anything else.
 
 Some instructions push the stack instead before whatever other actions
@@ -64,13 +73,15 @@ they take.  Pushing the stack consists of overwriting T with Z (losing
 the previous value of T), Z with Y, and Y with X.  For example, the `x
 = *s` instruction (see below) pushes the stack before overwriting X
 with a value loaded from memory at the address in index register S.
-The `y = x` or `dup` instruction (0x7c) *only* pushes the stack
+The `y = x` or `dup` instruction *only* pushes the stack
 without doing anything else.  Immediate-load instructions like `x = 1`
-(0x31, one of the lit3 group) push the stack before setting X to a
-constant.
+push the stack before setting X to a
+constant.  There are two immediate-load opcodes, one which sets X
+to the operand byte, and one which is followed by a 32-bit immediate
+argument to set X to.
 
-Single-operand ALU instructions like `x = ~x` (0x21), `x++` (0x2e),
-and `x /= 2` (0x5d) neither push the stack nor pop it; they merely
+Single-operand ALU instructions like `x = ~x`, `x++`,
+and `x /= 2` neither push the stack nor pop it; they merely
 overwrite the X register with their result.
 
 The four-level operand stack permits the evaluation of even relatively
@@ -96,22 +107,26 @@ Here’s a tentative full list of ALU/operand-stack instructions:
        x <<= 3
        x /= 2  # x >>= 1
        x /= 8  # x >>= 3
+       x = k8  # 8-bit immediate
+       x = k32 # 32-bit immediate
 
-These are 15 ALU instructions, which seems like a reasonable set
+These are 17 ALU instructions, which seems like a reasonable set
 compared to 16 in Wirth-the-RISC, 6 in Chifir, 21 in LuaJIT, 4 in
 SWEET-16 if we categorize the comparisons as control-flow
 instructions, and 7 in the MuP21 or F21.
 
-Index registers
----------------
+XXX maybe provide rotates instead of shifts?
 
-XXX “pointer registers”?  Also from looking at the RTL this is still a
+Pointer registers
+-----------------
+
+XXX from looking at the RTL this is still a
 little muxier on the hardware side than having a single architectural
 A register like the MuP21, and of course involves more instructions,
 although maybe it’s better for software.  Maybe you could have a
 “wielded pointer register” and an “alternate pointer register”.
 
-The .xosm has two 32-bit index or base-pointer registers, S and D.  S
+The .xosm has two 32-bit pointer or index registers, S and D.  S
 is used for reading from memory (loads), while D is used for writing
 to memory (stores).  Normal load instructions push the stack and store
 the result in operand register X, though there are two “leap”
@@ -119,12 +134,12 @@ instructions that store it instead in S or D; all the store
 instructions write the contents of register X to memory before popping
 the operand stack.  Commonplace address arithmetic can be done within
 the S and D registers rather than requiring the use of the operand
-stack; there are instructions for bumping them by small (3-bit)
+stack; there are instructions for bumping them by small (8-bit)
 immediate constants (“creep”), adding them to large (32-bit) immediate
 constants, adding the program counter to them, shifting them left by 2
 bits, and “leap”ping with the `d = *s` and `s = *s` instructions.
 
-There are two instructions `x <=> d` (0x64) and `x <=> s` (0x73) to
+There are two instructions `x <=> d` and `x <=> s` to
 transfer the index registers to and from the operand stack.  These
 instructions exchange X with, respectively, D and S, without pushing
 or popping the operand stack.
@@ -141,8 +156,10 @@ Tentatively here’s the index-register instruction set:
     x = *(char*)s
     d = *s  # leap d
     s = *s  # leap s
-    s += k  # immediate constant; small and large formats
-    d += k
+    s += k8  # immediate constant; 8-bit and 32-bit formats
+    s += k32
+    d += k8
+    d += k32
     s += pc
     d += pc
     s <<= 2
@@ -166,14 +183,16 @@ The .xosm has two architectural registers for control flow, the program
 counter PC and the continuation pointer CP, and a single control-flow
 operation `yield`, which swaps them, and can thus function as either a
 procedure call or return instruction.  There are three `yield`
-instructions: unconditional (`else`, 0x21), conditional on `x == 0`
-(`if (x)`, 0x3d), and conditional on `x >= 0` (`if (x < 0)`, 0x3c).
+instructions: unconditional (`else`), conditional on `x == 0`
+(`if (x)`), and conditional on `x >= 0` (`if (x < 0)`).
 The conditional instructions pop the operand stack.  To enable control
 flow that goes beyond just two coroutines yielding back and forth,
-there’s an `x <=> cp` instruction (0x63) which exchanges CP and X,
+there’s an `x <=> cp` instruction which exchanges CP and X,
 which simultaneously loads in a new continuation pointer (for example,
 pointing to another location within the same subroutine) and puts the
 old one in a location where you can save it to memory.
+
+XXX do conventional short jumps too?
 
 This approach is inspired by Henry Baker’s COMFY-65 compiler and
 the Warren Abstract Machine, although it’s also related to Calculus
@@ -183,7 +202,6 @@ a nonrecursive function that calls other functions might save CP to a
 static memory location on entry and restore it before yielding on exit.
 I’d need more experience with the .xosm to really get a feel of what
 prologues and epilogues to use.
-
 
 Instruction 0x00 is the “halt” instruction, because if you’re
 executing uninitialized memory that’s a bug.  I don’t know what it
@@ -227,10 +245,10 @@ This may also have implications for efficient hardware implementation,
 as the tsunami in advance of the Landauer-limit earthquake seems to be
 arriving already.
 
-Strawman evaluation
--------------------
+Twigman evaluation
+------------------
 
-This is 15+15+4 = 34 opcodes, which seems perhaps a bit more
+This is 17+15+4 = 36 opcodes, which seems perhaps a bit more
 oversimplified than I would like, but will probably grow to the size I
 want when I get some experience with its deficiencies.
 
@@ -243,12 +261,12 @@ A couple of sample instruction implementations in an interpreter on a
         z = t;
         t = x;
         x ^= tmp;
-        goto *opcodes[mem[pc++]];
+        goto *opcodes[mem[pc++] & 0xff];
     leap_d:
         d = mem[s];
-        goto *opcodes[mem[pc++]];
+        goto *opcodes[mem[pc++] & 0xff];
 
-These probably work out to 8 and 5 instructions respectively,
+These probably work out to 9 and 6 instructions respectively,
 including a jump with a failed prediction, so I think I’m within my
 target performance zone for interpretation of 16 clock cycles per
 bytecode.  It’s also 5 lines of C per opcode, but some of that can and
@@ -257,7 +275,7 @@ probably be within my lines-of-code complexity budget.
 
     xor:
         x ^= pop_operand_stack();
-        goto *opcodes[mem[pc++]];
+        goto dispath;
 
 8 architectural registers is a good, practical, 8080ish size; we’d
 also need a non-architectural instruction register I, a memory-address
@@ -271,11 +289,12 @@ set at the top at the expense of a slowdown of 4× or so.
 A rough sketch of the RTL:
 
     X <= ALU-output if ALU-instruction else
+         operand-byte if load-immediate-8 else
          M if fetching-into-X else
          S if s-swapping else
          D if d-swapping else
          CP if cp-swapping else
-         XXX if immediate else
+         XXX if load-immediate-32 else
          X
 
     Y <= X if pushing else
@@ -291,11 +310,10 @@ A rough sketch of the RTL:
          T
 
     PC <= CP if yielding else
-          PC+5 if imm32 else
-          PC+2 if imm8 else
-          PC+1
+          PC+6 if immediate-32 else
+          PC+2
 
-    CP <= PC if yielding else
+    CP <= PC+2 if yielding else
           X if cp-swapping else
           CP
 
@@ -349,9 +367,9 @@ A rough sketch of the RTL:
                zero-conditional ∧ X == 0 ∨
                sign-conditional ∧ X[31]
 
-The “XXX if immediate” case and the A register point out that
+The “XXX if load-immediate-32” case and the A register point out that
 sometimes extra cycles will be needed during which almost all of the
-above will be paused, because it’s fetching an immediate operand or a
+above will be paused, because it’s fetching an immediate
 32-bit value (possibly unaligned).  If I want to build up an RTL
 design incrementally I probably want to start with those troublesome
 cases so the control state machine starts out as complicated as it’s
@@ -373,28 +391,28 @@ There’s a separate N-wide AND for the `X == 0` condition and some more
 muxes and adders for effective address computation, something like
 this:
 
-    s-effective-address = S + k if s-creeping else
+    s-effective-address = S + operand-byte if s-creeping else
                           S + PC if pc-relative else
                           S
-    d-effective-address = D + k if d-creeping else
+    d-effective-address = D + operand-byte if d-creeping else
                           D + PC if pc-relative else
                           D
 
 The instruction decode logic depends on the instruction encoding, but
 the above strawman has it and the microcycle logic producing the
-following control bits: `ALU-instruction`, `fetching-into-X`,
-`s-swapping`, `d-swapping`, `cp-swapping`, `immediate`, `pushing`,
+following control bits: `ALU-instruction`, `fetching-into-X`, `load-immediate-32`,
+`load-immediate-8`, `s-swapping`, `d-swapping`, `cp-swapping`, `pushing`,
 `popping`, `yielding`, `imm32`, `imm8`, `s-leaping`, `s-creeping`,
 `s-shifting`, `d-creeping`, `d-shifting`, `loading`, `storing`,
 `fetching`, `adding`, `subtracting`, `abjuncting`, `anding`, `xoring`,
 `negating`, `discarding`, `zeroing`, `incrementing`, `decrementing`,
 `doubling`, `octupling`, `halving`, `eighthing`,
 `unconditional-yield`, `zero-conditional`, and `sign-conditional`.
-That’s 37 control signals, and probably something like 9×37 = 333
+That’s 38 control signals, and probably something like 9×38 = 342
 two-input AND gates to compute them, if that’s how it’s done, or
 possibly a much smaller number of wider AND gates.
 
-So we’ve only accounted for about 1600+512+333 ≈ 2500 gates of an
+So we’ve only accounted for about 1600+512+342 ≈ 2500 gates of an
 internally-32-bit implementation, ten thousand transistors.  The 8
 architectural registers and 3 non-architectural registers add 352
 flip-flops, probably another 3000 transistors, for a total of 13000.
