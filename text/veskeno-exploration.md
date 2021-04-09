@@ -22,7 +22,8 @@ Visual Basic (.NET), JS, PHP, SQL, and assembly as its top 10; I
 included five of these including the top four; [GitHub][2] ranks JS,
 Python, Java, TypeScript, C#, PHP, C++, C, shell, and Ruby, and I
 included six of these, including the top three.  (PHP and C# are the
-big omissions.)
+big omissions.)  [Stack Overflow lists][9] JS, Python, Java, bash, C#,
+PHP, TypeScript, C++, C, and Golang.
 
 So, hopefully I’m getting a pretty broad range of programming styles,
 although all these languages except m4 are pretty similar.
@@ -30,6 +31,7 @@ although all these languages except m4 are pretty similar.
 [0]: http://www.modulecounts.com/
 [1]: https://www.tiobe.com/tiobe-index/
 [2]: https://octoverse.github.com/
+[9]: https://insights.stackoverflow.com/survey/2020
 
 ### Scheme ###
 

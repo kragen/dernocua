@@ -197,3 +197,83 @@ So, in reverse order, these types have 2, 5, 1, 3, 8, 2, 4, 2, 3, 1,
 2, 2, 1, 2, 1, 2, 3, 1, 2, 1, 2, 3, 3, 2, 4, 1, 3, 3, and 1 variant.
 So in most cases you could distinguish them entirely with pointer
 bits, even if you only had two pointer bits to play with.
+
+A more aggressive way to handle this is to represent references of a
+given type as integers, some of whose bits indicate which variant the
+object belongs to, while the other bits index an array of all objects
+of that variant.  For example, the high 16 bits of a 32-bit oop might
+indicate whether an object is a ProtoObject, a BaseObject, a Derive, a
+UserData, or an Error, while the low 16 bits index an array of Derives
+or BaseObjects or whatever.  For really simple generational garbage
+collection you could allocate a second set of typecodes for nursery
+ProtoObjects, nursery BaseObjects, and so on, where the “index” bits
+directly indicate an offset into the nursery (probably bit-shifted by
+whatever your nursery allocator alignment is.)
+
+The regexp engine revisited
+---------------------------
+
+The regex engine above in OCaml with polymorphic variants consists of
+547 non-indentation characters.  We could rewrite it in the above
+notation:
+
+    a stream:
+        a cons:
+            car: bool
+            cdr: unit -> stream
+        a nil
+
+    a regex:
+        a literal:
+            content: string
+        a catenation:
+            head: regex
+            tail: regex
+        a alternation:
+            a: regex
+            b: regex
+        a closure:
+            content: regex
+
+    to any:
+        on nil:
+            false
+        on cons:
+            head or any (tail())
+
+    to map f:
+        on nil:
+            nil
+        on cons:
+            cons (f head) λ().map f (tail())
+
+    to iota m n:
+        nil if m == n else cons m λ().iota (m+1) n
+
+    to splits s:
+        n ← #s
+        map (λi.s[0:i], s[i:n-i]) (iota 0 (n+1))
+
+    to matches s:
+        on literal:
+            s == content
+        on catenation:
+            any (map (λa b.matches a head and matches b tail) (splits s)
+        on alternation:
+            matches s a or matches s b
+        on closure:
+            s == "" or matches s (cat content (star content))
+
+That’s 646 non-indentation characters, 15% larger.  You could imagine
+that if you had more than one function on regexps, you could start
+winning:
+
+    to can_be_empty:
+        on literal:
+            s == ""
+        on catenation:
+            can_be_empty head and can_be_empty tail
+        on alternation:
+            can_be_empty a or can_be_empty b
+        on closure:
+            true
