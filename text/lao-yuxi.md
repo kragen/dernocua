@@ -97,7 +97,7 @@ closet door.  Ten thousand paintings of cocks avalanched onto the floor.
 Many of them were terrible, even ridiculous.  Some were good.  But the
 best painting of all was the one in the Emperor’s hand.
 
-The Hongwu Emperor was ashamed.  He left in silence with the twenty-minute
+The Hongwu Emperor was ashamed.  Silent, he left with the twenty-minute
 painting on which the painter Lao had spent three years of his life,
-and returned to Nanjing.  For the rest of his life the
+and he returned to Nanjing.  For the rest of his life the
 painting was his most precious possession.
