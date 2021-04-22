@@ -88,6 +88,10 @@ traces that are covered with solder mask, and which run to
 plated-through vias a safe distance away from the exposed pads
 themselves to connect them to the other side of the board.
 
+Hypo-allergenic metals commonly used for skin contact jewelry include
+gold, silver, titanium, aluminum, tantalum, niobium, rhodium,
+platinum, and palladium.
+
 Power, storage, and communication
 ---------------------------------
 
@@ -463,6 +467,15 @@ at 500 Hz is supposedly still about 65 dB.
 
 [9]: https://www.digikey.com/en/products/detail/microchip-technology/MCP6401UT-E-OT/2332835
 
+If we’re looking for one of the “basic components” at JLCPCB, maybe
+the [MCP6002T-I/SN][77] would work — it's the only “low-power opamp”
+in that category.  It’s the same MCP6001 circuit, with its 1-MHz GBW
+and 100μA at 1.8–6V, but has two op-amps on the chip, so it actually
+sucks 200 μA.  JLCPCB wants to charge you 34.9¢ for it I think, though
+LCSC would charge 45.1¢ in quantity 10.
+
+[77]: https://www.lcsc.com/product-detail/Low-Power-OpAmps_Microchip-Tech-MCP6002T-I-SN_C7377.html
+
 ### NAND Flash ###
 
 We need to be able to buffer up some EKG data during times when the
@@ -510,7 +523,28 @@ already at or above the linear pricing region, Digi-Key only stocks
 one 512-mebibit NAND chip, the Winbond W25N512GVEIG, which is actually
 *more* expensive than the gibibit chips.
 
+30 mA across the battery’s internal resistance of 15 Ω or so would
+produce almost half a volt of power rail droop, which could be a big
+problem not only for analog measurements but maybe even for digital
+circuit stability.
+
+The NAND is probably also the heaviest current draw, so it might give
+us an idea of how much capacitance we need.  If we wanted to handle
+30 mA for 2.5 ms without dropping the voltage by more than, say,
+0.3 V, we’d need 250 μF.  Ouch!  Not gonna find a cheap [ceramic
+cap][30] with that.
+
+[30]: https://www.digikey.com/en/products/filter/ceramic-capacitors/60
+
 ### Bypass caps ###
+
+Something like the [30¢ Vishay TMCMA0G227MTRF tantalum][31] might work
+to keep the NAND from harrowing the battery; it’s a 1206 4-V 220-μF
+tantalum.  But if we leave it connected all the time it will leak
+about 30 μA, 81 μW — not out of the question, but several times as
+much as the NAND itself.
+
+[31]: https://www.digikey.com/en/products/detail/vishay-sprague/TMCMA0G227MTRF/10107301
 
 We probably can’t get by without bypassing, and to get down below
 1 mW, we need at least 10kΩ leakage resistance in all the bypass caps
@@ -532,6 +566,8 @@ four orders of magnitude in this case.
 
 [25]: https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05A104KA5NNNC/3886701
 [26]: https://www.digikey.com/en/products/detail/yageo/CC0201MRX5R5BB105/5195022
+
+XXX maybe 0.001 μF too?  And maybe dump the 1μF one?
 
 ### Bluetooth Low Energy ###
 
