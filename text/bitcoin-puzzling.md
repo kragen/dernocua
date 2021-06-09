@@ -1,5 +1,17 @@
 Originally posted at <https://news.ycombinator.com/item?id=26238410>.
-Slightly edited at <https://news.ycombinator.com/item?id=26654767>.
+Slightly edited at <https://news.ycombinator.com/item?id=26654767> and
+<https://news.ycombinator.com/item?id=27337189>.
+
+I've been using Bitcoin to get paid for a couple of years at this
+point, and I haven't gotten scammed yet.  And, yeah, 13 years after
+the internet's invention was 01982; not only couldn't you get so much
+as a weather report online, much less IRC, but many of the early
+interesting experiments like NLS at SRI had shut down, and more and
+more places were disabling guest access to their hosts — you couldn't
+run so much as a game of ADVENT without getting a username.  And a
+password.  Things were seriously regressing.  The only people you
+could talk to on the internet were other people who really bought into
+the subculture.
 
 If you live in a country with a highly functional banking system and
 no kleptocracy, Bitcoin is probably a bit puzzling unless you have
@@ -20,8 +32,8 @@ the table):
 https://www.ambito.com/finanzas/dolares/cronologia-del-cepo-cambiario-se-cumple-un-ano-la-restriccion-impuesta-macri-n5129832
 
 You can see that in September 02019 when this measure was imposed the
-price of a dollar was AR$63.50; now it’s AR$139. So whatever savings
-you had in pesos in 02019 have lost 57% of their value to peso
+price of a dollar was AR$63.50; now it’s AR$155. So whatever savings
+you had in pesos in 02019 have lost 59% of their value to peso
 devaluation.
 
 In 02001 a lot of Argentines had saved dollars in their
@@ -80,25 +92,19 @@ ought to have it. US$10M in US$100 bills fits in a box you can wheel
 around on a dolly, but Bitcoin is a lot more practical. (And of course
 US$10M in dollar bills loses about US$200k per year to inflation.)
 
-Transaction fees are high enough that you wouldn’t want to use Bitcoin
+Transaction fees are usually high enough that you wouldn’t want to use Bitcoin
 to pay for a can of Red Bull or even a restaurant dinner.  But it’s
 extremely practical as an alternative to Western Union or US$100 bills
 or gold, even with the current very high transaction fees.  At the
-moment, the break-even point where the Bitcoin transaction fee is less
-than the 3.4% spread you’d pay to a jeweler or black-market money
-changer is around US$3000, because the median Bitcoin transaction fee
-in the last block was 1.7 millibitcoins, which is US$100:
+moment, the Bitcoin transaction fee is very low—the median Bitcoin transaction fee
+in the last block was 0.00678 millibitcoins, which is US$0.25:
 
-https://btc.com/0000000000000000000ae1cdc00169e5fb6931d105840c4a91e20739a249d18b?page=56&asc=1&order_by=fee
+https://btc.com/0000000000000000000778ef382c1697706e34634696ece8d3243eb061e896d9?page=59&order_by=fee&asc=1
 
-A month ago it was 0.31 millibitcoins:
+Three months ago it was at what I think of as a more normal rate of 0.31 millibitcoins, US$11, which is lower than the 3.4% spread you’d pay to a jeweler or black-market money
+changer for transactions over US$350:
 
 https://btc.com/00000000000000000000476ab57eea9be8ada36e26803130287eb75c7e99797d?page=72&order_by=fee&asc=1
-
-But there were transactions that made it into the last block with a
-transaction fee of only 0.082 millibitcoins, or US$5:
-
-https://btc.com/81032a76e7ced9678996446ea05c91329d028af2fbfeb90db4b4a32ccaf22a31
 
 So, Bitcoin doesn’t have to be a cypherpunk utopia to be a big
 improvement on the *status quo ante*. For those of you living in
@@ -110,6 +116,10 @@ with. And you may live there too, soon—the loyal subjects of Kaiser
 Wilhelm in 01913 certainly didn’t expect that in 15 years they’d be in
 the middle of a hyperinflation episode that remains legendary a
 century later.
+
+I think that, by providing workarounds to the people who need them, cryptocurrencies probably not only ameliorate the most immediate and pressing concerns of poor parts of the population like Venezuelan immigrants, but probably also adjust the power balance in a more liberal and democratic direction. This will improve the chance of those concerns being ameliorated by public policy over the next decades as well. But it's hard to tell what will really happen. The potential disaster scenario is that, by making most taxation impossible, cryptocurrencies destroy the modern welfare state without providing anything to replace it. So the public hospitals close, the enormous police force starts to support itself by extracting tribute, and the infrastructure decays. Pretty similar to what's happened in the US over the last 50 years, in fact, only more so.
+
+However, at this point I think the modern welfare state is already doing a good enough job of destroying itself without any significant help from cryptocurrencies—as evidence, I can point to Maduro, Macri, Bolsonaro, Trump, and Brexit, and metonymically to the social changes they betoken. So at this point I'm more worried about cushioning the collapse than preventing it.
 
 ____
 
