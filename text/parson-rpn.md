@@ -375,8 +375,29 @@ any parens at all:
 
     ; <_ $s, $#> $w "=" <e "(" <e> ")", $n, $w; "*", "/"; "+", "-"> ";"
 
+To compile into Forth, we could maybe try to include snippets of
+literal output with {} and use {{}} to mark bits of the input to copy
+to the output:
+
+    ; <_ $s, $#> {{$w}} "="
+        <e "(" <e> ")", {{$n}}, {{$w}};
+            "*" {"*"}, "/" {"/"}; "+" {"+"}, "-" {"-"}>
+    {"swap !"} ";"
+
+The inability to reorder chunks of the input here is a clear weakness.
+In this case we not only need a `swap`, we’re emitting the operators
+too early!  We can fix this in the conventional way, though losing the
+advantage of `;`:
+
+    ; <_ $s, $#> {{$w}} "="
+        <e <e2 <e3 "(" <e> ")", {{$n}}, {{$w}}>
+               (; "*" <e3> {"*"}, "/" <e3> {"/"})>
+           (; "+" <e2> {"+"}, "-" <e2> {"-"})>
+    {"swap !"} ";"
+
 If we define a lowest-precedence `@@` operator which discards its
-right argument, we could write this perhaps more readably as
+right argument, we could write one of the above versions perhaps more
+readably as
 
     ,($w "=" <e> ";";)
     @@

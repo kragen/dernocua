@@ -1,13 +1,26 @@
 Originally posted at <https://news.ycombinator.com/item?id=26238410>.
-Slightly edited at <https://news.ycombinator.com/item?id=26654767> and
-<https://news.ycombinator.com/item?id=27337189>.
+Slightly edited at <https://news.ycombinator.com/item?id=26654767>,
+<https://news.ycombinator.com/item?id=27337189>, and
+<https://news.ycombinator.com/item?id=27448744>.
 
-I've been using Bitcoin to get paid for a couple of years at this
-point, and I haven't gotten scammed yet.  And, yeah, 13 years after
-the internet's invention was 01982; not only couldn't you get so much
+Let me try to displace some of the content-free flaming with real
+information.
+
+I’m not in El Salvador, but I do have some experience with how Bitcoin
+gets used in practice in low- and middle-income countries, despite the
+transaction fees sometimes being high.  I *don’t* have experience with
+Strike or Lightning in general, so while in theory they should help a
+lot with the transaction-fee issue, I don’t know how they work out in
+practice.
+
+I’ve been using Bitcoin to get paid for a couple of years at this
+point where I live here in Argentina.
+It’s currently 13 years after Bitcoin’s invention, and some
+people think it’s regressing instead of progressing.  Well, 13 years after
+the internet’s invention was 01982; not only couldn’t you get so much
 as a weather report online, much less IRC, but many of the early
 interesting experiments like NLS at SRI had shut down, and more and
-more places were disabling guest access to their hosts — you couldn't
+more places were disabling guest access to their hosts—you couldn’t
 run so much as a game of ADVENT without getting a username.  And a
 password.  Things were seriously regressing.  The only people you
 could talk to on the internet were other people who really bought into
@@ -63,9 +76,10 @@ expectancy at birth is 77 years, worse than Switzerland’s 84, but the
 same as China and Hungary, and better than Saudi or Mexico. (Somalia
 is 54.)
 
-Most of the world is worse off than Argentina, although not
+Most of the world, and notably El Salvador, is worse off than Argentina, although not
 necessarily in such a statistically transparent fashion. About one
-fourth of the people in the world are unbanked, 51% here in Argentina;
+fourth of the people in the world are unbanked, 51% here in Argentina,
+70% in El Salvador;
 even advanced countries like Russia, Hungary, and Uruguay have roughly
 a quarter of the population unbanked:
 
@@ -80,7 +94,8 @@ Venezuelan governments is trying to tax Bitcoin remittances at 15%.
 https://archive.fo/ZRXzS
 
 Bitcoin handles a few billion dollars per year in such
-remittances. This might seem like a trivial amount of money to someone
+remittances, which are the lifeblood of the Salvadoran economy.
+A few billion dollars a year might seem like a trivial amount of money to someone
 in a rich country, but in poor countries, it’s enough to keep several
 million people alive.
 
@@ -91,13 +106,20 @@ US$10M if the bank thinks you don’t seem like the kind of person who
 ought to have it. US$10M in US$100 bills fits in a box you can wheel
 around on a dolly, but Bitcoin is a lot more practical. (And of course
 US$10M in dollar bills loses about US$200k per year to inflation.)
+The problems with official corruption in El Salvador are reputed to be
+dramatically worse than in the US, and Bitcoin should help a lot with that.
 
 Transaction fees are usually high enough that you wouldn’t want to use Bitcoin
 to pay for a can of Red Bull or even a restaurant dinner.  But it’s
 extremely practical as an alternative to Western Union or US$100 bills
 or gold, even with the current very high transaction fees.  At the
 moment, the Bitcoin transaction fee is very low—the median Bitcoin transaction fee
-in the last block was 0.00678 millibitcoins, which is US$0.25:
+in the last block was 0.0495 millibitcoins, which is US$1.72:
+
+https://btc.com/0000000000000000000c28aea6e8c073e44e249460e8e16cfc4a46f3b47d536b?page=60&order_by=fee&asc=1
+
+When I last checked a week ago, it was 0.00678 millibitcoins, which is
+US$0.25:
 
 https://btc.com/0000000000000000000778ef382c1697706e34634696ece8d3243eb061e896d9?page=59&order_by=fee&asc=1
 
@@ -117,9 +139,27 @@ Wilhelm in 01913 certainly didn’t expect that in 15 years they’d be in
 the middle of a hyperinflation episode that remains legendary a
 century later.
 
-I think that, by providing workarounds to the people who need them, cryptocurrencies probably not only ameliorate the most immediate and pressing concerns of poor parts of the population like Venezuelan immigrants, but probably also adjust the power balance in a more liberal and democratic direction. This will improve the chance of those concerns being ameliorated by public policy over the next decades as well. But it's hard to tell what will really happen. The potential disaster scenario is that, by making most taxation impossible, cryptocurrencies destroy the modern welfare state without providing anything to replace it. So the public hospitals close, the enormous police force starts to support itself by extracting tribute, and the infrastructure decays. Pretty similar to what's happened in the US over the last 50 years, in fact, only more so.
+I think that, by providing workarounds to the people who need them,
+cryptocurrencies probably not only ameliorate the most immediate and
+pressing concerns of poor parts of the population like Venezuelan
+immigrants and MS-13 victims, but probably also adjust the power
+balance in a more liberal and democratic direction. This will improve
+the chance of those concerns being ameliorated by public policy over
+the next decades as well. But it’s hard to tell what will really
+happen. The potential disaster scenario is that, by making most
+taxation impossible, cryptocurrencies destroy the modern welfare state
+without providing anything to replace it. So the public hospitals
+close, the enormous police force starts to support itself by
+extracting tribute, and the infrastructure decays. Pretty similar to
+what’s happened in the US over the last 50 years, in fact, only more
+so.
 
-However, at this point I think the modern welfare state is already doing a good enough job of destroying itself without any significant help from cryptocurrencies—as evidence, I can point to Maduro, Macri, Bolsonaro, Trump, and Brexit, and metonymically to the social changes they betoken. So at this point I'm more worried about cushioning the collapse than preventing it.
+However, at this point I think the modern welfare state is already
+doing a good enough job of destroying itself without any significant
+help from cryptocurrencies—as evidence, I can point to Maduro, Macri,
+Bolsonaro, Trump, and Brexit, and metonymically to the social changes
+they betoken. So at this point I’m more worried about cushioning the
+collapse than preventing it.
 
 ____
 
@@ -129,7 +169,7 @@ three different political parties (UCR, PJ, and PRO), and there’s no
 serious insurgency.  It’s the *economy* and *government policy* that
 are ruinously unstable, to a point that seems satirical to anyone
 accustomed to the US, but is lamentably common worldwide.  Rich people
-sometimes say they don't know of legitimate uses of Bitcoin outside of
+sometimes say they don’t know of legitimate uses of Bitcoin outside of
 “failed states”.
 
 ‡ Family remittances are specifically exempted from the US sanctions
