@@ -301,6 +301,9 @@ Some of these, like the STM32F730 and STM32F765, have built-in memory
 controllers designed to interface to external SRAM, SDRAM (!!), NOR
 Flash, and even NAND Flash.
 
+See also file `energy-autonomous-computing.md` for notes on the Ambiq
+chips, which are both much lower power and have more RAM.
+
 Full context switching and deep power down
 ------------------------------------------
 
