@@ -611,14 +611,16 @@ signals as long as they go to other things that also have some kind of
 [67]: https://www.digikey.com/en/products/detail/cypress-semiconductor-corp/CY62136EV30LL-45ZSXIT/1543737
 
 Still, spending 3 μW to get an extra quarter-mebibyte of 45ns SRAM
-seems pretty cheap.  But that goes up to 6000 μW/MHz when you’re
-actively frobbing it.  That’s, I guess, 6000 pJ per off-chip SRAM
+seems pretty cheap.  But that goes up to 6600 μW/MHz when you’re
+actively frobbing it (2 mA at 1 MHz, says the datasheet front page.)
+That’s, I guess, 3300 pJ per off-chip SRAM
 access, which is kind of high when we recall that we’re only paying on
 the order of 500 pJ per instruction (or much less with Ambiq)
 and 400 pJ per byte read from SPI
-NOR Flash.  Accessing the SRAM *once* costs as much as running *12*
-instructions.  You can write a byte of SRAM in 45 ns instead of the
-Flash’s average 27 000 ns, and spending 6000 pJ instead of the Flash’s
+NOR Flash.  Accessing the SRAM *once* costs as much as running *7*
+instructions, or *100* Ambiq instructions.
+You can write a byte of SRAM in 45 ns instead of the
+Flash’s average 27 000 ns, and spending 6600 pJ instead of the Flash’s
 1 800 000 pJ, and it really is random access both for reading and
 writing, which the Flash very much is not.
 
