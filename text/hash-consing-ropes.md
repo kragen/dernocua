@@ -1,4 +1,4 @@
-Avery Pennarun's bupsplit and Silentbicycle’s Jumprope, used in his
+Avery Pennarun’s bupsplit and Silentbicycle’s Jumprope, used in his
 [Tangram][1] filesystem, are something like a hash-consed
 general-purpose rope structure.
 
@@ -118,7 +118,7 @@ suggest that it would probably be easy to break:
 
 > Consider an ordered sequence of elements *aₙ*, a function *h* that
 > derives an invertible matrix over finite field 𝔽₂₅₆ from a single
-> element's cryptographic hash, and a function 𝐻 that finds the
+> element’s cryptographic hash, and a function 𝐻 that finds the
 > product of all such matrices from a sequence:
 > 
 > 𝐻(*a*)=∏*ⁿᵢ*₌₁*h*(*aᵢ*)
@@ -173,7 +173,7 @@ logarithmic.
 Here, I’m supposing that each concatenation node includes a left
 pointer, a right pointer, two 64-bit words of hash, and a length
 field, so about 5 words, 40 bytes.  On a 32-bit machine maybe it would
-be 20 bytes.  You might need another word if you can't steal a bit for
+be 20 bytes.  You might need another word if you can’t steal a bit for
 a type field somewhere, either in the node pointer or from one of the
 words.
 
@@ -203,7 +203,7 @@ into leafnode chunks of about 64–512 bytes that tends to reproduce the
 same cut points when it encounters the same data in different
 contexts.  After that, the size of the rope tree internal nodes is
 going to be relatively small, maybe 20% of the size of the leaf nodes,
-and if you build it in a relatively random and balanced way, you'll
+and if you build it in a relatively random and balanced way, you’ll
 probably be able to share a fair bit of that, too.
 
 One simple approach is to start with a counter at 576 and decrement it
