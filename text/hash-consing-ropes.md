@@ -4,6 +4,12 @@ general-purpose rope structure.
 
 [1]: https://github.com/silentbicycle/tangram/
 
+It occurred to me that by extending this approach, you can build a
+string type that supports in-practice-constant-time concatenation and
+comparison operations, at least in the absence of adversarial input.
+Traversal is linear time; extracting substrings by numeric byte
+position is logarithmic.
+
 Hash consing
 ------------
 
@@ -254,3 +260,8 @@ the new character to the previous and following parts of the editor
 buffer, but that’s true whether the keystroke is in a leafnode of its
 own or not.)
 
+Along the same lines, it’s probably good to coalesce concatenation
+nodes into a B-tree to some degree; a 4-child concatenation node would
+have a length, two words of hash, and 4 child pointers, 7 words.  If
+you built it out of binary concatenation nodes, you’d need three
+5-word concatenation nodes, 15 words, more than twice as much space.

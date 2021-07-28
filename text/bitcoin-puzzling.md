@@ -3,9 +3,6 @@ Slightly edited at <https://news.ycombinator.com/item?id=26654767>,
 <https://news.ycombinator.com/item?id=27337189>, and
 <https://news.ycombinator.com/item?id=27448744>.
 
-Let me try to displace some of the content-free flaming with real
-information.
-
 I’m not in El Salvador, but I do have some experience with how Bitcoin
 gets used in practice in low- and middle-income countries, despite the
 transaction fees sometimes being high.  I *don’t* have experience with
@@ -42,7 +39,7 @@ limited to US$200 a month now, and then only if you have a
 non-under-the-table job (about a third of total employment is under
 the table):
 
-https://www.ambito.com/finanzas/dolares/cronologia-del-cepo-cambiario-se-cumple-un-ano-la-restriccion-impuesta-macri-n5129832
+<https://www.ambito.com/finanzas/dolares/cronologia-del-cepo-cambiario-se-cumple-un-ano-la-restriccion-impuesta-macri-n5129832>
 
 You can see that in September 02019 when this measure was imposed the
 price of a dollar was AR$63.50; now it’s AR$155. So whatever savings
@@ -83,7 +80,7 @@ fourth of the people in the world are unbanked, 51% here in Argentina,
 even advanced countries like Russia, Hungary, and Uruguay have roughly
 a quarter of the population unbanked:
 
-https://www.gfmag.com/global-data/economic-data/worlds-most-unbanked-countries
+<https://www.gfmag.com/global-data/economic-data/worlds-most-unbanked-countries>
 
 And if your family lives in a country like Iran or Venezuela subject
 to US sanctions, and you live in the US?  Good luck sending them an
@@ -91,7 +88,7 @@ ACH, instant or otherwise!‡ It’s well known that Bitcoin is very
 popular in Venezuela, which kind of is a failed state, so one of the
 Venezuelan governments is trying to tax Bitcoin remittances at 15%.
 
-https://archive.fo/ZRXzS
+<https://archive.fo/ZRXzS>
 
 Bitcoin handles a few billion dollars per year in such
 remittances, which are the lifeblood of the Salvadoran economy.
@@ -116,17 +113,17 @@ or gold, even with the current very high transaction fees.  At the
 moment, the Bitcoin transaction fee is very low—the median Bitcoin transaction fee
 in the last block was 0.0495 millibitcoins, which is US$1.72:
 
-https://btc.com/0000000000000000000c28aea6e8c073e44e249460e8e16cfc4a46f3b47d536b?page=60&order_by=fee&asc=1
+<https://btc.com/0000000000000000000c28aea6e8c073e44e249460e8e16cfc4a46f3b47d536b?page=60&order_by=fee&asc=1>
 
 When I last checked a week ago, it was 0.00678 millibitcoins, which is
 US$0.25:
 
-https://btc.com/0000000000000000000778ef382c1697706e34634696ece8d3243eb061e896d9?page=59&order_by=fee&asc=1
+<https://btc.com/0000000000000000000778ef382c1697706e34634696ece8d3243eb061e896d9?page=59&order_by=fee&asc=1>
 
 Three months ago it was at what I think of as a more normal rate of 0.31 millibitcoins, US$11, which is lower than the 3.4% spread you’d pay to a jeweler or black-market money
 changer for transactions over US$350:
 
-https://btc.com/00000000000000000000476ab57eea9be8ada36e26803130287eb75c7e99797d?page=72&order_by=fee&asc=1
+<https://btc.com/00000000000000000000476ab57eea9be8ada36e26803130287eb75c7e99797d?page=72&order_by=fee&asc=1>
 
 So, Bitcoin doesn’t have to be a cypherpunk utopia to be a big
 improvement on the *status quo ante*. For those of you living in
@@ -175,4 +172,4 @@ sometimes say they don’t know of legitimate uses of Bitcoin outside of
 ‡ Family remittances are specifically exempted from the US sanctions
 on Iran, but good luck finding a US bank that’s willing and able to
 take that risk:
-https://www.wiggin.com/wp-content/uploads/2019/09/26580_advisory-family-remittances-from-us-to-iran-not-prohibited-by-iranian-transactions-regulations-martini-glasser-november-2011.pdf
+<https://www.wiggin.com/wp-content/uploads/2019/09/26580_advisory-family-remittances-from-us-to-iran-not-prohibited-by-iranian-transactions-regulations-martini-glasser-november-2011.pdf>

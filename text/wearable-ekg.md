@@ -1,6 +1,7 @@
 I think you ought to be able to take a weeks-long EKG
 (Elektrokardiogramm) from a person with an easy-to-fabricate
-electronic device that could retail under US$25.
+electronic device that could retail under US$25.  A bargain-basement
+Holter monitor.
 
 Specifically, you should be able to hook up some low-noise analog
 amplifiers to a couple of electrodes on your skin to amplify the

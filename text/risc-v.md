@@ -409,6 +409,13 @@ I suspect that loading a 64-bit non-PC-relative constant will require
 using an ARM-style “constant pool” rather than the `lui`/`addi` pair
 needed for 32-bit constants.
 
+This is reasonably compatible, but not totally; it might not be
+feasible to generate machine code that can do the same thing on either
+RV64I or RV32I, aside from having some sort of conditional jump.  But
+with the exception of `slli` and `sari` and the like, most of the
+instructions can just ignore the upper 32 bits if you don’t care about
+them.
+
 Multiplication and division
 ---------------------------
 
