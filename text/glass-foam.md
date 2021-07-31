@@ -110,7 +110,8 @@ volume of 9.9 cubic centimeters.  Although an extra decimal place of
 accuracy would give more confidence, particularly given how the scale
 readings were drifting upwards while the foam was held underwater, it
 seems safe to say that it’s probably 60 ± 30 mg/cc, so maybe 97%-99%
-air.
+air.  (But contrast that 0.06 g/cc to the 0.74 g/cc reported for
+pumice in file `material-observations.md`.)
 
 The resulting piece of white foam can be easily handled without
 breaking it, but it’s fragile enough that dropping it on the table
@@ -123,8 +124,11 @@ higher than air’s.
 
 For context, a silica aerogel produced in the 01990s was the
 record-holder for least-dense solid material for a while at 3 mg/cc,
+[more recent aerogels have reached 1 mg/cc][0],
 and extruded polystyrene panels for building are typically 20–80
 mg/cc.
+
+[0]: https://web.archive.org/web/20050718075757/http://www.llnl.gov/IPandC/technology/profile/aerogel/Terms/index.php
 
 I was concerned that the sand or vermiculite might stick to the
 waterglass as it foamed up, but this didn’t seem to happen — there
