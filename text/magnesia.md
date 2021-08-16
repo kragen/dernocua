@@ -1,3 +1,5 @@
+(See also file `magnesium-silicate.md`.)
+
 Suppose you want reactive magnesia in order to make, for example,
 Sorel cement for X-ray 3-D printing (see file `sorel-cement-3dp.md`),
 or exothermic refractory magnesium phosphate cement (see file

@@ -831,7 +831,8 @@ fakery, but [this Sanyo NCR20700b cell is specified at 4250mAh and
 3.7V for AR$2500][4], which would be US$17 and 57 kJ, or only 3.3
 kJ/US$.  (The seller falsely claims it’s an 18650.  It’s tested at
 [3.7–4.2 amp hours at 0.2–15 amps of discharge rate][12] by what I
-think is an independent tester, who weighed it at 61 g.)  But there
+think is an independent tester, who weighed it at 61 g; this 53 kJ
+then works out to 870 kJ/kg.)  But there
 are a lot of fake lithium-ion batteries like this [UltroFite GH 18650
 “6800 mAh” which sells for AR$427][5], which would be 91 kJ, US$2.90,
 and 31 kJ/$, nearly an order of magnitude cheaper and up in the

@@ -1,6 +1,7 @@
 See also file `firing-talc.md` for notes on magnesium-silicate
-ceramics processing and file `glass-foam.md` for notes on using
-magnesium chloride to raise the softening point of waterglass foam.
+ceramics processing, file `glass-foam.md` for notes on using
+magnesium chloride to raise the softening point of waterglass foam,
+and file `magnesia.md` on the oxide.
 
 In a crude kitchen experiment, I mixed 136 g of a waterglass solution
 (35%?) with 136 g of tap water in a cut-off Monster can, then took
@@ -39,8 +40,8 @@ silicate](https://en.wikipedia.org/wiki/Synthetic_magnesium_silicate),
 which forms porous, amorphous masses.
 
 Roughly guessing at the stoichiometry, 136 g of 35% waterglass would
-be 47 g of waterglass.  If it’s 3:1 SiO₂:Na₂O by weight then that’s 35
-g of silica, which is 60.08 g/mol, so 0.58 mol of silica (and of
+be 47 g of waterglass.  If it’s 3:1 SiO₂:Na₂O by weight then that’s 35 g
+of silica, which is 60.08 g/mol, so 0.58 mol of silica (and of
 silicon).  Anhydrous MgCl₂ is 95.211 g/mol so 34 g of it would be 0.36
 mol of MgCl₂ (and of magnesium).  So that’s about 1.6 silicons per
 magnesium (Mg/Si molar ratio 0.62).  Forsterite has 2 magnesiums per
@@ -73,3 +74,10 @@ into a combustion chamber with extra air would solve it.
 The microporous nature of the material suggests that it might be
 useful for filtering; a major commercial use of the stuff is adsorbing
 polar radicals from used frying oil.
+
+One paper describing the synthesis of a magnesium silicate with a
+particular molar ratio added the silicate and the magnesium salt
+dropwise to a continuously stirred solution of ethanol thickened with
+PEG.  I guess the idea was to keep the concentration of unreacted
+feedstocks low enough that they would produce a mineral of a
+consistent composition.

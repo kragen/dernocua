@@ -265,4 +265,9 @@ dissolve the glass-foam residues.
 It might be possible to raise the melting point of the foam once it
 has been shaped through ion exchange, for example with salts of
 magnesium, iron, boron, or aluminum.  Saturating the foam with an
-aqueous solution of such soluble salts might be enough.
+aqueous solution of such soluble salts might be enough.  This could
+enable it to be used directly as a refractory.
+
+The standard established approach to foaming glass is to mix carbon
+and an oxygen source such as MnO₂ into it, so that as the glass starts
+to soften they react to form CO₂ (and, say, Mn).

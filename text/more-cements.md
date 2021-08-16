@@ -14,7 +14,7 @@ phosphoric acid) for 1–4 days, then heating the resulting a thick
 puttylike gel of hydrated aluminum phosphate to only 150° for 1–3 days
 to get a 20%-porosity solid of nearly 50 MPa compressive strength.
 Similar substances (“MALP” or “MAP”) are widely sold as castable
-refractories.
+refractories.  (See file `cola-flavor.md` for more on this substance.)
 
 With respect to adding phosphate cross-linkers, the ammonium
 phosphates should not be overlooked; some are deliquescent under
@@ -22,10 +22,27 @@ ordinary conditions, easily dehydrated to crystallinity with gentle
 heating, and yield phosphoric acid when the ammonia is driven off with
 stronger heating.
 
+An interesting benefit of phosphoric acid as a binder (or acid
+phosphates like monoaluminum phosphate or monomagnesium phosphate) is
+that it can bind silicates like soda-lime glass, but doesn’t destroy
+them the way lye does.  Soda-lime glass fiber is only about US$3/kg,
+according to file `refractories.md`, which is enormously cheaper than
+any alternative fiber reinforcement of similar strength.  Maybe by
+combining phosphoric acid, some kind of high-strength foam (see file
+`glass-foam.md`) and oriented glass fiber, you could produce a
+structure analogous to wood.  Space Shuttle TPS protective LI-900 HRSI
+tiles were a felt of fused-quartz fibers, but they were adhered
+together with, I think, borosilicate.
+
+More discussion of such composite materials is in file
+`fiberglass-cmc.md`.
+
 A different way to get phosphates of aluminum might be to react
 [sodium aluminate][4], easily prepared by digesting aluminum in lye,
 with a soluble phosphate, such as one of the phosphates of sodium or
-ammonium.  WP says sodium aluminate is thus used to precipitate
+ammonium.  I seem to have had some success with this with fire; see file
+`material-observations.md`, 02021-08-06.
+WP says sodium aluminate is thus used to precipitate
 soluble phosphates in water treatment plants.
 
 [4]: https://en.wikipedia.org/wiki/Sodium_aluminate
@@ -43,9 +60,9 @@ notorious for causing “flash setting” of concrete immediately upon
 hydration, though a small amount of sulfate can prevent this.  WP
 says:
 
-> Water reacts instantly with tricalcium aluminate. Hydration likely
+> Water reacts instantly with tricalcium aluminate.  Hydration likely
 > begins already during grinding of cement clinker due to residual
-> humidity and dehydration of gypsum additives. Initial contact with
+> humidity and dehydration of gypsum additives.  Initial contact with
 > water causes protonation of single bonded oxygen atoms on aluminate
 > rings and leads to the formation of calcium hydroxide.[4] The next
 > steps in the sequence of the hydration reaction involve the
