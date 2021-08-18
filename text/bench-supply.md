@@ -261,3 +261,163 @@ parts like the IRF540 would make that part of the circuit cooler, more
 efficient, and perhaps more reliable; so too would a GaN part like the
 EPC2036.
 
+Inductor current feedback
+-------------------------
+
+I was thinking about the current-sensing problem today, stimulated by
+[Chris Glaser’s note][1] on high-side current sensing for LED lighting
+using the voltage drop across the switching power MOSFET.  I was
+driven to revisit a thought I’d had previously about high-side current
+sensing: if you’re using a microcontroller, maybe you could sense the
+current intermittently by using an inductor to hold the current
+constant while you divert it?
+
+[1]: https://e2e.ti.com/blogs_/b/powerhouse/posts/efficiently-dim-your-led-without-a-sense-resistor
+
+Here’s an [example of this current-feedback scheme], where the
+switching P-MOSFET of a standard buck converter is fed from an LC
+low-pass filter, so its source experiences a significant positive
+voltage excursion every time it switches off, whose initial slope and
+peak voltage value should tell us rather precisely how much current
+the buck converter is drawing.
+
+![circuit V-100μH-a-1nF-GND; PMOS(S=a, G=square(40kHz, 90%)-GND, D=c-100μF-d-470nF-GND); GND->|-c; d-pot(10kΩ)-GND](current-metered-buck.png)
+
+    $ 1 1e-8 0.9487735836358526 50 5 43 5e-11
+    R -112 -16 -112 -80 0 0 40 5 0 0 0.5
+    l -112 -16 -16 -16 0 0.00009999999999999999 0.009476973841339323 0
+    l 112 -16 224 -16 0 0.00009999999999999999 0.007763234883748598 0
+    f 48 48 48 -16 41 1.5 0.02
+    w -16 -16 32 -16 0
+    c -16 -16 -16 96 0 1e-9 4.82585135926864 0.001
+    g -16 96 -16 128 0 0
+    R 48 48 48 96 0 2 40000 2.5 2.5 0 0.1
+    174 336 -16 384 112 1 1000 0.9158000000000001 Resistance
+    c 224 -16 224 112 0 4.7000000000000005e-7 4.827958335480461 0.001
+    g 224 112 224 128 0 0
+    g 384 48 384 128 0 0
+    w 224 -16 336 -16 0
+    368 -16 -16 -16 -80 0 0
+    w 112 -16 64 -16 0
+    d 112 96 112 -16 2 1N5711
+    g 112 96 112 128 0 0
+    403 80 -112 208 -48 0 2_64_0_4103_10_0.1_0_2_2_3
+    403 240 -112 368 -48 0 12_64_0_4353_5_0.1_0_2_12_3
+    403 240 16 304 128 0 9_64_0_4354_10_0.05_0_2_9_3
+    o 13 4 0 4098 10 6.4 0 3 7 0 7 3
+
+[example of this current-feedback scheme]: https://tinyurl.com/ygfffcj6
+
+In simulation this sort of works, but not as well as I had hoped.
+When the load is drawing 5.3 mA, the input voltage jounces up to 7.191
+V, because at the point the transistor cuts off, the input 100μH
+inductor is carrying 6.34 mA.  But when the load is drawing 50.0 mA,
+the input voltage jounces up to 9.109 V, because the input inductor
+was carrying 54.1 mA.  Physically this seems wrong; in the 6.34 mA
+case the inductor holds 2.0 nJ of energy, but the input 1 nF capacitor
+would contain 25.9 nJ at 7.191 V, while at the nominal 5 V it would
+contain 12.5 nJ, a gain of a lot more than 2.0 nJ; this could be
+explained if the voltage on the capacitor was already 6.91 V at the
+point where the voltage starts climbing.  In the 54.1 mA case the
+100 μH inductor contains 146 nJ, and at 9.109 V the 1 nF cap contains
+41.5 nJ, which is a mystery in the other direction.
+
+This is partly explained by my inept circuit design: I was trying to
+cut off the P-MOSFET (whose Vth is simulated as -1.5V) by putting its
+gate at 5 V, but of course as soon as the inductor drives its source
+up past 6.5 V it starts conducting again.  Nevertheless I think it
+proves out the underlying principle.  (This mechanism might actually
+be a useful way to limit the peak voltage to something safe, if you’re
+measuring the current using the rate of voltage rise rather than the
+peak voltage.)
+
+The appeal of this complicated mechanism over a sense resistor (or
+using the MOSFET on-resistance) is that in theory you should be able
+to get more precise measurements at lower energy loss and regulation
+instability for a given precision of voltage measurement.
+
+Suppose your switching MOSFET is a 2N7000: can handle 200 mA (and
+dissipate up to 400 mW) and block 60 V with 1.9 Ω of on-resistance,
+switched with 2 nC of gate charge with about a 3 V threshold voltage.
+(According to file `pick-and-place.md` JLCPCB will solder a 2N7002, a
+lower-power version, onto your surface-mount project, for 1.23¢ for
+the part plus 0.45¢ for the three terminals.  According to file
+`jellybeans` in Dercuano, Digi-Key sells the 2N7002 for 2.958¢ in
+quantity 1000, and local merchants here in Argentina sell the 2N7000
+for 12¢.)  And suppose you’re building a tiny adjustable power supply
+with one or more of these, supplying up to 200 mA and up to 12 volts,
+working from a 12-volt supply, and you’re using a single-ended ADC
+with ±0.2% error over the range 0 to 1.1 volts.  (For now I’ll assume
+your voltage reference is better than that.)
+
+The 2N7000 has low enough on-resistance that, if it's being operated
+in the fully-on or fully-off states, it will never come close to its
+400 mW limit.  The surface-mount 2N7002 has higher on-resistance (7 Ω)
+and max current (115 mA) but I think is actually *more* able to
+dissipate heat than its through-hole progenitor, so I think the max
+current is the only limit here.
+
+Suppose you’re doing high-side sensing with a 1 Ω sense resistor, just
+using the ADC directly rather than some kind of differential amplifier
+or flying-capacitor setup.  You need to use some kind of resistive
+dividers to divide the 12 V signal down into the 1.1 V range, say
+100kΩ and 10kΩ (GND-10kΩ-t-100kΩ-x-1Ω-y-100kΩ-u-10kΩ-GND, and the ADC
+measures the voltages at points t and u in order to measure the
+current between points x and y).  You’ll have some gain error between
+the two ends of the sense resistor, but that’s easy enough to
+calibrate out.  Then your 200 mA maximum current generates 200 mV,
+which gets divided down to a difference of 18.2 mV (1.091 V on the
+high end, 1.073 V on the low end).  ±0.2% error on your 1.1 V signal
+would be ±2.2 mV, which is ±24 mA, or ±12% error on your current
+reading even at max scale.  If you actually care about whether your
+circuit is using 10 mA or 30 mA, it’s hopeless.
+
+If you use a 4.7Ω sense resistor instead, those 200 mA becomes a 85 mV
+signal (1.005 V vs. 1.091 V), and your ±0.2% error now translates to
+±5.1 mA, which is ±2.5% on your full-range current measurement, which
+is not good but not completely useless.  But such a large sense
+resistor means that at 200 mA output the sense resistor is eating
+almost a whole volt; not only is your 12 V circuit running at 11.06 V,
+if you’re feeding the load 200 mA at 1 V, the high side of the
+resistor has to be at 1.94 V (and burning 200 mW, which is not good
+for precision).  That’s potentially pretty unhealthy for the load if
+it suddenly drops from 200 mA to 10 mA — output capacitance upstream
+of the sense resistor could raise the load voltage up from 1 V to
+1.89 V instantly.  Capacitance across the load, downstream of the
+sense resistor, could prevent this, at the cost of creating similar
+uncontrolled and unmeasured *current* excursions when the load
+impedance suddenly drops instead of suddenly rising.
+
+If you use a low-side sense resistor instead, you avoid the need for
+the 11× divider, and your current-measuring precision correspondingly
+improves by a factor of 11.  This also doubles your data rate and
+eliminates the need to calibrate out the gain difference between the
+dividers on the high side and low side of the sense resistor.  But now
+the load isn’t grounded; it’s floating above ground, potentially by as
+much as 0.94 V in the above 4.7Ω scenario.  And the sense resistor is
+still burning 184 mW at maximum output current.  For an isolated
+supply maybe this doesn’t matter.  But this would give us ±0.2% error
+on the maximum current,
+i.e. ±400 μA.
+
+Consider instead the situation where we use an LC circuit upstream of
+the switching transistor.  We should be able to arrange for the
+full-scale C voltage at 12V output to be 48 V or so, and an 0.2% error
+in measuring that voltage should be 96 mV, which would be an 0.27%
+error in the 36V ΔV, which corresponds to an 0.54% error on the
+energy, which corresponds to an 0.27% error in the 200 mA current,
+±540 μA.  We can take multiple data points on the voltage curve as it
+rises, which allows us to eliminate any offset error in the ADC, and
+we don’t have to deal with calibrating out gain differences between
+different dividers, because we have only one divider to worry about.
+We could quite plausibly take 20 data points for our measurement with
+a 1Msps ADC like the one on the STM32 series in 20 μs...
+
+Ugh, but that means that if we want to only be doing this measurement
+10% of the time, we can only run the buck converter at 5kHz, which is
+horrible.  I was hoping to come up with a happy story here like "so,
+you see, we can divert an arbitrarily small amount of our power to
+measurement, and still get a very precise measurement!" but that's not
+going to be true with an ADC.  So it looks like we’d have to do some
+analog RF electronics to measure the peak current level.  Maybe a
+flyback winding on the input inductor or something.

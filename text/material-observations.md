@@ -1026,6 +1026,10 @@ initial mixing it’s already past its prime for molding.
 02021-08-15
 -----------
 
+My hands and upper respiratory system were a little irritated last
+night; some of my fingers itched.  I suspect exposure to acetic acid
+exacerbated by a lot of handwashing was to blame.
+
 It’s 19:17.
 
 All three Oogoo samples from last night are fairly hard, as rubbers
@@ -1094,3 +1098,41 @@ from the other day), but it easily rubs off.  A smiley face thus drawn
 on one of the Oogoo balls rubbed onto paper transfers onto the paper,
 suggesting the possibility of flexographic offset printing with this
 material.
+
+By 02:41 the sand-filled Oogoo had stopped feeling wet on the top side
+(and stopped depositing water-soluble slime on wine bottles when
+rubbed) but still felt wet on the bottom (and still deposited slime).
+
+02021-08-16
+-----------
+
+The 39 grams of sand-filled Oogoo had dried out by this afternoon.  I
+pounded the crap out of it with a hammer against some bricks (maybe 20
+hammer blows of 50 J each); it crumbled somewhat and became softer and
+porous, but mostly retained its structural integrity.  The only pieces
+that came off were due to a couple of hammer blows where the corner of
+the hammer punched all the way through it into the brick on the other
+side.  The surfaces are now whiter and rougher.  It now weighs 38.0 g,
+and I regret not having weighed it before pounding it with the hammer,
+because I suspect that most of that weight loss was from boiling
+starch out of its surface, not from hammering damage.
+
+This seems like noticeably worse impact toughness than I would
+normally expect from this kind of silicone, but then again, this
+object is only 16% silicone by weight.  It’s kind of in the ballpark
+for what I’d expect from non-ferrous metals, although of course this
+impact toughness was achieved mostly through large deformations rather
+than large stiffness.
+
+As I suspected yesterday, I can cut through the stuff with a razor
+knife just by pushing it hard enough through the material if I
+carefully avoid sawing back and forth, which immediately destroys the
+edge of the razor knife.  By contrast, the knife edge is mostly intact
+when I just push through, though not without nicks from the sand.
+Pushing hard even works when the knife edge has been thus dulled by
+sawing, although it requires more force.
+
+Using the unsharpened *back* of the razor knife, I can cut through the
+pumice quite readily — not quite as readily as cutting soft materials
+like cardboard or silicone, but very nearly.  This further reinforces
+my impression that Foams Are A Miracle.
