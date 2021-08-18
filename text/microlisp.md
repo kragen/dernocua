@@ -1290,7 +1290,7 @@ technique at the time (p. 56):
 
 > The definition of the *compiling* system consists of the parsing
 > algorithm, given in paragraph III.B.1., a set of syntactic rules,
-> and a set of corresponding interpretation rules by which an EULER >
+> and a set of corresponding interpretation rules by which an EULER
 > text is transformed into a polish string.  The definition of the
 > *executing* system consists of a basic interpreting mechanism with a
 > rule to interpret each symbol in the polish string.

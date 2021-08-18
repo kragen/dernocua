@@ -231,7 +231,8 @@ Sketches
 
 Let’s look at some examples of what bytecode-compiled subroutines
 might look like.  My examples so far, with a strawman bytecode I made
-up as I went along, are respectively 3.4, 3.1, 7.5, and 3.4 bytes per
+up as I went along, are respectively 3.4,
+3.1, 7.5, 3.4, 2.4, and 2.3 bytes per
 source line of code.  I think this is a compelling argument that 4
 bytes per line of code is usually achievable and 3 bytes might be.
 
@@ -319,6 +320,10 @@ Maybe in idealized bytecode assembly this would look something like this:
         lea_blob 8          ; load @myProcs (@myProcs)
         loadglobal thePort
         storeword_offset 5  ; using thePort value from top of stack, offset 5 words and store result
+        ;       myProcs.textProc := @PatchText;
+        loadfuncptr PatchText
+        lea_blob 8
+        storeword_offset 3  ; let’s say .textProc is the fourth word of myProcs
         ;      i := CharWidth('A');  { swap in font } (oddly this return value i is not used, but let’s compile it anyway)
         lit8 65             ; 'A'
         call CharWidth
@@ -341,7 +346,7 @@ Maybe in idealized bytecode assembly this would look something like this:
         storeword_offset 0
         ret
 
-That’s 44 bytecode instructions, so 44 opcode bytes; how many operand
+That’s 47 bytecode instructions, so 47 opcode bytes; how many operand
 bytes?  All but 5 of them have immediate operands, but probably none
 of those operands need to be more than 1 byte, so we have at most 39
 operand bytes.  10 of them are call instructions (or 12 if we count
@@ -353,27 +358,30 @@ Another 10 operands are global variables; of these half (thePort twice
 and and txScrapHndl three times) are referenced more than once and
 could thus be usefully listed in the function’s global-references
 vector so they could be referenced in a single byte; the other 5 would
-require a separate operand byte.  Of the other 19 operands, most are
+require a separate operand byte.  loadfuncptr requires a separate
+operand byte, too.  Of the other 21 operands, most are
 small integers between -3 and 3 or between 0 and 6, so they could be
-packed into a 3-bit immediate field; the only exceptions are 8, 8, and
-65, so there would be 3 more bytes of operands, and 16 bytecodes with
+packed into a 3-bit immediate field; the only exceptions are 8, 8, 8, and
+65, so there would be 4 more bytes of operands, and 17 bytecodes with
 embedded operands.
 
-So that’s 3 numeric operand bytes, 5 global-index operand bytes, and
-10 function-call operand bytes, for 18 operand bytes, and 44+18 = 62
+So that’s 4 numeric operand bytes, 5 global-index operand bytes,
+10 function-call operand bytes, and one
+loadfuncptr operand byte, for 20 operand bytes, and 44+20 = 64
 bytes of bytecode.  The procedure header is probably 2 bytes, the
 procedure's address in the global subroutine table is another 2 bytes,
 and then you have two global-variable offset bytes, so all in all the
-subroutine is probably about 68 bytes.  This corresponds to 20
-non-comment non-blank source lines of Pascal code, or 3.4 bytes per
-line, which is about 2.9 times the density of the original MacOS
+subroutine is probably about 64 + 2 + 2 + 2 = 70 bytes.  This corresponds to 20
+non-comment non-blank source lines of Pascal code, or 3.5 bytes per
+line, which is about 2.8 times the density of the original MacOS
 compiled program.
 
 (All this is assuming that there are few enough bytecode operations to
 fit into a single byte.  The above code already uses `call`,
 `lea_blob`, `tinylit`, `loadword_blob`, `loadglobal`, `add`, `max`,
 `storeword_blob`, `lit8`, `storeword`, `storeword_offset`, and `ret`,
-which is 12, to 9 of which we are imputing this 3-bit operand field;
+which is 12, to 9 of which we are imputing this 3-bit operand field
+(let’s call these heavyweight opcodes “baryonic”);
 furthermore supersymmetry implies the existence of such undiscovered
 massive particles as `storeglobal`, `loadbyte_blob`, `storebyte_blob`,
 `loadword_offset`, `storebyte_offset`, and `loadbyte_offset`, which
@@ -879,6 +887,10 @@ base+index addressing:
         decrtos          ; -1
         loadword_indexed ; ]
 
+You’d also have `storeword_indexed`, `loadbyte_indexed`,
+`storebyte_indexed`, `leaword_indexed`, and maybe `leabyte_indexed`,
+though that last one is really just `add`.
+
 And we could support the loop with a baryonic bytecode similar to the
 8086 LOOP instruction mentioned earlier, but for up-counting loops; if
 at the bottom of the loop:
@@ -917,8 +929,211 @@ And the inner loop as follows:
 
 Instead of having Forth-like i, j, and k instructions, you could maybe
 stick the loop counter in a regular word-sized local variable, using a
-baryonic for-loop instruction.
+baryonic for-loop instruction.  But suppose we go with the leptonic
+approach above:
 
-XXX
+    PROCEDURE isort argwords=2 localwords=1
+        tinylit 1
+        loadword 1
+        fortoloop
+        i               ; outer loop counter, currently topmost
+        0
+        tinylit -1
+        fortosteploop
+        loadword 0
+        i               ; inner loop counter, called j in the code, now topmost
+        decrtos
+        loadword_indexed
+        loadword 0
+        i
+        loadword_indexed
+        subtract
+        jns 1f
+        loadword 0
+        i
+        loadword_indexed
+        storeword 2
+        loadword 0
+        i
+        decrtos
+        loadword 0
+        i
+        storeword_indexed
+        loadword 2
+        loadword 0
+        i
+        decrtos
+        storeword_indexed
+    1:  continue
+        continue
+        ret
 
-Finally, you could actually do common subexpression elimnation XXX
+That gets us down to 34 bytecode instructions and 35 bytes of
+bytecode, 39 bytes in all, 2.4 bytes per line of code.
+
+Finally, you could actually do common subexpression elimination and
+stack-allocate the value of `tmp`:
+
+    PROCEDURE isort argwords=2 localwords=2
+        tinylit 1
+        loadword 1
+        fortoloop
+        i
+        0
+        tinylit -1
+        fortosteploop
+        loadword 0      ; &a[j-1]
+        i
+        decrtos
+        leaword_indexed
+        storeword 2
+        loadword 0
+        i
+        leaword_indexed
+        storeword 3     ; &a[j]
+        loadword 2
+        loadword_offset 0
+        loadword 3
+        loadword_offset 0
+        subtract
+        jns 1f          ; if
+        loadword 3      ; swap
+        loadword_offset 0
+        loadword 2
+        loadword_offset 0
+        loadword 3
+        storeword_offset 0
+        loadword 2
+        storeword_offset 0
+    1:  continue
+        continue
+        ret
+
+That gets it down to 33 bytecode instructions, 34 bytes of bytecode,
+38 bytes in all, still 2.4 bytes per line.  It’s surprising, though,
+how little space those complicated compiler optimizations actually
+bought us: one measly byte!
+
+However, we did need *some* complicated compiler optimizations to use
+the above version.
+
+### Anduril `config_state_base` ###
+
+Let’s look at some BudgetLightForum flashlight firmware, because
+Anduril now compiles to over 8 KiB and so won't fit in some of the
+smaller AVRs.  Here’s a random 27-line function from
+`flashlight-firmware/ToyKeeper/spaghetti-monster/anduril/anduril.c`,
+with internal comments removed:
+
+    // ask the user for a sequence of numbers, then save them and return to caller
+    uint8_t config_state_base(Event event, uint16_t arg,
+                              uint8_t num_config_steps,
+                              void (*savefunc)()) {
+        static uint8_t config_step;
+        if (event == EV_enter_state) {
+            config_step = 0;
+            set_level(0);
+            return MISCHIEF_MANAGED;
+        }
+        else if (event == EV_tick) {
+            if (config_step < num_config_steps) {
+                push_state(number_entry_state, config_step + 1);
+            }
+            else {
+                savefunc();
+                save_config();
+                pop_state();
+            }
+            return MISCHIEF_MANAGED;
+        }
+        else if (event == EV_reenter_state) {
+            config_state_values[config_step] = number_entry_value;
+            config_step ++;
+            return MISCHIEF_MANAGED;
+        }
+        return EVENT_HANDLED;
+    }
+
+`Event` is `uint8_t`.  `config_step` is a “global variable” that no
+other functions use.  `EV_enter_state` is `(B_SYSTEM|0b00001000)`.
+`B_SYSTEM` is just 0, so `EV_enter_state` is just 8.
+`MISCHIEF_MANAGED` is `EVENT_HANDLED` which is 0. `EV_tick` is
+`(B_SYSTEM|0b00000001)` or 1.  `EV_reenter_state` is
+`(B_SYSTEM|0b00001010)`, or 10.  `config_state_values` is an array of
+3 `uint8_t`.  `number_entry_value` is a volatile global `uint8_t`.  So
+maybe that function would look something like this:
+
+    ; event and num_config_steps are two argument blob bytes; arg and
+    ; savefunc are two word args.
+    PROCEDURE config_state_base argwords=2 argblob=2
+    globals config_step
+        loadbyte_blob 0     ; event
+        lit8 8              ; EV_enter_state
+        subtract
+        jnz 1f              ; if ==
+        tinylit 0
+        storeglobal_byte config_step
+        tinylit 0
+        call set_level
+        tinylit 0
+        ret
+    1:  loadbyte_blob 0
+        tinylit 1           ; EV_tick
+        subtract
+        jnz 3f
+        loadglobal_byte config_step
+        loadbyte_blob 1     ; num_config_steps
+        subtract
+        jns 1f              ; if <
+        loadfuncptr number_entry_state
+        loadglobal_byte config_step
+        incrtos
+        call push_state
+        jmp 2f
+    1:  call savefunc
+        call save_config
+        call pop_state
+    2:  tinylit 0
+        ret
+    3:  loadbyte_blob 0
+        lit8 10             ; EV_reenter_state
+        subtract
+        jnz 1f
+        loadglobal_byte number_entry_value  ; config_state_values[config_step] = number_entry_value
+        leaglobal config_state_values
+        loadglobal_byte config_step
+        add
+        storeword_offset 0
+        loadglobal_byte config_step
+        incrtos
+        storeglobal_byte config_step
+        tinylit 0           ; return MISCHIEF_MANAGED
+        ret
+    1:  tinylit 0           ; return EVENT_HANDLED
+        ret
+
+That’s 44 bytecode instructions.  5 of these are calls, 2 are lit8s, 5
+are jumps, and 1 is loadfuncptr, and those 13 instructions will need a
+separate operand byte.  I think all the others can be single-byte
+instructions, so this would be 57 bytes of bytecode.  There would
+additionally be 2 bytes of procedure header, 2 bytes of subroutine
+table entry, and 1 or 2 bytes of global vector (to enable the function
+to refer to `config_step` with a 3-bit immediate index field), for a
+total of 63 bytes, which is about 2.3 bytes per line of code.
+
+(There’s questions here of how this kind of thing affects the
+instruction set, and whether there might be opcode space contention,
+but I feel like there was enough headroom previously that I shouldn’t
+worry about that.)
+
+The Anduril repo is fairly large; it draws from the 1703 SLOCCount
+lines of code in its parent directory and contains 2814 SLOCCount
+lines itself.  But the majority of these lines are `#ifdef`fed out in
+most configurations or are declarations or preprocessor directives.  A
+typical configuration might have 1200 logical lines of code (with
+semicolons) that actually make it through the preprocessor, a quarter
+of which are declarations.  But that still compiles to over 8 KiB of
+AVR code.  So, although I could be mistaken, I tentatively think that
+this sort of bytecode trick could be useful even for existing embedded
+projects that have gone to substantial trouble to fit into the
+limitations of tiny microcontrollers.
