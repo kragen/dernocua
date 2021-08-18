@@ -81,7 +81,8 @@ increment 1, VVVVVV encodes B0, F encodes +, the second CCCVVV encodes
 the ending counter value (255, say), the third CCCVVV encodes the
 starting counter value (0, say), and the final AAAAAAAAAAA encodes the
 address of the statement to jump to (the first statement inside the
-loop).
+loop).  This is 41 bits, plus 16 in the FOR token, for a total of 57
+bits per loop.
 
 [4]: http://www.mcmanis.com/chuck/robotics/stamp-decode.html
 
@@ -902,7 +903,8 @@ at the bottom of the loop:
 
 For the full C semantics, which loops zero times when n is 0, you’d
 need to initialize the counter to one *less than* the initial value
-and then unconditionally jump to that loop trailer.  Alternatively you
+and then unconditionally jump to that loop trailer;
+5 bytes per loop in total.  Alternatively you
 could reverse the sense of the conditional jump, put it at the top of
 the loop, and put the unconditional jump at the end of the loop.
 
@@ -928,6 +930,10 @@ And the inner loop as follows:
         fortosteploop
         ...
         continue
+
+These are respectively 4 bytes (32 bits) and 5 bytes (40 bits), which
+are significantly less than the BASIC Stamp’s 57 bits despite using a
+byte-oriented encoding.
 
 Instead of having Forth-like i, j, and k instructions, you could maybe
 stick the loop counter in a regular word-sized local variable, using a
@@ -1129,70 +1135,69 @@ but I feel like there was enough headroom previously that I shouldn’t
 worry about that.)
 
 I asked what this function looks like in AVR machine code; solrize
-generously provided the following compiler output for a slightly
-different version of the code, which I’ve trimmed down for
+generously provided the following assembler output listing for a
+slightly different version of the code, which I’ve edited down for
 readability:
 
-    config_state_base:
-            cpi r24,lo8(8)
-            brne .L348
-            sts config_step.2502,__zero_reg__
-            ldi r24,0
-            call set_level
-            lds r24,button_last_state
-            cpse r24,__zero_reg__
-            rjmp .L350
-            ldi r24,lo8(1)
-            sts config_step.2502,r24
-            rjmp .L362
-    .L348:  mov r25,r24
-            andi r25,lo8(-16)
-            cpi r25,lo8(-80)
-            brne .L351
-            lds r18,config_step.2502
-            cp r20,r18
-            brlo .L352
-            movw r24,r22
-            ldi r22,lo8(93)
-            ldi r23,0
-            call __udivmodhi4
-            sbiw r24,2
-            brne .L353
-            subi r18,lo8(-(1))
-            sts config_step.2502,r18
-            cp r20,r18
-            brlo .L350
-            ldi r24,lo8(56)
-            rjmp .L360
-    .L353:  ldi r24,lo8(18)
-            rjmp .L360
-    .L352:  ldi r24,0
-    .L360:  call set_level
-            rjmp .L350
-    .L351:  cpi r25,lo8(-32)
-            brne .L355
-            lds r24,config_step.2502
-            tst r24
-            breq .L361
-            cp r20,r24
-            brlo .L361
-    .L362:  ldi r22,0
-            ldi r23,0
-            ldi r24,lo8(gs(number_entry_state))
-            ldi r25,hi8(gs(number_entry_state))
-            call push_state
-            rjmp .L350
-    .L355:  cpi r24,lo8(10)
-            brne .L350
-            lds r22,number_entry_value
-            lds r24,config_step.2502
-            movw r30,r18
-            icall
-            call save_config
-    .L361:  call pop_state
-    .L350:  ldi r24,0
-            ret
-            .size   config_state_base, .-config_state_base
+     4121                   config_state_base:
+     4134 0fc0 8830                 cpi r24,lo8(8)                    ;     config_step = 0;
+     4135 0fc2 01F4                 brne .L348
+     4138 0fc4 1092 0000            sts config_step.2502,__zero_reg__ ;     set_level(0);
+     4141 0fc8 80E0                 ldi r24,0
+     4142 0fca 0E94 0000            call set_level
+     4145 0fce 8091 0000            lds r24,button_last_state         ;         config_step ++;
+     4146 0fd2 8111                 cpse r24,__zero_reg__
+     4147 0fd4 00C0                 rjmp .L350
+     4150 0fd6 81E0                 ldi r24,lo8(1)
+     4151 0fd8 8093 0000            sts config_step.2502,r24          ;         push_state(number_entry_state, 0);
+     4152 0fdc 00C0                 rjmp .L362
+     4154 0fde 982F         .L348:  mov r25,r24
+     4155 0fe0 907F                 andi r25,lo8(-16)
+     4158 0fe2 903B                 cpi r25,lo8(-80)                  ;     if (config_step <= num_config_steps) {
+     4159 0fe4 01F4                 brne .L351
+     4162 0fe6 2091 0000            lds r18,config_step.2502          ;         if (2 == (arg % (TICKS_PER_SECOND*3/2))) {
+     4163 0fea 4217                 cp r20,r18
+     4164 0fec 00F0                 brlo .L352
+     4167 0fee CB01                 movw r24,r22                      ;             config_step ++;
+     4168 0ff0 6DE5                 ldi r22,lo8(93)
+     4169 0ff2 70E0                 ldi r23,0
+     4170 0ff4 0E94 0000            call __udivmodhi4
+     4171 0ff8 0297                 sbiw r24,2
+     4172 0ffa 01F4                 brne .L353
+     4175 0ffc 2F5F                 subi r18,lo8(-(1))
+     4176 0ffe 2093 0000            sts config_step.2502,r18
+     4179 1002 4217                 cp r20,r18                        ;                 set_level(RAMP_SIZE * 3 / 8);
+     4180 1004 00F0                 brlo .L350
+     4183 1006 88E3                 ldi r24,lo8(56)                   ;         }
+     4184 1008 00C0                 rjmp .L360
+     4188 100a 82E1         .L353:  ldi r24,lo8(18)                   ;         }
+     4189 100c 00C0                 rjmp .L360
+     4193 100e 80E0         .L352:  ldi r24,0                         ;     }
+     4195 1010 0E94 0000    .L360:  call set_level
+     4196 1014 00C0                 rjmp .L350
+     4200 1016 903E         .L351:  cpi r25,lo8(-32)
+     4201 1018 01F4                 brne .L355
+     4204 101a 8091 0000            lds r24,config_step.2502          ;         push_state(number_entry_state, 0);
+     4205 101e 8823                 tst r24
+     4206 1020 01F0                 breq .L361
+     4209 1022 4817                 cp r20,r24                        ;         push_state(number_entry_state, 0);
+     4210 1024 00F0                 brlo .L361
+     4214 1026 60E0         .L362:  ldi r22,0                         ;     }
+     4215 1028 70E0                 ldi r23,0
+     4216 102a 80E0                 ldi r24,lo8(gs(number_entry_state))
+     4217 102c 90E0                 ldi r25,hi8(gs(number_entry_state))
+     4218 102e 0E94 0000            call push_state
+     4219 1032 00C0                 rjmp .L350
+     4223 1034 8A30         .L355:  cpi r24,lo8(10)
+     4224 1036 01F4                 brne .L350
+     4227 1038 6091 0000            lds r22,number_entry_value
+     4228 103c 8091 0000            lds r24,config_step.2502
+     4229 1040 F901                 movw r30,r18
+     4230 1042 0995                 icall
+     4233 1044 0E94 0000            call save_config                  ;     pop_state();
+     4237 1048 0E94 0000    .L361:  call pop_state                    ; }
+     4241 104c 80E0         .L350:  ldi r24,0
+     4242 104e 0895                 ret
 
 That’s 58 instructions, and with the 16-bit immediate address
 arguments for instructions like `sts` and `call`, it turns out to be
