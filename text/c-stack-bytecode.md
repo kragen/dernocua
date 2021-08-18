@@ -1,7 +1,9 @@
 What would a compact stack bytecode for C look like?  I think you
 could usually manage to compile to about 3 bytes per line of C code,
 which would enable you to run C programs of about 10kloc on an Arduino
-or about 300kloc on an Ambiq Apollo3.
+or about 300kloc on an Ambiq Apollo3, in exchange for nearly an order
+of magnitude worse power usage and runtime for the interpreted code.
+This could expand the uses of such small computers dramatically.
 
 Why?
 ----
@@ -1125,6 +1127,77 @@ total of 63 bytes, which is about 2.3 bytes per line of code.
 instruction set, and whether there might be opcode space contention,
 but I feel like there was enough headroom previously that I shouldn’t
 worry about that.)
+
+I asked what this function looks like in AVR machine code; solrize
+generously provided the following compiler output for a slightly
+different version of the code, which I’ve trimmed down for
+readability:
+
+    config_state_base:
+            cpi r24,lo8(8)
+            brne .L348
+            sts config_step.2502,__zero_reg__
+            ldi r24,0
+            call set_level
+            lds r24,button_last_state
+            cpse r24,__zero_reg__
+            rjmp .L350
+            ldi r24,lo8(1)
+            sts config_step.2502,r24
+            rjmp .L362
+    .L348:  mov r25,r24
+            andi r25,lo8(-16)
+            cpi r25,lo8(-80)
+            brne .L351
+            lds r18,config_step.2502
+            cp r20,r18
+            brlo .L352
+            movw r24,r22
+            ldi r22,lo8(93)
+            ldi r23,0
+            call __udivmodhi4
+            sbiw r24,2
+            brne .L353
+            subi r18,lo8(-(1))
+            sts config_step.2502,r18
+            cp r20,r18
+            brlo .L350
+            ldi r24,lo8(56)
+            rjmp .L360
+    .L353:  ldi r24,lo8(18)
+            rjmp .L360
+    .L352:  ldi r24,0
+    .L360:  call set_level
+            rjmp .L350
+    .L351:  cpi r25,lo8(-32)
+            brne .L355
+            lds r24,config_step.2502
+            tst r24
+            breq .L361
+            cp r20,r24
+            brlo .L361
+    .L362:  ldi r22,0
+            ldi r23,0
+            ldi r24,lo8(gs(number_entry_state))
+            ldi r25,hi8(gs(number_entry_state))
+            call push_state
+            rjmp .L350
+    .L355:  cpi r24,lo8(10)
+            brne .L350
+            lds r22,number_entry_value
+            lds r24,config_step.2502
+            movw r30,r18
+            icall
+            call save_config
+    .L361:  call pop_state
+    .L350:  ldi r24,0
+            ret
+            .size   config_state_base, .-config_state_base
+
+That’s 58 instructions, and with the 16-bit immediate address
+arguments for instructions like `sts` and `call`, it turns out to be
+144 bytes of AVR machine code, 5.3 bytes per line of code, 2.3 times
+the size of as the strawman bytecode above.
 
 The Anduril repo is fairly large; it draws from the 1703 SLOCCount
 lines of code in its parent directory and contains 2814 SLOCCount
