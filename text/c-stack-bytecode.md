@@ -8,6 +8,11 @@ This could expand the uses of such small computers dramatically.
 Why?
 ----
 
+There are two major reasons to do this: to pack more functionality
+into less memory and to improve in-application programmability.
+
+### To pack more functionality into less memory ###
+
 There are lots of microcontrollers around now, but for traditional
 personal computing purposes they have more speed than needed and less
 memory.  The 3¢ Padauk microcontrollers (the PMS150 family) as
@@ -70,6 +75,24 @@ machine code:
 In exchange for this 4.9× code compression, they accepted about a 6.4×
 interpretive slowdown.
 
+The [Aztec C compiler for the Apple][8] included a bytecode mode to
+reduce space, and you could compile only part of your program with it:
+
+> As an alternative, the pseudo-code C compiler, CCI, produces machine
+> language for a theoretical machine with 8, 16 and 32 bit
+> capabilities.  This machine language is interpreted by an assembly
+> language program that is about 3000 bytes in size.
+>
+> The effects of using CCI are twofold.  First, since one instruction
+> can manipulate a 16 or 32 bit quantity, the size of the compiled
+> program is generally more than fifty percent smaller than the same
+> program compiled with C65 [the Aztec C native code compiler for the
+> 6502].  However, interpreting the pseudo-code incurs an overhead
+> which causes the execution speed to be anywhere from five to twenty
+> times slower.
+
+[8]: http://www.clipshop.ca/Aztec/docs/AztecC_minimanual.txt "Manx Aztec C mini-manual, 01983"
+
 Chuck McManis [famously reverse-engineered the Parallax BASIC
 Stamp][4], based on a PIC16C56, and found that it used a
 variable-bit-length “bytecode” system to take maximum advantage of the
@@ -86,7 +109,7 @@ bits per loop.
 
 [4]: http://www.mcmanis.com/chuck/robotics/stamp-decode.html
 
-How big is functionality?  The original [MacOS Finder was 46KiB][5]
+How big is, uh, functionality?  The original [MacOS Finder was 46KiB][5]
 and fit on a 400KiB floppy with MacOS (“System”) and an application
 and a few documents, making it possible to use the Macintosh with a
 single floppy, though drawing on the [128KiB of ROM including
@@ -111,16 +134,48 @@ seems plausible but difficult, you could fit MacPaint into about
 
 There’s a nonlinear benefit to this kind of thing, too: the
 functionality of software comes more from interactions among the
-components than from individual components.  If you can fit 6000 lines
-of code into your Arduino, there are four times as many potential
-interactions as if you can only fit 3000 lines of code in.
+components than from individual components.  If you can fit 12000 lines
+of code into your Arduino, there are nine times as many potential
+pairwise interactions as if you can only fit 4000 lines of code in.
+At least potentially, it's an order-of-magnitude increase in system
+functionality.
+
+### To facilitate programmability ###
 
 So, the primary objective is to fit more functionality into less
-memory.  But a secondary objective is to add in-application
-programmability to one-time-programmable devices like the PMS150C, and
-make in-application programmability easier for Harvard-architecture
-devices like the AVR and the GD32VF, which can’t execute native code
-from RAM.
+memory.  But a secondary objective is to improve “in-application
+programmability” (that is, reprogrammability without popping the
+microcontroller out of its ciruit and into a PROM burner) and thus
+flexibility.
+
+Such a bytecode can help overcome several different obstacles to
+in-application programmability.
+
+One-time-programmable devices like the PMS150C can only have code
+burned into them once; any further changes requires either making that
+code do different things based on what’s in RAM, or replacing the chip
+with a fresh, unburned chip (3.18¢ according to file
+`minimal-cost-computer.md` in Derctuo — but taking advantage of that
+potentially involves desoldering and/or waiting for a package in the
+mail).  It has 1024 words of PROM but only 64 bytes of RAM, but like
+the AVR and the GD32VF, it’s a Harvard-architecture device, so it
+can’t execute native code from RAM.  Only some kind of interpreter can
+make it programmable.
+
+Moreover, RAM is often small, but loading code into RAM is easier than
+loading code into program memory, when that is possible at all.  The
+PMS150C’s 64 bytes of RAM is enough for about 15 or 20 lines of C
+using a compact bytecode, but would be only about 5 lines of C using
+native code.  (And in practice you probably only have about 48 of
+those bytes, since you need a few for stack and variables.)  The 82¢
+ATTiny1614 I mentioned earlier has 16384 bytes of Flash but only 2048
+bytes of RAM; 2048 bytes is enough for 500—800 lines of C.
+
+Finally, compiling to bytecode can be considerably easier than
+compiling to native code, which makes it more feasible to include a
+compiler in the device itself.  Its input format doesn’t necessarily
+have to be C; it might be something like ladder logic,
+scientific-calculator formulas, or keyboard macros.
 
 How?
 ----
@@ -229,8 +284,8 @@ stack frame.  On the other hand, you could very reasonably allocate
 word-sized local variables in a separate area, even if you take their
 addresses.
 
-Sketches
---------
+A sketch with a low-level bytecode
+----------------------------------
 
 Let’s look at some examples of what bytecode-compiled subroutines
 might look like.  My examples so far, with a strawman bytecode I made
