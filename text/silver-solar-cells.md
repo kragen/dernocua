@@ -66,7 +66,7 @@ million troy ounces is 2470 tonnes; and 94.1 million troy ounces is
 year is 92.7 grams per second.)
 
 Clearly the article is in error about global industrial demand for
-silver, both because it's an order of magnitude too high and because
+silver, both because it’s an order of magnitude too high and because
 an increase of 222 million ounces per year cannot be “mainly due to”
 an increase of 15 million ounces per year.
 

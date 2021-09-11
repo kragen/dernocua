@@ -52,9 +52,18 @@ aluminum to the chloride rather than the hydroxide or the oxide.
 
 50¢/m² is 50¢/kWp in a solar concentrator, or 0.05¢/Wp, which is
 noticeably cheaper than photovoltaic cells, currently around 18¢/Wp,
-360 times more expensive.  A large aluminum-foil assembly would be
+360 times more expensive.  (However, the foil number there is sunlight
+watts; if you’re making a PV solar concentrator you have to divide by
+the efficiency of the solar cells, say 21%, which gives you 0.24¢/Wp
+electric.)  A large aluminum-foil assembly would be
 vulnerable to significant deflections, but many small assemblies could
 be placed on a hard, stable surface such as a rock or an adobe wall.
+
+Alternatively, though, it might be possible to stiffen the foil by
+making the equivalent of corrugated cardboard out of it, maybe using
+aqueous boric acid (US$1.70/kg according to file `refractories.md`) or
+borax as the glue.  The surface tension of water is ample to hold
+aluminum foil in place until the water dries.
 
 The feature that currently attracts my attention is the possibility of
 work-hardening, which suggests the tempting possibility of making
@@ -207,3 +216,16 @@ expansion and contraction: it would just expand isotropically rather
 than bending or sliding to do useful work.  It might be possible to
 use just aluminum foil coated on one side with something else, such as
 glass or a few microns of aluminum oxide.
+
+An interesting way to think of the density of aluminum foil is that
+10 μm of 2.71-g/cc aluminum foil is 27.1 g/m², which is the same areal
+density as a 23-mm-high column of air.
+
+Other processes that may be very interesting to apply to aluminum foil
+include electrolytic machining, electric discharge machining, scanning
+probe microscopy, and anodization.  Electrolytic machining might make
+it possible to use an aluminum-foil tool to cut arbitrary shapes into
+metals such as steel, invar, brass, inconel, monel, or tungsten, and
+also to transform a scrap of aluminum foil (either flat or of a known
+geometry) into a white-light hologram of an arbitrary optical system,
+Fresnel-reflector-style.

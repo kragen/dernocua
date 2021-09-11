@@ -75,8 +75,9 @@ machine code:
 In exchange for this 4.9× code compression, they accepted about a 6.4×
 interpretive slowdown.
 
-The [Aztec C compiler for the Apple][8] included a bytecode mode to
-reduce space, and you could compile only part of your program with it:
+The [Aztec C compiler for the Apple][8] ([available for free
+download][9])included a bytecode mode to reduce space, and you could
+compile only part of your program with it:
 
 > As an alternative, the pseudo-code C compiler, CCI, produces machine
 > language for a theoretical machine with 8, 16 and 32 bit
@@ -92,6 +93,7 @@ reduce space, and you could compile only part of your program with it:
 > times slower.
 
 [8]: http://www.clipshop.ca/Aztec/docs/AztecC_minimanual.txt "Manx Aztec C mini-manual, 01983"
+[9]: http://aztecmuseum.ca/intro.htm
 
 Chuck McManis [famously reverse-engineered the Parallax BASIC
 Stamp][4], based on a PIC16C56, and found that it used a
@@ -112,8 +114,9 @@ bits per loop.
 How big is, uh, functionality?  The original [MacOS Finder was 46KiB][5]
 and fit on a 400KiB floppy with MacOS (“System”) and an application
 and a few documents, making it possible to use the Macintosh with a
-single floppy, though drawing on the [128KiB of ROM including
-LisaGraf/QuickDraw][6]; MacPaint was under 50 KB and consisted of
+single floppy, though drawing on the [64KiB of ROM][11] including
+[LisaGraf/QuickDraw][6] (the [128KiB ROM didn’t arrive until
+the Mac Plus?][10]); MacPaint was under 50 KB and consisted of
 [5804 lines of Pascal and 2738 lines of assembly][7], but that
 includes blank lines and comments and excludes MyHeapAsm.a and
 MyTools.a.  A more reliable figure is 4688 lines of Pascal and 2176
@@ -126,11 +129,13 @@ under 9.8 bytes of compiled code per line.
 
 If you could get 4 bytecode bytes per Pascal-level line of code, which
 seems plausible but difficult, you could fit MacPaint into about
-20 KB.
+20 KB.  The same 2.5× compression would reduce the Mac ROM to 26 KB.
 
 [5]: https://www.folklore.org/StoryView.py?project=Macintosh&story=The_Grand_Unified_Model_The_Finder.txt "The Grand Unified Model.  CC-BY-NC"
 [6]: https://www.folklore.org/StoryView.py?project=Macintosh&story=MacPaint_Evolution.txt&sortOrder=Sort+by+Date&topic=QuickDraw "MacPaint Evolution.  CC-BY-NC"
 [7]: https://computerhistory.org/blog/macpaint-and-quickdraw-source-code/ "MacPaint and QuickDraw source code, licensed for non-commercial use."
+[10]: https://www.folklore.org/StoryView.py?project=Macintosh&story=Font_Manager.txt&sortOrder=Sort+by+Date&topic=QuickDraw "Font Manager Redux.  CC-BY-NC"
+[11]: https://en.wikipedia.org/wiki/Macintosh_128K
 
 There’s a nonlinear benefit to this kind of thing, too: the
 functionality of software comes more from interactions among the
@@ -175,7 +180,7 @@ Finally, compiling to bytecode can be considerably easier than
 compiling to native code, which makes it more feasible to include a
 compiler in the device itself.  Its input format doesn’t necessarily
 have to be C; it might be something like ladder logic,
-scientific-calculator formulas, or keyboard macros.
+scientific-calculator formulas, keyboard macros, Lisp, or Forth.
 
 How?
 ----
@@ -1000,7 +1005,7 @@ approach above:
         loadword 1
         fortoloop
         i               ; outer loop counter, currently topmost
-        0
+        tinylit 0
         tinylit -1
         fortosteploop
         loadword 0
@@ -1010,19 +1015,19 @@ approach above:
         loadword 0
         i
         loadword_indexed
-        subtract
-        jns 1f
-        loadword 0
-        i
+        subtract        ; if not <
+        jns 1f          ; skip body
+        loadword 0      ; a[j] → tmp
+        i             
         loadword_indexed
         storeword 2
-        loadword 0
+        loadword 0      ; a[j-1] → a[j]
         i
         decrtos
         loadword 0
         i
         storeword_indexed
-        loadword 2
+        loadword 2      ; tmp → a[j-1]
         loadword 0
         i
         decrtos
@@ -1079,6 +1084,9 @@ bought us: one measly byte!
 
 However, we did need *some* complicated compiler optimizations to use
 the above version.
+
+XXX what if we use the dumber loop operations?  how about if we don’t
+inline?
 
 ### Anduril `config_state_base` ###
 
@@ -1270,3 +1278,221 @@ AVR code.  So, although I could be mistaken, I tentatively think that
 this sort of bytecode trick could be useful even for existing embedded
 projects that have gone to substantial trouble to fit into the
 limitations of tiny microcontrollers.
+
+A sketch with an AST bytecode
+-----------------------------
+
+The above design corresponds pretty closely to machine operations,
+although in some cases several of them.  But, for example,
+`loadbyte_blob 0` pushes a byte onto the stack from the beginning of
+blob space.
+
+A disadvantage of this is that, in a way, the type of every variable
+is encoded redundantly all over the program.  Every time `config_step`
+is loaded or stored, the `loadglobal_byte` or `storeglobal_byte`
+instruction repeats the fact that it’s a byte.  This is fast but uses
+up a lot of the 32 possible baryonic opcodes: you need the cross
+product of {lea, load, store}, {global, local}, and {word, byte},
+which is 12, and at some point you need to handle longs too, which
+I’ve given short shrift to above, and maybe long longs, at which point
+you’d be at 24.  (The load and store instructions that use computed
+pointers on the operand stack could be leptonic, although in the above
+sketch they contain a rarely-used offset in their operand field, but
+the global and local instructions need an operand field to specify
+which global or local variable they’re referring to.  Potentially you
+could supply the long (or short, on a 32-bit system) and long long
+versions only in leptonic form so they always take a pointer from the
+stack.)
+
+But you could imagine storing the fact that `config_step` is a byte
+just once, in the `config_step` object, and just having `loadglobal`
+consult that information.  Moreover, you could even eliminate the
+distinct types of `storeword_offset` etc. if the pointers on the stack
+carried a data type with them (which could be overridden by an
+explicit cast operation).
+
+In a sense, your virtual machine ends up being dynamically typed,
+purely in order to reduce the number of distinct opcodes; it mirrors
+the structure of the C source code, where type information is confined
+to variable declarations rather than replicated across all uses of the
+variables.  Aside from potentially making more efficient use of opcode
+space (and thus getting a more compact bytecode) such dynamic typing
+might be beneficial in two other ways: it might be friendlier for
+interactive use, and it might allow library functions to be
+polymorphic, so you could just invoke a linear-search function rather
+than writing a linear-search loop.
+
+Self took this approach further; because its bytecode was intended for
+JIT-compiling rather than direct interpretation, it was very nearly
+just an abstract syntax tree of the Self program.  Could this provide
+a more compact representation?  Consider my isort example above:
+
+    void
+    isort(int *a, size_t n)
+    {
+      for (size_t i = 1; i < n; i++) {
+        for (size_t j = i; j > 0; j--) {
+          if (a[j-1] > a[j]) {
+             int tmp = a[j];
+             a[j] = a[j-1];
+             a[j-1] = tmp;
+          }
+        }
+      }
+    }
+
+As an S-expression, its abstract syntax tree might look like this:
+
+    (function isort ((pointer int) unsigned) ; argument types, words 0 and 1
+                    (unsigned unsigned int)  ; local types, words 2, 3, 4
+       (forto (word 2) (const 1) (word 1)    ; i is word 2, n is word 1
+          (fortostep (word 3) (word 2) (const 0) (const -1)
+             (if (> (aref (word 0) (- (word 3) (const 1))) (aref (word 0) (word 3)))
+                (progn
+                    (setf (word 4) (aref (word 0) (word 3)))
+                    (setf (aref (word 0) (word 3)) (aref (word 0) (- (word 3) (const 1))))
+                    (setf (aref (word 0) (- (word 3) (const 1))) (word 4))))))))
+
+Most of the node types here have a fixed arity; the exceptions are
+`progn` and the function arguments and locals.  So if we wanted to
+build up this tree in RPN, we could use a setf operation that pops two
+expressions off the stack and pushes a setf node, and so on, but for
+`progn` we’d need some kind of marker.  A dumb way of writing this
+down might be:
+
+    isort:
+        [        ; begin list
+        int
+        pointer  ; make pointer of int
+        unsigned
+        ]        ; end argument type list
+        [        ; begin local variable type list
+        unsigned
+        unsigned
+        int
+        ]
+        word 2   ; (for) i =
+        const 1  ; 1 to
+        word 1   ; n
+        word 3   ; (for) j =
+        word 2   ; i to
+        const 0  ; 0 step
+        const -1 ; -1
+        word 0   ; a[
+        word 3
+        const 1
+        -
+        aref     ; ]
+        word 0   ; a[
+        word 3
+        aref     ; ]
+        >
+        [        ; progn
+        word 4   ; tmp =
+        word 0   ; a[
+        word 3   ; j
+        aref     ; ]
+        setf
+        word 0
+        word 3
+        aref
+        word 0
+        word 3
+        const 1
+        -
+        aref
+        setf
+        word 0
+        word 3
+        const 1
+        -
+        aref
+        word 4
+        setf
+        ]progn
+        if
+        fortostep
+        forto
+
+By my count, this is 52 AST-node building operations, each quite
+plausibly encodable in a byte; `const 1` corresponds rather closely to
+`tinylit 1`, `word 3` to `loadword 3`, etc.  It’s pretty hard to read,
+as stack-machine code often is, because the context that gives meaning
+to the for-loop stuff at the beginning isn't provided until half a
+page later.  The type-building operations could conceivably use a
+separate encoding from the expression-building operations like `aref`
+and `-`, which could conceivably use a separate encoding from the
+statement-building operations like `if`, `forto`, and `]progn`, but
+that would probably also require a REBOL-like or LOGO-like non-reverse
+Polish notation approach.  That might look like this.  The `.` token
+represents a byte that terminates a variable-length thing like a
+progn; `word.2` represents a byte with `2` packed into the low 3 bits.
+
+    function isort pointer int unsigned .
+                   unsigned unsigned int .
+       forto word.2 const.1 word.1
+          fortostep word.3 word.2 const.0 const.-1
+             if > aref word.0 - word.3 const.1  aref word.0 word.3
+                progn
+                    setf word.4 aref word.0 word.3
+                    setf aref word.0 word.3  aref word.0 - word.3 const.1
+                    setf aref word.0 - word.3 const.1  word.4
+                .
+
+(I’m not suggesting that writing in this format would be a good way to
+program, just trying to write out the contents of the sketched
+bytecode in a way that’s easy to run through `wc` and easy to see if I
+left something out of.)
+
+These 52 tokens are almost the same tokens as before, but in a
+different order.  My earlier lower-level sketch of this using
+fortoloop and fortosteploop and no CSE was more compact for the
+following reasons:
+
+- It doesn’t have 8 or more bytes of procedure header.
+- It doesn’t specify where to store the loop counters; instead they
+  are stored on a loop counter stack, saving 2 bytes.
+- Instead of saying `- word.3 const.1` it uses `decrtos`, saving 3
+  bytes.
+- Instead of `if >` it uses `subtract; jns`, but that's a wash.
+- Instead of `setf aref`, it uses `storeword_indexed`, and instead of
+  `setf word`, it uses `storeword`, saving 3 bytes.
+- Instead of using `progn ... .` to delimit the innermost block, it
+  uses `continue; continue; ret`, which ought to use one *more* byte.
+
+So it was 34 bytes, and 34 + 8 + 2 + 3 + 3 - 1 = 51, which I think is
+everything but the “function isort” at the beginning.
+
+If we apply the applicable improvements from the above, we get:
+
+    function isort pointer int unsigned .
+                   int .
+       forto const.1 word.1
+          fortostep i const.0 const.-1
+             if > aref word.0 1- i  aref word.0 i
+                progn
+                    setword.4         aref word.0 i
+                    aset word.0 i     aref word.0 1- i
+                    aset word.0 1- i  word.4
+                .
+
+This gets us down to, say, 40 bytes, which is still worse than the
+low-level bytecode version.
+
+It’s a little annoying that `aref` needs to be explicit; in Forth you
+can define and use an array-creating word as follows:
+
+    : array create cells allot does> swap cells + ;  ok
+    5 array myarray  ok
+    57 0 myarray !  68 1 myarray !  ok
+    0 myarray ?  1 myarray ? 57 68  ok
+
+Here we have defined a 5-entry array called `myarray` and stored 57 in
+its entry 0 and 68 in its entry 1.  No explicit `aref` is needed, but
+this being Forth, an explicit `?` or `@` is needed to fetch from it in
+rvalue context anyway!  But we could imagine avoiding that in an AST
+format designed for C, somehow.
+
+However, aside from being (it seems) bulkier than the low-level
+approach, this structure seems like it would be much more difficult to
+interpret.

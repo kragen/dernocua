@@ -157,3 +157,6 @@ flexed much.  Gypsum is more expensive, but lighter and more flexible,
 so it might be a better option.  Gypsum used as a binder for other
 lightweight, stiff aggregate such as expanded perlite might be better
 still.
+
+File `sandwich-panel-optimization.md` has notes on how to get the
+cheapest sandwich panels for a given stiffness.

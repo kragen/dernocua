@@ -17,7 +17,8 @@ seawater, and with less useless ions.  Seawater is only 0.13%
 magnesium and 0.04% calcium, so the large majority of cations you’ll
 attract to the cathode are sodium (it’s 1.1% sodium).  (Simply boiling
 down seawater, or drying it out in ponds, to crystallize out most of
-the sodium chloride, would greatly improve the situation.)  Making
+the sodium chloride leaving [bitterns][14],
+would greatly improve the situation.)  Making
 most of the cations something that can participate in the
 mineralization reaction ought to boost the Faraday efficiency of the
 process by a factor of 6 or so.
@@ -29,7 +30,7 @@ would need to be, though [it gives calcium bicarbonate’s solubility as
 ions are 0.14% of all dissolved ions in seawater, which is 3.5%
 dissolved ions, so maybe that’s about 5 mg/100 mℓ already (depending
 on whether those numbers are both by weight, or whether one of them is
-molar).  Alternatively, magnesium hydroxide, brucite, Mohs 2.5–3,
+molar).  Alternatively, magnesium hydroxide (brucite, Mohs 2.5–3),
 might be a more practical primary electrolytic mineral accretion
 material.  However, maybe enough dissolved choke-damp could enable
 higher chalk deposition rates.
@@ -63,7 +64,7 @@ household freezer) setup, and depending on the voltage, it might be
 to reach 10–60% Faraday efficiency in real life.
 
 These 10 A/dm² would be 93 “amps per square foot” in the medieval
-units used by electroplating shops in the US, which is on the high end
+units used by US electroplating shops, which is on the high end
 of the current levels commonly used for electroplating, so it may be a
 little high but it’s not outrageously so.  Nickel sulfamate baths for
 nickel plating are operated as high as 15 A/dm² at the cathode.
@@ -74,6 +75,19 @@ us 0.650 mg of smithsonite per coulomb, or 6.5 mg/s at 10 A, or
 23.4 g/hour, and over 100 cm² that’s... 0.52 mm/hour.  I was hoping
 for a way more exciting number, but I guess the higher density of the
 smithsonite mostly cancels out its higher molar mass.
+
+In theory you can use higher current densities than that, but if you
+keep increasing the current density eventually you will boil your
+electrolyte; there’s also the risk of primary nucleation somewhere
+other than your cathode, forming a particle which might be swept away
+and consumed.  Somewhere in between, though, I suspect you might be
+able to control the porosity with current density; higher or lower
+porosities might be desirable in different situations.  In particular,
+higher porosity will give you higher strength, hardness, and density,
+while lower porosity will give you easier ionic conduction, faster
+mineralization (at least volumetrically), higher filler fractions (if
+you’re using fillers), and greater flexural rigidity per material
+mass.
 
 Temperature and pressure
 ------------------------
@@ -143,7 +157,8 @@ surrounding the cathode within it.
 Clays are commonly used as functional fillers in plastics, but I
 suspect that they might be counterproductive in this application,
 since even kaolin contracts significantly when dried.  Less
-hygroscopic phyllosilicates like mica and talc can fill their role.
+hygroscopic phyllosilicates like mica and talc can fill their role;
+so, too, could platy nanocrystals of non-phyllosilicate minerals.
 
 Normally in electrodeposition dendrites are to be avoided, since they
 screw up the geometry.  But in this case it might be worthwhile to
@@ -251,8 +266,8 @@ conditions you’ll get iron oxides and oxyhydroxides.
 Nickel, cobalt, and copper plating out as metals might be a more
 difficult problem to solve.
 
-Post-hoc carbonatation
-----------------------
+Carbonatation
+-------------
 
 If only a metal hydroxide forms, it is likely possible to convert it
 to a carbonate afterwards by exposing it wet to air or choke-damp, at
@@ -281,8 +296,30 @@ would probably produce only gibbsite.
     | nickel    | theophrastite (3.5)       | gaspéite (4.5)       |
     | cobalt    | (rather unstable)         | spherocobaltite (4)  |
     | zinc      | soluble rare sweetite (3) | smithsonite (4.5)    |
-    |           |                           | (calamine)           |
+    |           |                           | (a type of calamine) |
     | beryllium | behoite (4)               | ??? soluble          |
+
+I think you could probably directly precipitate the carbonates by
+keeping enough choke-damp dissolved in the water under pressure and
+low temperature, which in most cases would produce a stronger result.
+
+Goethite (FeOOH) is particularly interesting as the hardest mineral in
+this table; limpets use goethite *fibers* (whiskers) to harden their
+radula teeth, achieving [tensile strengths of 3.0–6.5 GPa][20],
+several times higher than Kevlar, any steel, or even spider silk,
+which is how limpets can literally eat rocks; the elastic modulus
+measured 120 GPa.  Probably electrolytic deposition is not a useful
+way to grow whiskers, much less protein/whisker nanocomposite
+metamaterials, but it’s useful to have this approximation to
+goethite’s mechanical properties.
+
+Goethite is formed naturally through, among other processes, the
+oxidation of siderite (FeCO₃), a process I suppose must swallow water
+and throw off choke-damp and hydrogen.  Ferrous ions tend to oxidize
+to ferric in the atmosphere, and there seems to be no ferric
+carbonate.
+
+[20]: https://royalsocietypublishing.org/doi/full/10.1098/rsif.2014.1326 "Extreme strength observed in limpet teeth, by Asa H. Barber, Dun Lu, and Nicola M. Pugno, 02015-04-06, J. R. Soc. Interface 12: 20141326, 10.1098/rsif.2014.1326, CC-BY"
 
 Firing the result
 -----------------
@@ -420,12 +457,12 @@ strontium, and barium are reasonably water-insoluble, but even calcium
 bisulfate doesn’t seem to exist at all, except in homework-cheating
 websites and the catalogs of fraudulent chemical merchants.
 
-The other polyprotic acids I’m familiar with are similarly unhelpful;
-nobody knows what hydrogenchromates would look like, and hydrosulfide
-(“bisulfide”) and hydrogenoxalate (“bioxalate”) are similar to
-bisulfate, with soluble sodium, potassium, and ammonium compounds but
-no polyvalent cations.  Potassium bioxalate is notable as “salt of
-sorrel”; I'm not sure there’s a (di)potassium oxalate.
+The other polyprotic acids I’m familiar with are mostly similarly
+unhelpful; nobody knows what hydrogenchromates would look like, and
+hydrosulfide (“bisulfide”) and hydrogenoxalate (“bioxalate”) are
+similar to bisulfate, with soluble sodium, potassium, and ammonium
+compounds but no polyvalent cations.  Potassium bioxalate is notable
+as “salt of sorrel”; I’m not sure there’s a (di)potassium oxalate.
 
 I’m not sure about citrate, which is triprotic.  The magnesium/citrate
 system does at least have known trimagnesium and (highly soluble)
@@ -442,19 +479,469 @@ tektoborates.  Boracite (Mohs 7–7.5, “very slowly soluble in water”)
 is a tektoborate Mg₃B₇O₁₃Cl, which I guess is sort of like
 trimagnesium heptaborate.  The other known tektoborates are
 chambersite (same thing but with manganese) and hilgardite (same thing
-but with calcium and a different crystal structure).  Why chlorine is
-always involved in these tektoborates is a mystery to me (well,
-londonite and rhodizite lack it, but they're beryllium-based and may
-lack boron entirely).  There’s a pure calcium borate called nobleite
-(Mohs 3) which is a phylloborate.
+but with calcium (2½ borons per calcium) and a different crystal
+structure).  Why chlorine is always involved in these tektoborates is
+a mystery to me (well, londonite and rhodizite lack it, but they’re
+beryllium-based and may lack boron entirely).  There’s a pure calcium
+borate called nobleite (Mohs 3, 6 borons per calcium) which is a
+phylloborate, and another called colemanite (Mohs 4.5, 3 borons per
+calcium) which is an inoborate.
+
+I suspect the calcium borates might work for this: if the overall
+electrolyte is mostly dilute boric acid with some anions to help keep
+calcium dissolved (chloride or acetate, say) maybe the calcium
+concentration around the cathode would get high enough to precipitate
+insoluble calcium borates.  But I’m just speculating, lacking any real
+evidence that you could maintain an adequately soluble calcium/borate
+electrolyte at any pH.  Magnesium borates are maybe more promising
+given their natural occurrence.
 
 It would be really interesting if you could solidify waterglass
 electrolytically; maybe you could drive out those pesky alkali ions
 that reduce its hardness and glass transition temperature so badly.
 You’d be left with a silica gel rather than fused quartz, though.
+(See below about Veeraraghavan et al., who seem to have had success.)
 
 There are about another 35 inorganic polyprotic [oxoacids][11] known
 that might conceivably support the same kind of mineralization as
-carbonic acid.
+carbonic acid, but I mostly don’t know anything about them.
 
 [11]: https://en.wikipedia.org/wiki/Oxyacid
+
+3-D printing stone by directing electric fields
+-----------------------------------------------
+
+The mineralization reaction, like any electrodeposition reaction, can
+be limited by ion concentrations or by electric field strength.  By
+using a pointed anode, especially one that’s insulated except for the
+tip, you can concentrate the electric field in a particular area and
+thus accelerate the electrodeposition there.  By varying the current
+through several such anodes, you can vary the electric field
+spatially, and possibly also the ion concentration; so by moving them
+around you can perhaps deposit stone where you like.  In the more
+immediate vicinity of the anodes, however, you form acid, which will
+*erode* hydroxide and carbonate minerals.
+
+Demolding
+---------
+
+Suppose you electrolytically mineralize a thick sheet of hydroxide or
+carbonate stone onto one surface of a metal sheet cathode which has
+been bent into some sort of desirable shape.  If you now reverse the
+polarity of the electrolysis, acid should form at the surface of the
+old cathode and attack the part of the stone that’s in direct contact
+with it; in most cases, this will dissolve it, although there are
+exceptions such as sulfate attacking calcium compounds or phosphate
+attacking most things.  Then you can remove the stone from the old
+cathode easily.  This could enable the use of such a metal sheet as a
+reusable mold in a process similar to pottery slipcasting, making many
+stone copies of the same metal form.
+
+The anodic dissolution process will tend to attack the form, but it’s
+probably possible to get a long form life anyway with metals that are
+fairly resistant to that kind of attack, like lead, chromium, gold, or
+platinum.  And it may not be a very serious problem, since the stone
+will quickly neutralize the acid thus generated.
+
+Previous work
+-------------
+
+Sometimes a month in the lab can save you an hour in the library.
+What does the library have to say about this stuff?
+
+### Deng et al. ###
+
+[Deng et al.][15] report Faraday efficiencies of 50% to 76.5% in
+electrolytic precipitation of 99.6% pure magnesium hydroxide with a
+100cm² graphite anode 4 cm from a stainless cathode of the same size,
+with a room-temperature electrolyte of 100 g of magnesium chloride
+hexahydrate dissolved in 2 ℓ of deionized water and <1% Na⁺, running
+40 mA/cm² (thus 4 A) for 4 h.  They report the best efficiency at
+0.5mol/ℓ Mg⁺⁺.  This paper tells me exactly what I wanted to know on
+the first page (the reproducible setup for their experiment and their
+major results); the only missing information is the voltage.
+
+The paper then goes on to explain what factors they found affect
+Faraday efficiency: low magnesium concentrations lower Faraday
+efficiency; current densities below 40 mA/cm² also lower Faraday
+efficiency (above which it’s basically constant, though they only
+tried up to 70 mA/cm², i.e., 7 A/dm² or 700 A/m²), which is the
+opposite of what I expected; so do interelectrode distances under 4 cm
+because they allow the MgCl₂ to recombine; so do Na⁺ concentrations
+under 1% (because they increase electrolyte resistance) or of 3% or
+over (for obvious reasons), dropping Faraday efficiency from 70.5% at
+1% Na⁺ down to 65% at 10% Na⁺.  They don’t say whether that’s weight
+percentage or mole percentage, or whether the denominator is the salt,
+the cations, or the solution.
+
+The brucite precipitated was in the form of 40–200 nm nanoparticles,
+so it must have been a royal pain in the ass to filter out.
+
+My only complaint is that I would have liked to see some numbers from
+particular runs, though, including the actual measured mass of the
+dried magnesium hydroxide rather than the calculated Coulomb
+efficiency.
+
+At 76.5% faradaic efficiency they’d be getting 36.9 kilocoulombs per
+mole of brucite (2.3446 g/cc, 58.3197 g/mol), thus 1.58 mg/C and
+0.674 μℓ/C, or the other way around, 1.48 MC/ℓ or 633 kC/kg.  If we
+suppose that they were using 3 V, which has to be in the ballpark,
+then that’s 4–5 MJ/ℓ or about 2 MJ/kg.  At a nominal price of 4¢/kWh
+(11 nanodollars per joule, typical for wholesale power, though solar
+has brought this down by a factor of 4 for new projects in much of the
+world) this is about 2¢/kg, which is cheaper than construction sand
+and enormously cheaper than portland cement.  Of course that doesn’t
+include the cost of getting hold of bittern, much less purified
+magnesium salts.
+
+[15]: https://www.atlantis-press.com/article/25837650.pdf "Current efficiency of synthesis magnesium hydroxide nanoparticles via electrodeposition, by XinZhong Deng, YaoWu Wang, JianPing Peng, YueZhong Di, 3rd International Conference on Material, Mechanical and Manufacturing Engineering (IC3ME 2015)"
+
+### Sano, Hao, and Kuwahara ###
+
+[Sano, Hao, and Kuwahara report][12] efficient electrolytic extraction
+of magnesium from seawater as 99% pure magnesium hydroxide by using a
+cation exchange membrane and “deaerating” the seawater first (either
+by boiling or by acidifying) in order to remove the choke-damp and
+thus avoid precipitating chalk.  Their objective seems to have been to
+get magnesium as a structural metal or battery electrode.  They ran a
+solution of 5% sal mirabilis through their “anode channel” (they
+didn’t want to use a chloride salt to avoid chlorine production) and
+used platinum-plated titanium electrodes.
+
+If they bothered to say anything about the material properties of the
+brucite thus formed, or the currents, voltages, current densities, or
+electrode spacings they used, I must have missed it.
+
+[12]: https://www.sciencedirect.com/science/article/pii/S2405844018320735 "Development of an electrolysis based system to continuously recover magnesium from seawater, by Yoshihiko Sano, YiJia Hao, and Fujio Kuwahara, Heliyon 4 (2018) e00923, 10.1016/j.heliyon.2018.e00923, CC-BY"
+
+### Johra et al. ###
+
+[Johra et al.][16] tested some seacrete; they produced some at
+0.8 cm/year with 2.5 V in 25°–31° seawater off Thailand, and tested
+some more that was accidentally produced by parasitic currents around
+the Italy–Greece 400 kV submarine power transmission cable, which had
+more magnesium and was consequently software.  They report that
+brucite deposits from seawater when the pH locally reaches 9.2, and
+confirm my inference above that brucite is weaker than calcite.  The
+paper contains the following text apparently plagiarized from
+<http://www.globalcoral.org/faq/> (identical matching text
+*italicized*):
+
+> Regarding the CO₂ budget of the calcium carbonate precipitation, one
+> could intuitively think *that since limestone deposition is removing
+> dissolved inorganic carbon from the ocean, this should be
+> compensated by absorption of atmospheric CO₂* into *the ocean.*
+> However, the opposite phenomenon occurs. This can be explained by
+> the fact *that there is* actually *much more dissolved inorganic
+> carbon in the ocean (in the form of bicarbonate ion* HCO₃̄) *than
+> there is CO₂ in the atmosphere*. Consequently, *the predominant
+> reaction* for the precipitation o [sic] calcium carbonate is as
+> follows:
+> 
+> > Ca⁺⁺ + 2HCO₃ = CaCO₃ + H₂O + CO₂
+> 
+> Therefore, for every two molecules *of bicarbonate precipitated as
+> limestone in the ocean, one molecule* of CO₂ is released into the
+> atmosphere. On the *geological time scale, this is the major source
+> of atmospheric CO₂ along with volcanic* activity [9]. More
+> information about Seacrete and materials formed by electrodeposition
+> of minerals in seawater can be found in the publications of Goreau
+> [9,10].
+
+The corresponding text on the Global Coral Reef Alliance site says
+(again, with identical matching text italicized):
+
+> It seems intuitively obvious that *since limestone deposition is
+> removing dissolved inorganic carbon from the ocean, that this should
+> be compensated by one molecule of atmospheric CO2 [sic] dissolving*
+> in *the ocean*, but in fact the opposite happens.
+> 
+> The reason is *that there is much more dissolved inorganic carbon in
+> the ocean, in the form of bicarbonate ion, than there is CO2 [sic]
+> in the atmosphere*, and the ocean is a pH buffered system due to
+> dissolution of limestone sediments and also acid base reactions
+> [sic] involving weathering of oceanic basalts to clay minerals. So
+> *the predominant reaction* is:
+> 
+> Ca++ + 2HCO3- = CaCO3 + H2O + CO2 [sic]
+> 
+> That is to say, in order to preserve pH and charge balance, for each
+> molecule *of bicarbonate precipitated as limestone in the ocean, one
+> molecule* is released as CO2 [sic] to the atmosphere. On a
+> geological time scale, this is the major source of atmospheric CO2
+> [sic] along with volcanic* gases.
+
+Note that the text that isn’t copied verbatim is only a slight
+paraphrase.
+
+This text has been on the Global Coral Reef Alliance website since at
+least [02014-05-05][17], so it’s clear they didn’t plagiarize it from
+this 02021 paper, though it’s possible that the authors of the paper
+*are* the Global Coral Reef Alliance, in which case no plagiarism
+would be involved; or that both plagiarized the text from some third
+source, such as the Goreau papers cited.
+
+However, the paper is not listed in
+<http://www.globalcoral.org/gcra-papers/>, and the authors of those
+papers are Thomas Goreau ([husband of Dra. Nora Isabel Arango de
+Urriola y Goreau, who died in 02016][18]), Verena Vogler, Raymond
+Hayes, Ernest Williams, Charles Mazel, Paul Andre DeGeorges,
+R. Grantham, H. Faure, T. Greenland, N.A. Morner,
+J. Pernetta, B. Salvat, V.R. Potter, Paulus Prong, Munandar, Mahendra,
+Muhammad Rizal, Chair Rani, Ahmad Faizal, and herrzoox, who Johra et
+al. fail to list as co-authors.  Of these I think Thomas Goreau,
+herrzoox, and maybe Paul Andre DeGeorges are actually part of GCRA,
+and Wolf Hilbertz and Dra. Arango de Urriola were also involved.
+Goreau seems to have predeceased his wife, but they had a son also
+named Tom, and there seem to be new papers by “Thomas Goreau” from
+02020, so there may be two Thomas Goreaus publishing on this topic.
+
+[17]: https://web.archive.org/web/20140712191745/http://www.globalcoral.org/faq/#sink
+[18]: http://www.globalcoral.org/memoriam-dr-nora-goreau-april-25-1921-december-18-2016/
+
+[One of the Goreau papers is open access under CC-BY][19], and doesn’t
+contain this text, being mostly a catalog of ways people have screwed
+up their seacrete experiments, up to and including connecting the
+cables backwards!
+
+[19]: https://www.scirp.org/journal/paperinformation.aspx?paperid=48444 "Electrical Stimulation Greatly Increases Settlement, Growth, Survival, and Stress Resistance of Marine Organisms, by Thomas J. Goreau, Global Coral Reef Alliance, Cambridge, USA; in Natural Resources, Vol. 5 No. 10, July 2014 10.4236/nr.2014.510048 CC-BY"
+
+Their apparent plagiarism aside, Johra et al. report that their
+low-voltage seacrete was 80.8% aragonite, 18.9% brucite, and 0.3%
+calcite, while the high-voltage seacrete was 52.3% brucite.  They also
+detected significant amounts of silicon, aluminum, strontium, iron,
+chlorine, and sulfur in the seacrete samples.  They report
+2499.2 kg/m³ (σ=9.1 kg/m³) for the low-voltage seacrete and 1771 kg/m³
+(σ=17.4 kg/m³) for the high-voltage seacrete due to higher porosity.
+Disappointingly, they measured the compressive strength of only the
+high-voltage seacrete (16.8 MPa), though they did some imprecise
+improvised tests that suggest that the low-voltage seacrete should be
+in the neighborhood of 25 MPa.
+
+[16]: https://www.sciencedirect.com/science/article/pii/S0950061820330294 "Thermal, moisture and mechanical properties of Seacrete: A sustainable sea-grown building material, by Hicham Johra, Lucia Margheritini, Yovko Ivanov Antonov, Kirstine Meyer Frandsen, Morten Enggrob Simonsen, Per Møldrup, and Rasmus Lund Jensen, Construction and Building Materials, Volume 266, Part A, 10 January 2021, 121025, 10.1016/j.conbuildmat.2020.121025"
+
+### Alamdari et al. ###
+
+[Alamdari et al.][13] report that magnesium goes from 1272 ppm in
+seawater to 30,000 ppm in the “end [bitterns][14] of NaCl production
+units from seawater”, and they precipitated brucite from that bittern
+using lye.
+
+[13]: https://www.researchgate.net/publication/244400927_Kinetics_of_magnesium_hydroxide_precipitation_from_sea_bittern "Kinetics of magnesium hydroxide precipitation from sea bittern, by A. Alamdari, M. R. Rahimpour, Nadia Esfandiari, Ehsan Nourafkan, February 2008, Chemical Engineering and Processing 47(2):215-221, 10.1016/j.cep.2007.02.012"
+[14]: https://en.wikipedia.org/wiki/Bittern_%28salt%29
+
+### Veeraraghavan, Haran, Slavkov, et al. ###
+
+[These researchers succeeded at electrodepositing sodium silicate on
+galvanized steel for corrosion resistance in 02003][29], and they
+mention that Speers and Cahoon had success with “anodic deposition at
+high voltages” (E. A. Speers and J. R. Cahoon, J. Electrochem. Soc.,
+145, 1812 (1998)):
+
+> Speers and Cahoon report the deposition of Si from alkaline silicate
+> electrolytes by anodizing Al at 350 V.  However, this process is
+> limited to Al or similar metals which have stable anodic oxide films
+> and also involves application of large potentials.  Recently,
+> Chigane et al. reported formation of silica thin films on copper
+> substrates through cathodic electrolysis of pH 3.3 ammonium
+> hexafluorosilicate solution.  In acid solutions, fluoride ions help
+> keep the silica stable in solution.  In the absence of fluoride
+> ions, the bath becomes unstable and precipitates as Si(OH)₄.
+> However, high pH and presence of fluoride ions limits the process
+> developed by Chigane et al. to metals capable of withstanding
+> corrosive environments.  Further, the deposits obtained by them were
+> highly porous and hence not suitable as a protective coating.
+
+[29]: https://scholarcommons.sc.edu/cgi/viewcontent.cgi?article=1170&context=eche_facpub "Development of a Novel Electrochemical Method to Deposit High Corrosion Resistant Silicate Layers on Metal Substrates, by Basker Veeraraghavan, Bala Haran, Dragan Slavkov, Swaminatha Prabhu, Branko Popov, and Bob Heimann, Electrochemical and Solid-State Letters, 6 2 B4-B8 2003, 10.1149/1.1537092, https://scholarcommons.sc.edu/eche_facpub/171"
+
+I’m not sure that what precipitates is orthosilicic acid rather than
+frank silica, but whatever.
+
+Veeraraghavan et al. were using a 3.22 SiO₂:Na₂O mole ratio solution
+for their electrodeposition, which I think is similar to the bottle I
+have here, and platinum-niobium anodes, and apparently they
+electrodeposited zinc onto their workpieces themselves before
+beginning the silicate deposition.  Initially they diluted the
+waterglass to 5.6 wt% sodium silicate, pH 10.5, and electrodeposited
+with a potentiostat† at 12 V for 15' at 75°, and I guess they finally
+got a 1μm-thick silicate layer of zinc silicate followed by silica and
+pyrosilicate (Si₂O₇).  They report that at room temperature no
+silicate formed, but further heating to 85° gave highly porous
+deposits but no faster deposition.
+
+(For my purposes, the higher porosity would be desirable, but their
+objective was to replace chromate conversion coatings for metal
+protection, not grow rocks in a tank, and by that measure they
+achieved an order of magnitude better performance, for which the
+porosity was undesirable.)
+
+They were definitely depositing on the cathodes, not the anodes; they
+say, “The silicate deposition was carried out in a two-electrode
+plating cell made of glass with Pt-niobium anodes.  Zinc-plated steel
+panels (EZG-60G) of surface area 116 cm² each side, as-received from
+ACT labs[,] were used as the cathodes.”  They contrast their process
+with the anodic deposition process of Speers and Cahoon:
+
+> Under an applied potential, before Si anions can be
+> electrochemically reduced on the surface of Zn, all the solvent
+> water will be electrolyzed.  The soluble silicate is a complex
+> mixture of silicate anions.  Hence it can be expected that under
+> large applied electric fields, the negatively charged silicate
+> species migrate to the anode and are deposited.  Speers and Cahoon
+> report that the thickness of the silicate layer formed using such
+> method is limited only by the time of anodic deposition. They report
+> thickness up to 100 μm for 20 min of deposition. ... Note that the
+> silicate layer is not more than 1 μm thick.  Unlike anodic silicate
+> deposition, the deposits are very thin 1–3 μm.  The maximum
+> thickness seems to be limited to 3 μm.  These results indicate that
+> the mechanism of cathodic Si deposition in our case is more complex
+> than was previously reported.
+
+They report that drying the layer at 100° instead of room temperature
+made it 0.69—2 orders of magnitude more resistive, presumably by
+affecting the structure of the silica layer, and they show that drying
+at 175° or 200° made the layer much less full of cracks, and it
+retained corrosion resistance better afterwards.
+
+They explain the electrodeposition through an increase in hydroxyls
+and thus pH around the cathode, which increases the polymerization of
+the silicate and thus decreases its solubility.  Weird thing about
+that, waterglass usually precipitates with *decreasing* pH, but maybe
+that’s because normally you’re adding Na⁺ or K⁺ ions to the solution
+to increase the pH, and in this case they’re adding Zn⁺⁺ ions, or
+rather bizincate ZnO(OH)⁻ ions.
+
+If I had to criticize something about this paper, it would be that
+they don’t mention anything about stirring, turbulence, anode size,
+electrode distances, or the nature of the surface of their anode,
+which could be important considerations to reproducing their results.
+Also, they only analyzed the surface film with EDAX, which can show
+the concentration of Zn, Si, Fe, and other such heavy elements, but is
+useless for light elements like Na and O (their EDAX results for these
+oxide coatings include an obviously spurious “0.00 wt%” oxygen entry,
+and don’t mention sodium at all).  But, from my point of view, the
+sodium content of these protective films is one of the most important
+questions, even for their declared objective of corrosion resistance:
+the lower it is, the better the films will resist years-long immersion
+in water.  Presumably a Keim-like treatment with alkaline-earth
+cations would help, but whether it’s necessary is clearly an important
+question for the wide deployment of their process.
+
+______  
+† A “potentiostat” is usually the chemist’s name for a voltage
+regulator.  The main difference is that they cost US$3000.  There are
+also three-electrode potentiostats that use a third reference
+electrode to keep the working electrode (the cathode in this case) at
+a fixed voltage relative to the electrolyte, but Veeraraghavan et
+al. don’t mention such a reference electrode and specifically say
+their “plating cell” was “two-electrode”, so I think they were just
+using a 12-volt voltage regulator.
+
+### Harman 01924 ###
+
+[R.W. Harman wrote an article in 01924][30] about reducing the
+alkalinity of sodium silicate solutions by a method quite similar to
+the chlor-alkali process, but starting from sodium metasilicate rather
+than salt.  They comment that silica precipitation on the anode was a
+problem at high current densities:
+
+> The second method[,] of increasing the C.D. considerably hastens the
+> removal of the alkali and gave good results; but it has its
+> limitations in the fact that, above a certain limit, increase of
+> C.D. causes separation of solid silica on the platinum anode.  This
+> limiting C.D., above which silica separates on the anode, varies not
+> only with the dilution but also markedly with the ratio.  The more
+> concentrated the silicate solution and the greater the proportion of
+> silica in the ratio, the lower must be the limiting C.D.
+
+[30]: https://pubs.acs.org/doi/10.1021/j150255a014 "Aqueous Solutions of Sodium Silicates, I, by R.W. Harman, 01924. The Journal of Physical Chemistry, 29(9), 1155–1168.  10.1021/j150255a014"
+
+They give the sodium/silicon ratios as “gram-equivalent” ratios of
+sodia and silica, and concentrations as “weight normality” numbers
+N<sub>w</sub> which I think are sodium ion molarities:
+
+> Throughout the whole of this work, the different silicates and
+> mixtures will be designated by the ratio Na₂O:SiO₂ in equivalent
+> proportions, this being the simplest and most convenient system of
+> nomenclature and one already finding general and serviceable use in
+> industry.  Thus a ratio of 1:2 contains one equivalent of Na₂O in
+> grams to two equivalents of SiO₂.
+> 
+> All concentrations, except where otherwise stated, are expressed in
+> weight normality (N<sub>w</sub>) with regard to their sodium
+> content, i.e. in gram-equivalents of sodium per 1000 grams of
+> water. Thus, a 1 N<sub>w</sub> solution of ratio 1:4 contains
+> ½(Na₂O·4SiO₂) expressed in grams, in 1000 grams of water.
+
+[WP explains][31]:
+
+> By this definition, the number of equivalents of a given ion in a
+> solution is equal to the number of moles of that ion multiplied by
+> its valence. If 1 mol of NaCl and 1 mol of CaCl₂ dissolve in a
+> solution, there is 1 equiv Na, 2 equiv Ca, and 3 equiv Cl in that
+> solution. (The valency of calcium is 2, so for that ion 1 mole is 2
+> equivalents.)
+
+[31]: https://en.wikipedia.org/wiki/Equivalent_%28chemistry%29
+
+Given the above definition, I’m not totally sure but I guess a mole of
+SiO₂ would be “two equivalents”.  The problem is that SiO₂ isn’t an
+ion!  But we see that Harman considers Na₂O·4SiO₂ to be “1:4”.
+
+So, given all that, we have Harman’s account of what circumstances
+were necessary for rapid mineralization on his rotating-platinum-disc
+anode:
+
+> With a 2N<sub>w</sub> [2 mol/ℓ Na⁺] solution of ratio 1:1
+> [Na₂O·SiO₂] or 1:2 [Na₂O·2SiO₂] a C.D. of 0.044 amps per
+> sq. cm. scarcely diminishes the alkalinity of the solution; a
+> C.D. of 0.15 amps per sq. cm. diminishes the alkalinity quite
+> rapidly but yet does [not?] cause separation of solid silica.
+
+The “not” here is missing from the published paper, but the sentence
+structure (as well as a paragraph I will quote later) seems to
+strongly suggest that it should be there, and the numerous
+typographical inconsistencies and errors also suggest that such an
+error is eminently possible, which unfortunately completely changes
+its meaning.
+
+Harman continues:
+
+> With ratio 1:4 [Na₂O·4SiO₂] a 3N<sub>w</sub> solution gave a very
+> thick deposit of silica with a C.D. of 0.11 amps per sq.cm.  A
+> 2N<sub>w</sub> solution with a C.D. of 0.11 also gave a thick
+> deposit[,] but with a C.D. of 0.044 amps per sq.cm., although silica
+> was deposited on the anode, at the end of 4 hours the solution on
+> analysis was found to be 0.8N<sub>w</sub> and its ratio was 1:5.2
+> [Na₂O·5.2SiO₂].  This solution was very opalescent and after two
+> days set to a gel and later on exhibited synaeresis.  A
+> 0.5 N<sub>w</sub> solution of ratio 1:4 with a C.D. of 0.13 amps per
+> sq. cm. also deposited silica, but at the end of 10 hours, during
+> which time the C.D. gradually fell [I guess they weren’t using a
+> galvanostat], the resulting solution was found to be 0.08
+> N<sub>w</sub>, with a ratio of 1:40 [Na₂O·40SiO₂!!]. This dilute
+> solution showed no signs of gel formation.
+>
+> Thus with ratio 1:1 a 2N<sub>w</sub>, solution may be electrolysed
+> with a C.D. of 0.15 amps per sq. cm. but with ratio 1:4 a
+> 1N<sub>w</sub> solution gives a deposit with as low a C.D. as 0.044.
+> It has been found possible by this means to prepare 2 N<sub>w</sub>
+> solutions of ratios 1:2, 1N<sub>w</sub> 1:3, and 1:4.  Higher ratios
+> than these set to a gel, viz., 1:5 above 0.1N<sub>w</sub>, but in
+> very dilute solutions the removal of alkali can proceed until the
+> solution is practically one of pure silicic acid.
+
+It seems that they consider anodic deposition something to be avoided
+(perhaps since the silica deposit robs the solution of silica, while
+the objective of the procedure is to increase the silica-to-sodium
+ratio), but they considered the 1:1 2N<sub>w</sub> 0.15A/cm² result to
+be acceptable.  This reinforces my inference that the “not” I inserted
+above should be there.
+
+Unfortunately the deposits are only ever described in qualitative
+terms, as “thick” or “very thick”.  I’d really like to know whether
+“thick” means 10μm and electrically insulating, 100 μm, 1 mm, or
+10 mm.  WHAT DID YOU SEE, HARMAN?
+
+But Harman’s main concern here was measuring the conductivity of the
+solutions, not electrolyzing them.

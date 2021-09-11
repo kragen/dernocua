@@ -323,8 +323,6 @@ My efforts to find abrasives
 
 welding blankets
 
-borax
-
 zirconia
 
 carborundum
