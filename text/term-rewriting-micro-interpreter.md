@@ -27,7 +27,8 @@ expressive power (especially for things like writing compilers), the
 code to implement a term-rewriting interpreter is roughly as simple as
 the code to implement an ur-Lisp interpreter, just much slower.
 However, I don’t think it’s actually any *simpler* than the ur-Lisp,
-and it’s surely a bit larger than `hex0_riscv64`.
+and it’s surely a bit larger than `hex0_riscv64`.  The surprising
+thing is that the difference may not be that much.
 
 A Scheme strawman interpreter for term rewriting
 ------------------------------------------------
@@ -40,7 +41,7 @@ match values, then evaluate the instantiated replacement.  Something
 like this in Scheme (untested):
 
     (define (ev t)                                 ; eval, for tree rewriting
-      (if (pair? t) (ap (args (cdr t)) rules) t))  ; atoms don’t get rewritten
+      (if (pair? t) (ap (args t) rules) t))        ; atoms don’t get rewritten
 
     (define (args xs)    ; evlis, for tree rewriting; applied to the head too
       (if (null? t) '() (cons (ev (car xs)) (args (cdr xs)))))
@@ -121,6 +122,8 @@ are not very difficult.
 
 (None of the assembly code below is tested.)
 
+### Type tags in RAM ###
+
 In i386 code, using the simple approach I took in Ur-Scheme, cons
 might be 18 bytes:
 
@@ -141,6 +144,8 @@ And an unsafe `cdr` might be 4 bytes:
     cdr:    mov 8(%eax), %eax       # probably better to open-code these 3 bytes
             ret
 
+### Type tags in pointer low bits ###
+
 But the SBCL approach of tagging the pointer would be shorter:
 
     sbcons: mov %eax, 0(%ebx)       # car was arg 1
@@ -159,6 +164,8 @@ But the SBCL approach of tagging the pointer would be shorter:
 
     sbcdr:  mov 1(%eax), %eax
             ret
+
+### Type tags in pointer low bits where 00 denotes a pair ###
 
 If we instead use two low-order 0 bits to tag cons pointers, list
 operations get smaller still, to the point where almost all of them
@@ -187,6 +194,8 @@ are so small that they need to be open-coded:
       4b:	85 c0                	test   %eax,%eax
       4d:	c3                   	ret    
 
+### A sketch of `subst` in assembly ###
+
 Here’s what `subst` might look like with that setup:
 
             # subst t env returns a version of t with atom substitutions from env.
@@ -196,7 +205,7 @@ Here’s what `subst` might look like with that setup:
             test $3, %al
             jnz 1f                  # jump if not a pair
             mov 4(%eax), %eax       # get cdr t for (subst (cdr t) env)
-            call subst              # inherits our env
+            call subst              # inherits our env.  calls are 5 bytes
             mov %eax, %ebp          # save subst result
             mov 4(%esp), %eax       # load saved t
             mov (%eax), %eax        # car t
@@ -217,7 +226,8 @@ Here’s what `subst` might look like with that setup:
     1:      mov 8(%esp), %eax       # return original t
             jmp 2b
 
-That’s 60 bytes of machine code, and although I’m sure I missed a few
+That’s 24 instructions and 60 bytes of machine code,
+and, although I’m sure I missed a few
 tricks, I don’t think it’s going to get more than about 30% smaller.
 That’s 15 bytes per line of Scheme, which I think is pretty good, but
 it puts the estimate of the whole 23-line Scheme program at 345 bytes,
@@ -265,13 +275,13 @@ dynamic-dispatch trick.  You can define a higher-order mapcar function
 as follows:
 
     (map ,f nil) => ()
-    (map ,f (cons ,car ,cdr)) => (cons (apply ,f ,car) (map ,f ,cdr))
+    (map ,f (cons ,car ,cdr)) => (cons (call ,f ,car) (map ,f ,cdr))
 
 Then you can define patterns like this:
 
-    (apply (cover ,material) ,base) => (some ,material covered ,base)
+    (call (cover ,material) ,base) => (some ,material covered ,base)
 
-so that `(apply (cover chocolate) raisins)` rewrites to `(some
+so that `(call (cover chocolate) raisins)` rewrites to `(some
 chocolate covered raisins)`.  I learned about this on p. 35 of the
 Aardappel dissertation, which gives the example (in slightly different
 syntax):
@@ -306,3 +316,134 @@ as well define things this way:
 This would have the advantage that you could pass in the name of any
 existing function.  But compiling this efficiently might be
 nontrivial.
+
+It might be worthwhile to implement lambda-lifting to get closures.
+Aardappel experimented with this but ultimately rejected it.
+
+A metacircular term-rewriting interpreter
+-----------------------------------------
+
+If you love term rewriting so much, why don’t you marry it, huh?
+Why’dja write that “strawman” above in *Scheme*?  Are you *chicken*?
+
+Well, maybe it would look something like this, written in itself:
+
+    (ev (cons ,f ,a) ,r) => (ap (args (cons ,f ,a) ,r) ,r ,r)
+    (ev ,t ,_) => ,t
+    (args nil ,_) => nil
+    (args (cons ,a ,d) ,r) => (cons (ev ,a ,r) (args ,d ,r))
+
+    (ap ,t norules ,_) => ,t            # no rules left to match
+    (ap ,t (rule ,pat ,tem ,r) ,r0) =>  # try to match a rule
+        (ap2 ,t ,r (match ,t ,pat emptyenv) ,tem ,r0)
+    (ap2 ,t ,r nomatch ,_ ,r0) => (ap ,t ,r ,r0)  # on failure try others
+    (ap2 ,t ,r ,env ,tem ,r0) => (ev (subst ,tem ,env) ,r0)  # or subst & eval
+
+    (subst (cons ,a ,d) ,env) => (cons (subst ,a ,env) (subst ,d ,env))
+    (subst ,t ,env) => (subst2 ,t (lookup ,t ,env))
+    (subst2 ,t nomatch) => ,t
+    (subst2 ,t ,v) => ,v
+
+    (match ,_ ,_ nomatch) => nomatch               # match failures always win
+    (match ,t (var ,v) ,env) => (bind ,v ,t ,env)  # otherwise vars always do
+    (match (cons ,ta ,td) (cons ,pa ,pd) ,env) =>  # match cars and cdrs
+        (match ,td ,pd (match ,ta ,pa ,env))
+    (match ,t ,pat ,env) => (match2 (equal? ,pat ,t) ,env)
+    (match2 true ,env) => ,env
+    (match2 false ,env) => nomatch
+
+So that’s 21 lines, about the same as Scheme, but I left out `lookup`,
+which in Scheme is the standard procedure `assoc`:
+
+    (lookup ,_ emptyenv) => nomatch
+    (lookup ,v1 (bind ,v2 ,t ,env)) => (lookup2 ,v1 (equal? ,v1 ,v2) ,t ,env)
+    (lookup2 ,_ true ,t ,_) => ,t
+    (lookup2 ,v false ,_ ,env) => (lookup ,v ,env)
+
+Tht brings the total to 25 lines.
+
+I think I may have some unresolved confusion between `(var x)` and
+`x`; which is supposed to occur in the template?  Also, which is
+supposed to occur in the environment?  Maybe instead of
+
+    (subst ,t ,env) => (subst2 ,t (lookup ,t ,env))
+
+I intended to write
+
+    (subst (var ,t) ,env) => (subst2 ,t (lookup ,t ,env))
+
+I should go back and review this.
+
+Also, `equal?` needs to be provided by the system, at least for atoms,
+which requires some sort of special case like this:
+
+    (ap (equal? ,x ,y) ,_ ,_) => (equal? ,x ,y)
+
+This points out how easy it is to add special cases like this in a
+term-rewriting system, though we need to make sure the rule precedence
+is such that adding the rule has an effect.  Of course, this
+implementation doesn’t tell us anything about which definition of
+equality is being used; this sort of thing is one of the common
+objections to the use of metacircular interpreters to define
+semantics.
+
+If, instead of being a magic function name, it is provided through
+multiple uses of the same variable name in a pattern, we could allow
+this definition of equality to flow through the metacircular
+interpreter in the same way; instead of
+
+    (match ,t (var ,v) ,env) => (bind ,v ,t ,env)
+
+we have
+
+    (match ,t (var ,v) ,env) => (match3 ,v ,t (lookup ,v ,env) ,env)
+    (match3 ,v ,t nomatch ,env) => (bind ,v ,t ,env)   # new var, not bound
+    (match3 ,v ,t ,t ,env) => ,env   # already bound to the same value
+    (match3 ,_ ,_ ,_ ,_) => nomatch  # all other cases are conflicting bindings
+
+There’s an additional buglet: lookup should return its positive
+results in a form that can’t be the symbol `nomatch`.  So maybe
+instead of
+
+    (lookup2 ,_ true ,t ,_) => ,t
+
+we should say
+
+    (lookup2 ,_ true ,t ,_) => (got ,t)
+
+Also probably it’s confusing that `lookup` and `match` return the same
+`nomatch` on failure.
+
+At least playing with it mentally like this, I feel like this
+term-rewriting paradigm is a much more pliant medium than Lisps are.
+
+A note on syntax
+----------------
+
+Above I’ve been slavishly following Scheme syntax; but it would
+probably be an improvement if instead of writing
+
+    (args (cons ,a ,d) ,r) => (cons (ev ,a ,r) (args ,d ,r))
+
+we wrote
+
+    Args (Cons a d) r: Cons (Ev a r) (Args d r)
+
+in part because that cuts down awkwardly verbose lines like
+
+    (match (cons ,ta ,td) (cons ,pa ,pd) ,env) =>
+        (match ,td ,pd (match ,ta ,pa ,env))
+
+to more manageable things like
+
+    Match (Cons ta td) (Cons pa pd) env: Match td pd (Match ta pa env)
+
+The concrete syntax here is something like this:
+
+    program: /\n/* definition* expression /[ \n\t]*/
+    definition: expression _ ":" expression "\n"+
+    expression: term /[ \t]+/ expression | term
+    term: _ symbol | _ var | _ "(" expression _ ")"
+    _: /[ \t]*/
+    var: /[a-z_][a-z_0-9]*/
+    symbol: /[A-Z][a-z_0-9]*/
