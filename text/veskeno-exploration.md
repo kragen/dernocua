@@ -5,6 +5,20 @@ those ingredients?  What are the things we want to be able to express?
 What does normal code consist of?
 ---------------------------------
 
+> According to our data, a typical procedure consists of 8 or 9
+> assignment statements, 4 calls to other procedures, 3 IF statements,
+> 1 loop, and 1 escape (RETURN or EXITLOOP).  Two of the assignment
+> statements simply assign a constant to a scalar variable, one
+> assigns one scalar variable to another, and 3 or 4 more involve only
+> one operand on the right hand size.  The entire procedure probably
+> contains only 2 arithmetic operators.  Two of the three conditions
+> in the IF statements involve only a single relational operator,
+> probably = or ≠.
+
+(Tanenbaum, 01978, “Implications of Structured Programming for Machine
+Architecture”; note how no records, arrays, or other data structures
+are mentioned)
+
 I thought I’d go and look at a variety of random code in different
 languages to get an idea of what random code looks like.  After all,
 maybe my own personal preferences and practices aren’t typical!  Maybe

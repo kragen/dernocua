@@ -1,7 +1,7 @@
 Today Andrius Štikonas got the `hex0_riscv64` bootstrap seed program
 down to 392 bytes; it translates from hexadecimal into binary, though
 much of the bulk of the program is opening and closing files.  This
-led me to thinking about the question of kefitzat haderech, shortening
+led me to thinking about the question of Kefitzat haDerekh, shortening
 the path: can we teleport directly from a few hundred bytes of machine
 code to something much more amenable to writing compilers?
 
@@ -10,7 +10,7 @@ Aardappel seem more amenable to writing compilers not only than
 imperative languages like C but also more so than traditional Lisps;
 it implicitly provides conditionals, pattern-matching for arguments,
 ad-hoc polymorphism with multiple dispatch, and parametric
-polymorphism.  As Oortmerssen’s dissertation on Aardappel points out
+polymorphism.  As [Oortmerssen’s dissertation on Aardappel][1] points out
 (p. 9), term rewriting can be top-down (normal-order, leftmost
 outermost) or bottom-up (applicative-order, eager, innermost),
 nondeterministic, as well as other variants; and it can select rule
@@ -21,6 +21,8 @@ source-order rewriting; though top-down evaluation could give you
 laziness, you don’t need laziness or special forms to get conditionals
 with term rewriting, the way you do with the λ-calculus or the
 ur-Lisp.
+
+[1]: https://strlen.com/files/lang/aardappel/thesis.pdf "Concurrent Tree Space Transformation in the Aardappel Programming Language, by Wouter van Oortmerssen, 02000"
 
 An interesting thing about this is that, despite the vastly increased
 expressive power (especially for things like writing compilers), the
@@ -46,19 +48,23 @@ like this in Scheme (untested):
     (define (args xs)    ; evlis, for tree rewriting; applied to the head too
       (if (null? t) '() (cons (ev (car xs)) (args (cdr xs)))))
 
-    (define (ap t rules) ; apply, for tree rewriting, but with different arguments
+    ;; apply, for tree rewriting, but the arguments are the top-level tree
+    ;; to rewrite, after all its children have been rewritten as above, and
+    ;; the remaining set of rules to attempt rewriting with
+    (define (ap t rules)
       (if (null? rules) t               ; no rewrite rules left? don’t rewrite
-        (let ((m (match t (caar rules) emptyenv)))
-          (if m (ev (subst (cdar rules) m)) ; if rule matched, substitute & eval
-                (ap t (cdr rules))))))      ; otherwise, try the other rules
+          (let ((m (match t (caar rules) emptyenv)))
+            (if m (ev (subst (cdar rules) m))  ; rule matched? substitute & eval
+                (ap t (cdr rules))))))         ; otherwise, try the other rules
 
-That depends on definitions of `match`, `emptyenv`, and `subst`.  `subst`
-is easy enough:
+That depends on definitions of `match`, `emptyenv`, and `subst`.
+`subst` is easy enough (though I got it wrong at first, and it might
+be nicer to handle the case where the variable is undefined):
 
     (define (subst t env)
-      (if (pair? t) (cons (subst (car t) env) (subst (cdr t) env))
-        (let ((v (lookup t env)))
-          (if v (cdr v) t))))
+      (if (var? t) (cdr (lookup t env))
+          (if (pair? t) (cons (subst (car t) env) (subst (cdr t) env))
+              t)))
 
 Then `match` needs to compute whether there’s a match, which requires
 it to distinguish variables from other things.  In its simplest form
@@ -71,12 +77,11 @@ error we don’t try to detect; then it might look like this:
 
     (define (match t pat env)
       (if (var? pat) (cons (cons pat t) env)  ; vars match anything
-        (if (pair? pat)  ; pairs match if the cars match and the cdrs match
-          (if (pair? t)  ; a non-var pair pattern can’t match an atom
-            (let ((a (match (car t) (car pat) env)))  ; try matching the car
-              (and a (match (cdr t) (cdr pat) a)))    ; then, try the cdr
-            #f)
-          (and (equal? pat t) env))))  ; non-var atoms match only the same atom
+          (if (pair? pat)  ; pairs match if the cars match and the cdrs match
+              (and (pair? t)  ; a non-var pair pattern can’t match an atom
+                  (let ((a (match (car t) (car pat) env)))  ; try to match car
+                    (and a (match (cdr t) (cdr pat) a))))   ; then, try the cdr
+              (and (equal? pat t) env))))  ; non-var atoms match only themselves
 
 Then you just need some kind of convention for marking variables.  The
 simplest thing in Scheme would be to use `,x`, which is syntax sugar
@@ -84,19 +89,13 @@ for `(unquote x)`:
 
     (define (var? pat) (and (pair? pat) (eq? (car pat) 'unquote)))
 
-And that’s it.  Unless I've forgotten something, 23 lines of Scheme in
+And that’s it.  Unless I've forgotten something, 22 lines of Scheme in
 terms of `define`, `if`, `'()`, `cons`, `pair?`, `let`, `car`, `cdr`,
 `caar`, `cdar`, `#f`, `and`, `equal?`, `assoc`, and `null?` gives you
 a bottom-up, source-order-precedence term-rewriting interpreter.  If
 we want to include implicit equality testing in patterns when a
 variable occurs more than once, it’s a couple more lines of code, but
 that’s about a 10% total complexity increase.
-
-(Hmm, now I realize that `subst` presupposes that variables aren’t
-pairs, but that bug probably doesn’t actually translate to assembly,
-so I’ll leave it for now; avoiding it would involve calling `var?`
-before `pair?` and perhaps instead of using the return value of
-`lookup`.)
 
 Of course this approach to term-rewriting interpretation is very
 inefficient, far more so than the standard Lisp tree-walker approach,
@@ -121,6 +120,9 @@ parsing, which is.  You also have to actually *implement* `cons`,
 are not very difficult.
 
 (None of the assembly code below is tested.)
+
+Because I still know almost no RISC-V assembly, I’m going to sketch
+this out in the i386 assembly of my childhood.
 
 ### Type tags in RAM ###
 
@@ -196,7 +198,15 @@ are so small that they need to be open-coded:
 
 ### A sketch of `subst` in assembly ###
 
-Here’s what `subst` might look like with that setup:
+Here’s what `subst` might look like with that setup.  I was working
+from this earlier version of `subst`:
+
+    (define (subst t env)
+      (if (pair? t) (cons (subst (car t) env) (subst (cdr t) env))
+        (let ((v (lookup t env)))
+          (if v (cdr v) t))))
+
+In i386 assembly:
 
             # subst t env returns a version of t with atom substitutions from env.
     subst:  push %ebp               # callee-saved variable used here
@@ -230,7 +240,7 @@ That’s 24 instructions and 60 bytes of machine code,
 and, although I’m sure I missed a few
 tricks, I don’t think it’s going to get more than about 30% smaller.
 That’s 15 bytes per line of Scheme, which I think is pretty good, but
-it puts the estimate of the whole 23-line Scheme program at 345 bytes,
+it puts the estimate of the whole 22-line Scheme program at 330 bytes,
 which doesn’t include the non-open-coded primitives like `cons` (and
 `assoc`/`lookup`), the parser, or I/O.  I/O is actually almost all of
 `hex0_riscv64`.
@@ -326,7 +336,8 @@ A metacircular term-rewriting interpreter
 If you love term rewriting so much, why don’t you marry it, huh?
 Why’dja write that “strawman” above in *Scheme*?  Are you *chicken*?
 
-Well, maybe it would look something like this, written in itself:
+Well, part of it is that I think Scheme is a better pseudocode for assembly
+language, but maybe it would look something like this, written in itself:
 
     (ev (cons ,f ,a) ,r) => (ap (args (cons ,f ,a) ,r) ,r ,r)
     (ev ,t ,_) => ,t
@@ -425,7 +436,8 @@ probably be an improvement if instead of writing
 
     (args (cons ,a ,d) ,r) => (cons (ev ,a ,r) (args ,d ,r))
 
-we wrote
+we wrote something more like [Darius Bacon's syntax for
+Pythological][0]:
 
     Args (Cons a d) r: Cons (Ev a r) (Args d r)
 
@@ -437,6 +449,8 @@ in part because that cuts down awkwardly verbose lines like
 to more manageable things like
 
     Match (Cons ta td) (Cons pa pd) env: Match td pd (Match ta pa env)
+
+[0]: https://github.com/darius/pythological/
 
 The concrete syntax here is something like this:
 

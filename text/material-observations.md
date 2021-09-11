@@ -2936,3 +2936,27 @@ phosphoric acid with phosphates of ammonia dissolved in it was black
 wherever the torch did not heat it to orange heat.  After several
 minutes and a visible haze of white smoke in the living room, I gave
 up on this approach as well.
+
+After cooling, the Speed can had a noticeable smell of acid, with a
+mass of what appeared to be carbon foam on top of a whiter porous mass
+of, presumably, a mix of ammonium phosphates and phosphoric acid.  I
+rinsed it into the fish can with the litharge and fertilizer,
+moistening the fertilizer (some of which had stuck to the litharge)
+and added baking soda to the remainder, which fizzed enthusiastically.
+
+The silicone flower Mina made on 02021-08-21 has faded from its
+original lilac color to a pale cyan.  I think the magenta food
+coloring in its surface has faded from exposure to light; Mina points
+out that on the bottom, where it's been exposed to air but not light,
+it’s still lilac.
+
+02021-09-11
+-----------
+
+The litharge/phosphate mix is kind of syrupy with white chunks and
+smells like a rusty engine.  The phosphate/baking soda mix smells
+acid, and on adding more water it resumes bubbling; maybe I didn’t add
+enough baking soda to fully neutralize the acid, which I guess is less
+surprising considering that it’s potentially triprotic.  The
+litharge–glycerin cement still seems to be hard and is now even less
+shiny, like dried “satin” paint.
