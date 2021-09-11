@@ -144,7 +144,7 @@ And an unsafe `cdr` might be 4 bytes:
 But the SBCL approach of tagging the pointer would be shorter:
 
     sbcons: mov %eax, 0(%ebx)       # car was arg 1
-            mov %ecx, 2(%ebx)
+            mov %ecx, 4(%ebx)
             lea 3(%ebx), %eax
             lea 8(%ebx), %ebx
             ret                     # 12 bytes, not 18
@@ -166,7 +166,7 @@ are so small that they need to be open-coded:
 
     00000036 <altcons>:  # 11 bytes
       36:	89 03                	mov    %eax,(%ebx)
-      38:	89 4b 02             	mov    %ecx,0x2(%ebx)
+      38:	89 4b 04             	mov    %ecx,0x4(%ebx)
       3b:	89 d8                	mov    %ebx,%eax
       3d:	8d 5b 08             	lea    0x8(%ebx),%ebx
       40:	c3                   	ret    
@@ -289,6 +289,9 @@ In the syntax I used above, this would be written as
     (filter ((cons ,h ,t) ,f)) => (filter2 (filter ,t ,f) ,h ,f (apply ,f ,h))
     (filter2 (pair ,a ,b) ,h ,f true) => (pair (cons ,h ,a) ,b)
     (filter2 (pair ,a ,b) ,h ,f false) => (pair ,a (cons ,h ,b))
+
+(This also demonstrates how the term-rewriting paradigm implicitly
+provides conditionals.)
 
 Oortmerssen discusses this further in pp. 48–50 (§4.1.2).
 
