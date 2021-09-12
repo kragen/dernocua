@@ -40,20 +40,17 @@ expression, you first evaluate its components, and then you loop over
 the rewrite rules, trying to match each one against the expression,
 and when one of them succeeds you instantiate its replacement with the
 match values, then evaluate the instantiated replacement.  Something
-like this in Scheme (untested):
+like this in Scheme:
 
     (define (ev t)                                 ; eval, for tree rewriting
-      (if (pair? t) (ap (args t) rules) t))        ; atoms don’t get rewritten
-
-    (define (args xs)    ; evlis, for tree rewriting; applied to the head too
-      (if (null? xs) '() (cons (ev (car xs)) (args (cdr xs)))))
+      (if (pair? t) (ap (map ev t) rules) t))      ; atoms don’t get rewritten
 
     ;; apply, for tree rewriting, but the arguments are the top-level tree
     ;; to rewrite, after all its children have been rewritten as above, and
     ;; the remaining set of rules to attempt rewriting with
     (define (ap t rules)
       (if (null? rules) t               ; no rewrite rules left? don’t rewrite
-          (let ((m (match t (caar rules) emptyenv)))
+          (let ((m (match t (caar rules) '()))) ; initially no vars () match
             (if m (ev (subst (cdar rules) m))  ; rule matched? substitute & eval
                 (ap t (cdr rules))))))         ; otherwise, try the other rules
 
@@ -62,7 +59,7 @@ That depends on definitions of `match`, `emptyenv`, and `subst`.
 be nicer to handle the case where the variable is undefined):
 
     (define (subst t env)
-      (if (var? t) (cdr (lookup t env))
+      (if (var? t) (cdr (assoc t env))
           (if (pair? t) (cons (subst (car t) env) (subst (cdr t) env))
               t)))
 
@@ -70,10 +67,6 @@ Then `match` needs to compute whether there’s a match, which requires
 it to distinguish variables from other things.  In its simplest form
 we can consider variables that occur more than once an error, but an
 error we don’t try to detect; then it might look like this:
-
-    (define lookup assoc)
-
-    (define emptyenv '())
 
     (define (match t pat env)
       (if (var? pat) (cons (cons pat t) env)  ; vars match anything
@@ -94,13 +87,13 @@ in head position in either a pattern or a replacement template.  You
 could fix this by quoting all the atoms in patterns and replacements,
 but probably a better idea is to use `#(varname)`.)
 
-And that’s it.  Unless I've forgotten something, 22 lines of Scheme in
+And that’s it.  19 lines of Scheme in
 terms of `define`, `if`, `'()`, `cons`, `pair?`, `let`, `car`, `cdr`,
-`caar`, `cdar`, `#f`, `and`, `equal?`, `assoc`, and `null?` gives you
-a bottom-up, source-order-precedence term-rewriting interpreter.  If
-we want to include implicit equality testing in patterns when a
-variable occurs more than once, it’s a couple more lines of code, but
-that’s about a 10% total complexity increase.
+`caar`, `cdar`, `#f`, `and`, `equal?`, `assoc`, `map`, and `null?`
+gives you a bottom-up, source-order-precedence term-rewriting
+interpreter.  If we want to include implicit equality testing in
+patterns when a variable occurs more than once, it’s a couple more
+lines of code, but that’s about a 10% total complexity increase.
 
 Of course this approach to term-rewriting interpretation is very
 inefficient, far more so than the standard Lisp tree-walker approach,
@@ -121,7 +114,7 @@ But that’s Scheme!  In machine code it seems like it could be
 significantly larger, even without garbage collection, which isn’t
 necessary for a bootstrap interpreter on a modern machine, and
 parsing, which is.  You also have to actually *implement* `cons`,
-`pair?`, `car`, `cdr`, `equal?`, `assoc`, and `null?`.  Most of these
+`pair?`, `car`, `cdr`, `equal?`, `assoc`, `map`, and `null?`.  Most of these
 are not very difficult.
 
 (None of the assembly code below is tested.)
@@ -245,9 +238,9 @@ That’s 24 instructions and 60 bytes of machine code,
 and, although I’m sure I missed a few
 tricks, I don’t think it’s going to get more than about 30% smaller.
 That’s 15 bytes per line of Scheme, which I think is pretty good, but
-it puts the estimate of the whole 22-line Scheme program at 330 bytes,
+it puts the estimate of the whole 19-line Scheme program at 285 bytes,
 which doesn’t include the non-open-coded primitives like `cons` (and
-`assoc`/`lookup`), the parser, or I/O.  I/O is actually almost all of
+`assoc` and `map`), the parser, or I/O.  I/O is actually almost all of
 `hex0_riscv64`.
 
 Trying to do this in RV64 without the C compressed-instruction
@@ -255,6 +248,8 @@ extension, like `hex0_riscv64`, would surely have much worse code
 density; *with* the C extension it might be slightly more compact.
 
 ### A sketch of `subst` in a stack bytecode ###
+
+XXX this is also the old version of the Scheme code
 
 In one of the bytecodes suggested in file `c-stack-bytecode.md` this
 might look like this:
@@ -288,7 +283,7 @@ According to the hypotheses in that note, this might compile to 2
 bytes of procedure header, 23 opcode bytes, 8 operand bytes for call
 instructions, 2 operand bytes for jump targets, and a 2-byte entry in
 a global subroutine table, for a total of 37 bytes.  At this rate, the
-whole Scheme program irresponsibly extrapolates to 212¾ bytes, but of
+whole Scheme program irresponsibly extrapolates to 175¾ bytes, but of
 course you’d have to add the bytecode interpreter on top of that.  On
 the other hand, if the bytecode interpreter is customized specifically
 to run the term-rewriting interpreter, none of the call instructions
@@ -296,7 +291,7 @@ will need an operand byte, because there’s plenty of opcode space to
 allocate each subroutine in this program a single-byte opcode.  That
 would bring it down to 29 bytes, less than half the size of the i386
 machine code, irresponsibly extrapolating the whole Scheme program to
-166¾ bytes of machine code.
+137¾ bytes of machine code.
 
 Dynamic dispatch
 ----------------
