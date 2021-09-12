@@ -46,7 +46,7 @@ like this in Scheme (untested):
       (if (pair? t) (ap (args t) rules) t))        ; atoms don’t get rewritten
 
     (define (args xs)    ; evlis, for tree rewriting; applied to the head too
-      (if (null? t) '() (cons (ev (car xs)) (args (cdr xs)))))
+      (if (null? xs) '() (cons (ev (car xs)) (args (cdr xs)))))
 
     ;; apply, for tree rewriting, but the arguments are the top-level tree
     ;; to rewrite, after all its children have been rewritten as above, and
@@ -88,6 +88,11 @@ simplest thing in Scheme would be to use `,x`, which is syntax sugar
 for `(unquote x)`:
 
     (define (var? pat) (and (pair? pat) (eq? (car pat) 'unquote)))
+
+(This has the unfortunate effect that you can’t use the atom `unquote`
+in head position in either a pattern or a replacement template.  You
+could fix this by quoting all the atoms in patterns and replacements,
+but probably a better idea is to use `#(varname)`.)
 
 And that’s it.  Unless I've forgotten something, 22 lines of Scheme in
 terms of `define`, `if`, `'()`, `cons`, `pair?`, `let`, `car`, `cdr`,
@@ -196,15 +201,15 @@ are so small that they need to be open-coded:
       4b:	85 c0                	test   %eax,%eax
       4d:	c3                   	ret    
 
-### A sketch of `subst` in assembly ###
+### A sketch of `subst` in i386 assembly ###
 
 Here’s what `subst` might look like with that setup.  I was working
 from this earlier version of `subst`:
 
     (define (subst t env)
       (if (pair? t) (cons (subst (car t) env) (subst (cdr t) env))
-        (let ((v (lookup t env)))
-          (if v (cdr v) t))))
+          (let ((v (lookup t env)))
+            (if v (cdr v) t))))
 
 In i386 assembly:
 
@@ -249,8 +254,54 @@ Trying to do this in RV64 without the C compressed-instruction
 extension, like `hex0_riscv64`, would surely have much worse code
 density; *with* the C extension it might be slightly more compact.
 
+### A sketch of `subst` in a stack bytecode ###
+
+In one of the bytecodes suggested in file `c-stack-bytecode.md` this
+might look like this:
+
+    PROCEDURE subst argwords=2
+        loadword 0  ; t
+        call pair?
+        jztos 1f    ; if not a pair, skip
+        loadword 0
+        call car
+        loadword 1  ; env
+        call subst
+        loadword 0
+        call cdr
+        loadword 1
+        call subst
+        call cons
+        ret
+    1:  loadword 0
+        loadword 1
+        call lookup
+        dup
+        jztos 1f     ; jump if top of stack is 0, i.e., nil
+        call cdr
+        ret
+    1:  drop
+        loadword 0
+        ret
+
+According to the hypotheses in that note, this might compile to 2
+bytes of procedure header, 23 opcode bytes, 8 operand bytes for call
+instructions, 2 operand bytes for jump targets, and a 2-byte entry in
+a global subroutine table, for a total of 37 bytes.  At this rate, the
+whole Scheme program irresponsibly extrapolates to 212¾ bytes, but of
+course you’d have to add the bytecode interpreter on top of that.  On
+the other hand, if the bytecode interpreter is customized specifically
+to run the term-rewriting interpreter, none of the call instructions
+will need an operand byte, because there’s plenty of opcode space to
+allocate each subroutine in this program a single-byte opcode.  That
+would bring it down to 29 bytes, less than half the size of the i386
+machine code, irresponsibly extrapolating the whole Scheme program to
+166¾ bytes of machine code.
+
 Dynamic dispatch
 ----------------
+
+XXX move this or another section of examples to the beginning?
 
 Because patterns can dispatch on more than just the function being
 called, you can define “methods” on “classes”; one of the examples in
@@ -261,6 +312,11 @@ the Aardappel dissertation is defining a hash method for a point class:
 Or, in S-expression syntax using unquote:
 
     (hash (point ,x ,y)) => (* ,x ,y)
+
+Which you could feed into the Scheme strawman interpreter above as
+follows:
+
+    (define rules '(((hash (point ,x ,y)) (* ,x ,y))))
 
 Elsewhere you might define how to rewrite `hash` expressions applied
 to other types of values; then a hashtable implementation can invoke
@@ -273,7 +329,20 @@ This also permits CLOS-style multiple dispatch:
 
     (* (scalar ,s) (vec ,x ,y ,z)) => (vec (* ,s ,x) (* ,s ,y) (* ,s ,z))
     (* (scalar ,s) (scalar ,t)) => (scalar (* ,s ,t))
-    (* (m ,r1 ,r2 ,r3) ,vec) => (vec (dot ,r1 ,vec) (dot ,r2 ,vec) (dot ,r3 ,vec))
+    (* (m ,r1 ,r2 ,r3) ,vec) => (vec (dot (vec . ,r1) ,vec)
+                                     (dot (vec . ,r2) ,vec)
+                                     (dot (vec . ,r3) ,vec))
+    (dot (vec ,a ,b ,c) (vec ,d ,e ,f)) => (+ (* ,a ,d) (* ,b ,e) (* ,c ,f))
+
+Those rules, for example, will rewrite
+
+    (* (m (1 2 3) (4 5 6) (7 8 9)) (vec x y z))
+
+to
+
+    (vec (+ (* 1 x) (* 2 y) (* 3 z))
+         (+ (* 4 x) (* 5 y) (* 6 z))
+         (+ (* 7 x) (* 8 y) (* 9 z)))
 
 Higher-order programming
 ------------------------
@@ -292,7 +361,17 @@ Then you can define patterns like this:
     (call (cover ,material) ,base) => (some ,material covered ,base)
 
 so that `(call (cover chocolate) raisins)` rewrites to `(some
-chocolate covered raisins)`.  I learned about this on p. 35 of the
+chocolate covered raisins)`.  These rules compose so that
+
+    (map (cover leather) (cons armchairs (cons bikers (cons goddesses nil))))
+
+rewrites to
+
+    (cons (some leather covered armchairs)
+          (cons (some leather covered bikers)
+                (cons (some leather covered goddesses) nil)))
+
+I learned about this on p. 35 of the
 Aardappel dissertation, which gives the example (in slightly different
 syntax):
 
@@ -336,6 +415,8 @@ A metacircular term-rewriting interpreter
 If you love term rewriting so much, why don’t you marry it, huh?
 Why’dja write that “strawman” above in *Scheme*?  Are you *chicken*?
 
+XXX the below lacks some bugfixes from the Scheme
+
 Well, part of it is that I think Scheme is a better pseudocode for assembly
 language, but maybe it would look something like this, written in itself:
 
@@ -374,8 +455,9 @@ which in Scheme is the standard procedure `assoc`:
 Tht brings the total to 25 lines.
 
 I think I may have some unresolved confusion between `(var x)` and
-`x`; which is supposed to occur in the template?  Also, which is
-supposed to occur in the environment?  Maybe instead of
+`x`; which is supposed to occur in the template?  In Scheme, `(var
+x)`.  Also, which is supposed to occur in the environment?  Also `(var
+x)`.  Maybe instead of
 
     (subst ,t ,env) => (subst2 ,t (lookup ,t ,env))
 
@@ -430,6 +512,8 @@ term-rewriting paradigm is a much more pliant medium than Lisps are.
 
 A note on syntax
 ----------------
+
+XXX probably move this to the beginning before giving examples
 
 Above I’ve been slavishly following Scheme syntax; but it would
 probably be an improvement if instead of writing

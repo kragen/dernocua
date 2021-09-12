@@ -1,3 +1,18 @@
+> From Table I we see that the assignment, IF, CALL, RETURN and FOR
+> statements together account for 96 percent of the source statements.
+> Therefore we will design an instruction set to handle the object
+> code from these statements efficiently.  To push local variables
+> (including parameters) onto the stack, we propose 12 distinct 1-byte
+> (format 1) opcodes, one each for offsets 0-11.  Twelve instructions
+> allow access to all the locals (and parameters) in 94.6 percent of
+> the procedures, and to more than 50 percent of the locals in the
+> remaining procedures.  For example, opcodes 114-125 might be used
+> for PUSH LOCAL 0, PUSH LOCAL 1..., PUSH LOCAL 11.
+
+([Tanenbaum 01978], §5, p. 243)
+
+[Tanenbaum 01978]: https://research.vu.nl/ws/files/110789436/11056 "Implications of Structured Programming for Machine Architecture, by Andrew S. Tanenbaum, 01978, CACM volume 21, number 3, 10.1145/359361.359454"
+
 What would a compact stack bytecode for C look like?  I think you
 could usually manage to compile to about 3 bytes per line of C code,
 which would enable you to run C programs of about 10kloc on an Arduino
@@ -439,7 +454,7 @@ non-comment non-blank source lines of Pascal code, or 3.5 bytes per
 line, which is about 2.8 times the density of the original MacOS
 compiled program.
 
-(All this is assuming that there are few enough bytecode operations to
+All this is assuming that there are few enough bytecode operations to
 fit into a single byte.  The above code already uses `call`,
 `lea_blob`, `tinylit`, `loadword_blob`, `loadglobal`, `add`, `max`,
 `storeword_blob`, `lit8`, `storeword`, `storeword_offset`, and `ret`,
@@ -451,7 +466,17 @@ massive particles as `storeglobal`, `loadbyte_blob`, `storebyte_blob`,
 bring us to 15 of the 32 major-opcode slots filled, plus leptons such
 as `subtract`, `multiply`, `divide`, `mod`, `bitand`, `bitor`, `xor`.
 So I think it’s pretty plausible that we’ll have plenty of opcode
-space, but it’s something to watch.)
+space, but it’s something to watch.
+
+(If we wanted the bytecodes to be *printable ASCII* things might get
+more difficult: from 32 to 128 we only have room for 11 baryons and 8
+leptons, or 10 baryons and 16 leptons, with one of the baryons missing
+the DEL character.  But that’s probably too strict a restriction; text
+in ISO-8859-1 (24 baryons instead of 12) or Windows CP1252 (most of
+26, though maybe the A0 control characters would be best as leptons
+due to the holes) would be more reasonable, and conceivably UTF-8
+would work well if operand bytes were trailing 10xx xxxx bytes.
+Cyrillic and Greek codepages have many more homoglyphs.)
 
 It’s a little bit unclear how blob parameters are supposed to get
 passed here.  Do we pass them in word-sized chunks on the operand
@@ -1496,3 +1521,87 @@ format designed for C, somehow.
 However, aside from being (it seems) bulkier than the low-level
 approach, this structure seems like it would be much more difficult to
 interpret.
+
+Notes on [Tanenbaum 01978]
+--------------------------
+
+Tanenbaum and his students tackled this idea in 01978, with the idea
+of implementing the interpreter as microcode and making their computer
+faster and cheaper.  Since they couldn’t measure how fast
+unimplemented microcode was, they settled for measuring how small
+their programs were, which was under the streetlight and is vaguely
+related.  The paper is sometimes cited as inspiring RISC, due to its
+emphasis on measuring the frequencies of real operations in real
+programs, but the actual “EM-1” instruction set they arrived at is
+about as far from RISC as it is possible to be.
+
+Where RISCs have many general-purpose registers, EM-1 has none, not
+even a single accumulator, instead using an operand stack (which is
+also the call stack and storage for globals).  Where RISCs have a
+single instruction width, EM-1 has instructions of 1, 2, 3, and 4
+bytes.  Where RISC instructions typically have 3 operand fields, EM-1
+instructions have 0 or 1.  Where RISCs have carefully laid out bit
+fields to minimize instruction decoding latency, EM-1 declares, “There
+is no need to have distinct “opcode” and “address” bits.”  Where RISCs
+are, like nearly all CPUs, untyped, and strive to keep all
+instructions constant-time so that they can be implemented without
+microcode, EM-1 has hardware support for bounds-checked Numpy-like
+arbitrary-dimensional array descriptors and for “accessing
+intermediate lexicographical levels in block structured languages”,
+which latter seems to be defined handwavily and buggily, and involves
+a single load or store instruction following an arbitrarily long
+linked list through RAM.
+
+However, the EM-1 *is* RISC-like in that it’s roughly a load-store
+machine: ALU operations operate strictly on the stack, not even
+including the add-immediate instruction, which is included even in the
+very frugal RV32E, except that the EM-1 has 14 increment instructions,
+including one for TOS.  And both the EM-1 and Berkeley RISC-I and -II
+(and their demon offspring SPARC) are designed around reducing the
+cost of procedure call and return.
+
+The strawman bytecode outlined earlier is remarkably similar to the
+EM-1!  The biggest differences are:
+
+- the EM-1 is a single-stack design.
+- the EM-1 is substantially less aggressive about packing operands
+  into single-byte instructions.
+- the EM-1 is not designed to be able to execute C, which makes
+  demands on pointer arithmetic that the EM-1’s array descriptors are
+  ill-suited to fulfill.
+
+The EM-1’s instruction set consists of the following:
+
+- 12 one-byte pushlocal opcode bytes (“all the locals in 94.6% of
+  procedures”);
+- 8 one-byte pushglobal opcodes;
+- 3 one-byte pushconst opcodes (0, 1, and 2);
+- 12 one-byte poplocal opcodes;
+- 8 one-byte popglobal opcodes;
+- 4 two-byte {push,pop}{global,local} opcodes;
+- 2 two-byte pushconst opcodes for numerical constants in [-256, 255];
+- 4 one-byte ALU opcodes (+, -, ×, ÷);
+- 24 one-byte opcodes and 2 two-byte opcodes for zeroing and
+  incrementing locals;
+- 4 two-byte local and global array-access opcodes (pushelement,
+  popelement);
+- 1 two-byte lealocal opcode “for call-by-reference”;
+- 1 two-byte dereference opcode, for the same reason;
+- 3 one-byte “mark” opcodes for starting to set up a parameter list
+  for a subroutine call, which increment, decrement, or leave
+  unchanged the static nesting levels (for nested subroutines);
+- 1 two-byte subroutine-call opcode for programs containing up to 256
+  subroutines, though they suggest that in most cases the special
+  context following a “mark” operation would allow some 200 opcodes to
+  context-dependently specify which subroutine to call;
+- 1 two-byte opcode for allocating a stack frame, which is odd since
+  the destination of the call instruction is a “procedure descriptor”
+  and not a raw code address;
+- XXX finish ...
+
+Discussion of records (structs) is, bizarrely, completely lacking.
+Perhaps multidimensional arrays were the only data-structuring
+mechanism contemplated, but 01978 is about 10 years too late for such
+an omission.  Even arrays were accessed via “descriptors” in the stack
+frame, suggesting that the EM-1’s stack frames were considered to be
+homogeneous vectors of machine words.
