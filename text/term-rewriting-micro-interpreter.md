@@ -42,10 +42,10 @@ and when one of them succeeds you instantiate its replacement with the
 match values, then evaluate the instantiated replacement.  Something
 like this in Scheme:
 
-    (define (ev t)                                 ; eval, for tree rewriting
+    (define (ev t)                                 ; eval, for term rewriting
       (if (pair? t) (ap (map ev t) rules) t))      ; atoms don’t get rewritten
 
-    ;; apply, for tree rewriting, but the arguments are the top-level tree
+    ;; apply, for term rewriting, but the arguments are the top-level term
     ;; to rewrite, after all its children have been rewritten as above, and
     ;; the remaining set of rules to attempt rewriting with
     (define (ap t rules)
@@ -63,6 +63,10 @@ be nicer to handle the case where the variable is undefined):
           (if (pair? t) (cons (subst (car t) env) (subst (cdr t) env))
               t)))
 
+So, for example, `(subst '(You #(vt) my #(np)) '((#(np)
+. wombat) (#(vt) . rot)))` evaluates to `(You rot my wombat)`, as
+you’d expect.
+
 Then `match` needs to compute whether there’s a match, which requires
 it to distinguish variables from other things.  In its simplest form
 we can consider variables that occur more than once an error, but an
@@ -71,10 +75,10 @@ error we don’t try to detect; then it might look like this:
     (define (match t pat env)
       (if (var? pat) (cons (cons pat t) env)  ; vars match anything
           (if (pair? pat)  ; pairs match if the cars match and the cdrs match
-              (and (pair? t)  ; a non-var pair pattern can’t match an atom
+              (and (pair? t)  ; a pair pattern can’t match an atom
                   (let ((a (match (car t) (car pat) env)))  ; try to match car
                     (and a (match (cdr t) (cdr pat) a))))   ; then, try the cdr
-              (and (equal? pat t) env))))  ; non-var atoms match only themselves
+              (and (equal? pat t) env))))  ; atoms match only themselves
 
 Then you just need some kind of convention for marking variables.  The
 simplest thing in Scheme would be to use `,x`, which is syntax sugar
@@ -82,7 +86,7 @@ for `(unquote x)`, but that would have the unfortunate effect that you
 can’t use the atom `unquote` in head position in either a pattern or a
 replacement template.  Instead I am using `#(x)`:
 
-    (define (var? pat) (vector? pat))
+    (define var? vector?)
 
 (In other environments, you might use a different data type.)
 
