@@ -51,7 +51,7 @@ like this in Scheme:
     (define (ap t rules)
       (if (null? rules) t               ; no rewrite rules left? don’t rewrite
           (let ((m (match t (caar rules) '()))) ; initially no vars () match
-            (if m (ev (subst (cdar rules) m))  ; rule matched? substitute & eval
+            (if m (ev (subst (cadar rules) m)) ; rule matched? substitute & eval
                 (ap t (cdr rules))))))         ; otherwise, try the other rules
 
 That depends on definitions of `match`, `emptyenv`, and `subst`.
@@ -78,18 +78,17 @@ error we don’t try to detect; then it might look like this:
 
 Then you just need some kind of convention for marking variables.  The
 simplest thing in Scheme would be to use `,x`, which is syntax sugar
-for `(unquote x)`:
+for `(unquote x)`, but that would have the unfortunate effect that you
+can’t use the atom `unquote` in head position in either a pattern or a
+replacement template.  Instead I am using `#(x)`:
 
-    (define (var? pat) (and (pair? pat) (eq? (car pat) 'unquote)))
+    (define (var? pat) (vector? pat))
 
-(This has the unfortunate effect that you can’t use the atom `unquote`
-in head position in either a pattern or a replacement template.  You
-could fix this by quoting all the atoms in patterns and replacements,
-but probably a better idea is to use `#(varname)`.)
+(In other environments, you might use a different data type.)
 
 And that’s it.  19 lines of Scheme in
 terms of `define`, `if`, `'()`, `cons`, `pair?`, `let`, `car`, `cdr`,
-`caar`, `cdar`, `#f`, `and`, `equal?`, `assoc`, `map`, and `null?`
+`caar`, `cadar`, `#f`, `and`, `equal?`, `assoc`, `map`, and `null?`
 gives you a bottom-up, source-order-precedence term-rewriting
 interpreter.  If we want to include implicit equality testing in
 patterns when a variable occurs more than once, it’s a couple more
@@ -304,14 +303,14 @@ the Aardappel dissertation is defining a hash method for a point class:
 
     hash(point(x,y)) = x*y
 
-Or, in S-expression syntax using unquote:
+Or, in S-expression syntax using vectors:
 
-    (hash (point ,x ,y)) => (* ,x ,y)
+    (hash (point #(x) #(y))) => (* #(x) #(y))
 
 Which you could feed into the Scheme strawman interpreter above as
 follows:
 
-    (define rules '(((hash (point ,x ,y)) (* ,x ,y))))
+    (define rules '(((hash (point #(x) #(y))) (* #(x) #(y)))))
 
 Elsewhere you might define how to rewrite `hash` expressions applied
 to other types of values; then a hashtable implementation can invoke
@@ -322,12 +321,14 @@ conditional tests to dispatch to one of them.
 
 This also permits CLOS-style multiple dispatch:
 
-    (* (scalar ,s) (vec ,x ,y ,z)) => (vec (* ,s ,x) (* ,s ,y) (* ,s ,z))
-    (* (scalar ,s) (scalar ,t)) => (scalar (* ,s ,t))
-    (* (m ,r1 ,r2 ,r3) ,vec) => (vec (dot (vec . ,r1) ,vec)
-                                     (dot (vec . ,r2) ,vec)
-                                     (dot (vec . ,r3) ,vec))
-    (dot (vec ,a ,b ,c) (vec ,d ,e ,f)) => (+ (* ,a ,d) (* ,b ,e) (* ,c ,f))
+    (* (scalar #(s)) (vec #(x) #(y) #(z))) =>
+        (vec (* #(s) #(x)) (* #(s) #(y)) (* #(s) #(z)))
+    (* (scalar #(s)) (scalar #(t))) => (scalar (* #(s) #(t)))
+    (* (m #(r1) #(r2) #(r3)) #(vec)) => (vec (dot (vec . #(r1)) #(vec))
+                                             (dot (vec . #(r2)) #(vec))
+                                             (dot (vec . #(r3)) #(vec)))
+    (dot (vec #(a) #(b) #(c)) (vec #(d) #(e) #(f))) =>
+        (+ (* #(a) #(d)) (* #(b) #(e)) (* #(c) #(f)))
 
 Those rules, for example, will rewrite
 
@@ -348,12 +349,13 @@ term-rewriting languages, because you can use the same
 dynamic-dispatch trick.  You can define a higher-order mapcar function
 as follows:
 
-    (map ,f nil) => ()
-    (map ,f (cons ,car ,cdr)) => (cons (call ,f ,car) (map ,f ,cdr))
+    (map #(f) nil) => ()
+    (map #(f) (cons #(car) #(cdr))) =>
+        (cons (call #(f) #(car)) (map #(f) #(cdr)))
 
 Then you can define patterns like this:
 
-    (call (cover ,material) ,base) => (some ,material covered ,base)
+    (call (cover #(material)) #(base)) => (some #(material) covered #(base))
 
 so that `(call (cover chocolate) raisins)` rewrites to `(some
 chocolate covered raisins)`.  These rules compose so that
@@ -378,11 +380,12 @@ syntax):
 
 In the syntax I used above, this would be written as
 
-    (apply (qsortcompare ,x) ,y) => (< ,y ,x)
-    (filter nil ,_) => (pair nil nil)
-    (filter ((cons ,h ,t) ,f)) => (filter2 (filter ,t ,f) ,h ,f (apply ,f ,h))
-    (filter2 (pair ,a ,b) ,h ,f true) => (pair (cons ,h ,a) ,b)
-    (filter2 (pair ,a ,b) ,h ,f false) => (pair ,a (cons ,h ,b))
+    (apply (qsortcompare #(x)) #(y)) => (< #(y) #(x))
+    (filter nil #(_) => (pair) nil nil)
+    (filter ((cons #(h) #(t)) #(f))) =>
+        (filter2 (filter #(t) #(f)) #(h) #(f) (apply #(f) #(h)))
+    (filter2 (pair #(a) #(b)) #(h) #(f) true) => (pair (cons #(h) #(a)) #(b))
+    (filter2 (pair #(a) #(b)) #(h) #(f) false) => (pair #(a) (cons #(h) #(b)))
 
 (This also demonstrates how the term-rewriting paradigm implicitly
 provides conditionals.)
@@ -392,10 +395,11 @@ Oortmerssen discusses this further in pp. 48–50 (§4.1.2).
 In the language implemented by the interpreter above, you could just
 as well define things this way:
 
-    (map ,f (cons ,car ,cdr)) => (cons (,f ,car) (map ,f ,cdr))
-    ((cover ,material) ,base) => (some ,material covered ,base)
-    ((qsortcompare ,x) ,y) => (< ,y ,x)
-    (filter ((cons ,h ,t) ,f)) => (filter2 (filter ,t ,f) ,h ,f (,f ,h))
+    (map #(f) (cons #(car) #(cdr))) => (cons (#(f) #(car)) (map #(f) #(cdr)))
+    ((cover #(material)) #(base)) => (some #(material) covered #(base))
+    ((qsortcompare #(x)) #(y)) => (< #(y) #(x))
+    (filter ((cons #(h) #(t)) #(f))) =>
+        (filter2 (filter #(t) #(f)) #(h) #(f) (#(f) #(h)))
 
 This would have the advantage that you could pass in the name of any
 existing function.  But compiling this efficiently might be
@@ -410,7 +414,8 @@ A metacircular term-rewriting interpreter
 If you love term rewriting so much, why don’t you marry it, huh?
 Why’dja write that “strawman” above in *Scheme*?  Are you *chicken*?
 
-XXX the below lacks some bugfixes from the Scheme
+XXX the below lacks some bugfixes from the Scheme.  Also I definitely
+do not want to use the shitty Scheme syntax.
 
 Well, part of it is that I think Scheme is a better pseudocode for assembly
 language, but maybe it would look something like this, written in itself:
