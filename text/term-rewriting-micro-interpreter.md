@@ -241,13 +241,15 @@ which doesn’t include the non-open-coded primitives like `cons` (and
 `assoc` and `map`), the parser, or I/O.  I/O is actually almost all of
 `hex0_riscv64`.
 
-I went through and coded the whole thing in assembly language; the
-resulting (untested) program is 106 instructions and 255 bytes of
+I went through and coded the whole thing in assembly language; after
+trimming it down a bit, the
+resulting (untested) program is 100 instructions and 237 bytes of
 machine code, containing `cons`, `subst`, `assq`, `match`, `evlis`,
 `ev`, `ap`, and no undefined symbols, so 275½ may actually be a little
 high.  I’m pretty sure I could squeeze it down a bit more, but
 probably not below 200 bytes.  It's still missing I/O, the reader, and
-the printer.
+the printer.  In the process I trimmed down `subst` itself to 20
+instructions and 55 bytes.
 
 Trying to do this in RV64 without the C compressed-instruction
 extension, like `hex0_riscv64`, would surely have much worse code
