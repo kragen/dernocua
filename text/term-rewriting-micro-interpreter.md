@@ -199,24 +199,30 @@ are so small that they need to be open-coded:
 
 ### A sketch of `subst` in i386 assembly ###
 
-Here’s what `subst` might look like with that setup.  I was working
-from this earlier version of `subst`:
-
-    (define (subst t env)
-      (if (pair? t) (cons (subst (car t) env) (subst (cdr t) env))
-          (let ((v (lookup t env)))
-            (if v (cdr v) t))))
+Here’s what `subst` might look like with that setup.
 
 In i386 assembly:
 
-            # subst t env returns a version of t with atom substitutions from env.
+            # subst t env returns a version of t with var substitutions from env.
     subst:  push %ebp               # callee-saved variable used here
             push %eax               # %eax has t, %ecx has env
             push %ecx
-            test $3, %al
-            jnz 1f                  # jump if not a pair
-            mov 4(%eax), %eax       # get cdr t for (subst (cdr t) env)
-            call subst              # inherits our env.  calls are 5 bytes
+            test $2, %al            # ...10 is the pointer type tag for vars
+            jz 1f
+
+            call assoc              # calls are 5 bytes. inherits both t & env
+            mov 4(%eax), %eax       # get the cdr
+    2:      pop %ecx                # discard saved arguments; labeled for
+            pop %ecx                # epilogue sharing
+            pop %ebp
+            ret
+
+    1:      test $3, %al            # ...00 is the pointer type tag for pairs
+            jz 1f                   # if this isn’t a pair:
+            jmp 2b                  # %eax is already t; implicitly return it
+
+    1:      mov 4(%eax), %eax       # get cdr t for (subst (cdr t) env)
+            call subst              # inherits our env.
             mov %eax, %ebp          # save subst result
             mov 4(%esp), %eax       # load saved t
             mov (%eax), %eax        # car t
@@ -224,27 +230,24 @@ In i386 assembly:
             call subst
             mov %ebp, %ecx          # second cons argument is (subst (cdr t) env)
             call cons
-    2:      pop %ecx                # discard saved arguments; labeled for
-            pop %ecx                # epilogue sharing
-            pop %ebp
-            ret
+            jmp 2b                  # return cons result
 
-    1:      call lookup             # inherits both arguments; sets CF if not found
-            jc 1f
-            mov 4(%eax), %eax       # return value is cdr of lookup return value
-            jmp 2b                  # returns via shared epilogue
-
-    1:      mov 8(%esp), %eax       # return original t
-            jmp 2b
-
-That’s 24 instructions and 60 bytes of machine code,
+That’s 24 instructions and 58 bytes of machine code,
 and, although I’m sure I missed a few
 tricks, I don’t think it’s going to get more than about 30% smaller.
-That’s 15 bytes per line of Scheme, which I think is pretty good, but
-it puts the estimate of the whole 19-line Scheme program at 285 bytes,
+That’s 14½ bytes per line of Scheme, which I think is pretty good, but
+it puts the estimate of the whole 19-line Scheme program at 275½ bytes,
 which doesn’t include the non-open-coded primitives like `cons` (and
 `assoc` and `map`), the parser, or I/O.  I/O is actually almost all of
 `hex0_riscv64`.
+
+I went through and coded the whole thing in assembly language; the
+resulting (untested) program is 106 instructions and 255 bytes of
+machine code, containing `cons`, `subst`, `assq`, `match`, `evlis`,
+`ev`, `ap`, and no undefined symbols, so 275½ may actually be a little
+high.  I’m pretty sure I could squeeze it down a bit more, but
+probably not below 200 bytes.  It's still missing I/O, the reader, and
+the printer.
 
 Trying to do this in RV64 without the C compressed-instruction
 extension, like `hex0_riscv64`, would surely have much worse code
@@ -252,18 +255,26 @@ density; *with* the C extension it might be slightly more compact.
 
 ### A sketch of `subst` in a stack bytecode ###
 
-XXX this is also the old version of the Scheme code
-
 In one of the bytecodes suggested in file `c-stack-bytecode.md` this
 might look like this:
 
     PROCEDURE subst argwords=2
         loadword 0  ; t
-        call pair?
-        jztos 1f    ; if not a pair, skip
+        call var?
+        jztos 1f    ; if not a var (top of stack is 0/nil/false), skip
         loadword 0
-        call car
         loadword 1  ; env
+        call assoc
+        call cdr
+        ret
+    1:  loadword 0
+        call pair?
+        jnztos 1f   ; skip if it *is* a pair
+        loadword 0  ; return t
+        ret
+    1:  loadword 0
+        call car
+        loadword 1
         call subst
         loadword 0
         call cdr
@@ -271,28 +282,18 @@ might look like this:
         call subst
         call cons
         ret
-    1:  loadword 0
-        loadword 1
-        call lookup
-        dup
-        jztos 1f     ; jump if top of stack is 0, i.e., nil
-        call cdr
-        ret
-    1:  drop
-        loadword 0
-        ret
 
 According to the hypotheses in that note, this might compile to 2
-bytes of procedure header, 23 opcode bytes, 8 operand bytes for call
+bytes of procedure header, 23 opcode bytes, 9 operand bytes for call
 instructions, 2 operand bytes for jump targets, and a 2-byte entry in
-a global subroutine table, for a total of 37 bytes.  At this rate, the
-whole Scheme program irresponsibly extrapolates to 175¾ bytes, but of
+a global subroutine table, for a total of 38 bytes.  At this rate, the
+whole Scheme program irresponsibly extrapolates to 180½ bytes, but of
 course you’d have to add the bytecode interpreter on top of that.  On
 the other hand, if the bytecode interpreter is customized specifically
 to run the term-rewriting interpreter, none of the call instructions
 will need an operand byte, because there’s plenty of opcode space to
 allocate each subroutine in this program a single-byte opcode.  That
-would bring it down to 29 bytes, less than half the size of the i386
+would bring it down to 29 bytes, half the size of the i386
 machine code, irresponsibly extrapolating the whole Scheme program to
 137¾ bytes of machine code.
 
