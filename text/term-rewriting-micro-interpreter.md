@@ -244,12 +244,32 @@ which doesn’t include the non-open-coded primitives like `cons` (and
 I went through and coded the whole thing in assembly language; after
 trimming it down a bit, the
 resulting (untested) program is 100 instructions and 237 bytes of
-machine code, containing `cons`, `subst`, `assq`, `match`, `evlis`,
-`ev`, `ap`, and no undefined symbols, so 275½ may actually be a little
+machine code (12.5 bytes per line of Scheme),
+containing `cons`, `subst`, `assq`, `match`, `evlis`,
+`ev`, `ap`, and no undefined symbols; so 275½ was actually a little
 high.  I’m pretty sure I could squeeze it down a bit more, but
-probably not below 200 bytes.  It's still missing I/O, the reader, and
+probably not below 200 bytes.  It’s still missing I/O, the reader, and
 the printer.  In the process I trimmed down `subst` itself to 20
 instructions and 55 bytes.
+
+Adding an input reading loop cost 49 more bytes of code, plus 4 of
+data; a printer (untested) cost another 81 bytes.  Now I'm at 370
+bytes of code.  I think all it’s lacking now is a reader, so I’m
+pretty sure it’ll be under 512 bytes of machine code and data, thus
+under 1 KiB of executable.  I’m currently suffering 414 bytes of
+executable-format overhead, mostly padding, but [Brian Raiter’s
+work][2] suggests that it should be possible to get the
+executable-format overhead down to about 45–52 bytes, but [with strict
+ELF conformance he couldn’t get it below 76 bytes][3], and [with
+dynamic linking he couldn’t get it below 297 bytes][2]; still, maybe I
+can get the whole executable under 512 bytes.
+
+[1]: https://www.muppetlabs.com/~breadbox/software/tiny/teensy.html
+[2]: https://www.muppetlabs.com/~breadbox/software/tiny/somewhat.html
+[3]: https://www.muppetlabs.com/~breadbox/software/tiny/revisit.html
+
+However, it’ll still be missing library functions to do useful things
+like I/O and arithmetic.
 
 Trying to do this in RV64 without the C compressed-instruction
 extension, like `hex0_riscv64`, would surely have much worse code

@@ -1113,6 +1113,62 @@ the above version.
 XXX what if we use the dumber loop operations?  how about if we don’t
 inline?
 
+Rob Kendrick mentions that DSP loop instructions are often implemented
+as Intercal’s “COMEFROM”, which seems like another approach that might
+be worth investigating — a for-loop instruction that encodes the
+length of the loop, so that instead of
+
+        tinylit 1
+        loadword 1
+        fortoloop
+        ...
+        continue
+        ret
+
+you would write
+
+        tinylit 1
+        loadword 1
+        fortoloop 2f
+        ...
+    2:  ret
+
+so that interpreting each instruction would require first checking to
+see if you had hit the address of the end of the innermost for-loop.
+This would improve compression over having a `continue` bytecode only
+if the loop extent could be packed into the `fortoloop` byte, which
+limits us to fairly short loops.
+
+Also, it might be worthwhile to have a special short form for `for
+(int i = 0; i < x; i++)` where `x` and the loop end are the only
+varying parameters, so the starting index doesn’t eat up a bytecode.
+Here’s a random sampling of 16 for loops in C codebases I have handy,
+divided into loops that fit that pattern and loops that don’t:
+
+    9base_6.orig/rc/trap.c:	while(ntrap) for(i = 0;i!=NSIG;i++) while(trap[i]){
+    cmusphinx/multisphinx/sphinxbase/feat.c:        for (i = 0; i < start_pad; ++i)
+    emacs24_24.5+1.orig/src/coding.c:  for (reg = 0; reg < 4; reg++)
+    exopc/lib/libtermlib/mkinfo.c:    for (i = 0; i < numcaps; i++)
+    flashlight-firmware/ToyKeeper/crescendo/crescendo.c:    for(i=0;i<32;i++) {
+    gmp-5.0.5+dfsg/mpn/generic/mu_divappr_q.c:		for (i = 0; i <= err_rec; i++)
+    linux-2.6/drivers/watchdog/sbc8360.c:			for (i = 0; i != count; i++) {
+    linux-2.6/sound/soc/soc-dapm.c:		for (i = 0; i < ARRAY_SIZE(dapm_up_seq); i++)
+    puzzles-20200513.c9b3c38/bridges.c:        for (x = 0; x < params->w; x++) {
+
+    exopc/bin/less/charset.c:	for (p = charsets;  p->name != NULL;  p++)
+    exopc/bin/less/opttbl.c:	for (o = option;  o->oletter != '\0';  o++)
+    exopc/bin/sh/show.c:	for (p = arg->narg.text ; *p ; p++) {
+    exopc/sys/ubb/dependency.c:	for(e = l_first(a->out); e; e = l_next(e, out_next))
+    gawk_4.2.1+dfsg.orig/cint_array.c:	for (i = NHAT; i < INT32_BIT; i++) {
+    linux-2.6/drivers/atm/eni.c:			for (*pre = 3; *pre >= 0; (*pre)--)
+    maru-2.4/eval.c:	for (;;) {
+
+9 of these, the majority, though barely, fit that pattern, more or
+less.  Saving a `tinylit 0` byte on half of all for loops seems like
+it would be worthwhile.  There’s substantial diversity in the
+termination condition — `<`, `<=`, `!=` — though in many cases `<=
+err_rec` is equivalent to `< err_rec + 1` or `!= err_rec + 1`.
+
 ### Anduril `config_state_base` ###
 
 Let’s look at some BudgetLightForum flashlight firmware, because
@@ -1556,8 +1612,8 @@ However, the EM-1 *is* RISC-like in that it’s roughly a load-store
 machine: ALU operations operate strictly on the stack, not even
 including the add-immediate instruction, which is included even in the
 very frugal RV32E, except that the EM-1 has 14 increment instructions,
-including one for TOS.  And both the EM-1 and Berkeley RISC-I and -II
-(and their demon offspring SPARC) are designed around reducing the
+including one for TOS.  And, like the EM-1, the Berkeley RISC-I and
+-II (and their demon offspring SPARC) are designed around reducing the
 cost of procedure call and return.
 
 The strawman bytecode outlined earlier is remarkably similar to the
@@ -1569,6 +1625,7 @@ EM-1!  The biggest differences are:
 - the EM-1 is not designed to be able to execute C, which makes
   demands on pointer arithmetic that the EM-1’s array descriptors are
   ill-suited to fulfill.
+- the EM-1 apparently entirely lacks structs or records.
 
 The EM-1’s instruction set consists of the following:
 
@@ -1597,11 +1654,31 @@ The EM-1’s instruction set consists of the following:
 - 1 two-byte opcode for allocating a stack frame, which is odd since
   the destination of the call instruction is a “procedure descriptor”
   and not a raw code address;
-- XXX finish ...
+- 2 three-byte opcodes for FOR (one counting up and one down; the
+  second byte tells which variable to use, and the third gives the
+  branch offset), though you additionally need an unconditional jump
+  back at the end of the loop;
+- 14 (?) two-byte opcodes for conditional branches;
+- 141 unallocated opcode bytes;
+- lots of other three- and four-byte instructions whose first byte is
+  255; they propose “accessing intermediate lexicographical levels”,
+  “multiple precision arithmetic, floating point, shifting, rotating,
+  Boolean operations, etc.”
 
-Discussion of records (structs) is, bizarrely, completely lacking.
+I seem to have omitted 10 opcode bytes somewhere.  Unfortunately they
+didn’t include an opcode table.
+
+Discussion of records (structs) is, bizarrely, completely lacking; in the
+EM-1 design it seems to be impossible to heap-allocate linked list nodes.
 Perhaps multidimensional arrays were the only data-structuring
 mechanism contemplated, but 01978 is about 10 years too late for such
 an omission.  Even arrays were accessed via “descriptors” in the stack
 frame, suggesting that the EM-1’s stack frames were considered to be
 homogeneous vectors of machine words.
+
+There are lots of good ideas in this paper.  They mention that 95% of
+FOR loops have steps of +1 or -1, so maybe it’s best to support those
+two with special for-loop instructions, and relegate other steps to
+compilation as `while` loops.  Their conditional branches combine
+testing with jumping, like RISC-V, for example, and they propose an
+assembler that sorts local variables by number of references.
