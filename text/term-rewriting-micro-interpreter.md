@@ -171,8 +171,24 @@ machine-code primitive with multiple arguments, like Mulsubdiv a b c d
     * (Int x) (Int y): Mulsubdiv x y 0 1
     / (Int x) (Int y): Mulsubdiv 1 x 0 y
 
-This would avoid needing four separate primitive subroutines, four
-separate conditional cases to call them, four separate subroutine
+Alternatively you could have `Arithmetic x y` which evaluates to a
+tuple containing all the results, like `Results <x+y> <x-y> <x*y>
+<x//y> <x%y>`, and you could write
+
+    + (Int x) (Int y): R15 (Arithmetic x y)
+    - (Int x) (Int y): R25 (Arithmetic x y)
+    * (Int x) (Int y): R35 (Arithmetic x y)
+    / (Int x) (Int y): R45 (Arithmetic x y)
+    % (Int x) (Int y): R55 (Arithmetic x y)
+    R15 (a b c d e f): b
+    R25 (a b c d e f): c
+    R35 (a b c d e f): d
+    R45 (a b c d e f): e
+    R55 (a b c d e f): f
+
+Either would avoid needing four or five
+separate primitive subroutines, four or five
+separate conditional cases to call them, four or five separate subroutine
 table entries, etc.  Though maybe a single conditional case would be
 sufficient, `Primop op x y`, with an op number, you’d still need a
 table of subroutines.
