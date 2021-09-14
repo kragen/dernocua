@@ -1,7 +1,10 @@
+Qfitzah: a minimal term-rewriting language
+==========================================
+
 Today Andrius Štikonas got the `hex0_riscv64` bootstrap seed program
 down to 392 bytes; it translates from hexadecimal into binary, though
 much of the bulk of the program is opening and closing files.  This
-led me to thinking about the question of Kefitzat haDerekh, shortening
+led me to thinking about the question of Qfitzat haDerekh, shortening
 the path: can we teleport directly from a few hundred bytes of machine
 code to something much more amenable to writing compilers?
 
@@ -109,6 +112,103 @@ rewrite any term, you can start by doing a hash table lookup, and then
 typically have a small number of conditionals after that.  So you’d
 probably want to use this bootstrap interpreter only to run a
 bootstrap compiler.
+
+### Primitives and integers ###
+
+Formally speaking we don’t need arithmetic primitives, since we can
+define numbers in a variety of ways via term rewriting, but for
+practical efficiency we probably want access to machine arithmetic.
+
+I’m thinking that the way to handle things like arithmetic is to have
+an additional class of constant atoms, the integers, and some built-in
+rewrite rules that are implemented in machine code.  Darius Bacon
+suggests that perhaps only the right-hand side should be implemented
+in machine code, and the pattern-match itself maybe in a prelude.
+
+The question is how to handle them for matching: can you pattern-match
+on integerness, or do you just have a “function”?  In the first case,
+you could allow an integer like 283 to match a pattern like `Int x`
+and bind `x` to 283; or you could instead rewrite `Int? 283` and
+similar to `Yes` and `Int? Qfitzat` to `No`.
+
+If you were doing the pattern-match in the prelude, these alternatives
+might look like:
+
+    + (Int x) (Int y) :: 3
+    - (Int x) (Int y) :: 4
+    - x: - 0 x
+
+where the `::` rather than `:` indicates that you’re supplying a
+machine-code primitive index rather than a template, 3 being the index
+of the addition routine and 4 that of subtraction; or, in the other
+case:
+
+    If Yes a b: Do a
+    If No a b: Do b
+    && x y: If x y x
+    || x y: If x x y
+    Not Yes: No
+    Not No: Yes
+    Do Yes: Yes
+    Do No: No
+    + x y: If (&& (Int? x) (Int? y)) (Int+ x y) (Add x y)
+    Do (Int+ x y) :: 3
+    - x: - 0 x
+    - x y: If (&& (Int? x) (Int? y)) (Int- x y) (Sub x y)
+    Do (Int- x y) :: 4
+
+These If rules are convenient here but maybe not ideal, both because
+it’s easy to forget the `Do` when you try to define the results, and
+because it’s easy to forget that the *arguments within* the consequent
+and alternate blocks *will* be evaluated eagerly.
+
+You could define the usual arithmetic operations in terms of a single
+machine-code primitive with multiple arguments, like Mulsubdiv a b c d
+= (a*b - c)//d, with definitions in the standard prelude like these:
+
+    + (Int x) (Int y): Mulsubdiv -1 x y -1
+    - (Int x) (Int y): Mulsubdiv 1 x y 1
+    * (Int x) (Int y): Mulsubdiv x y 0 1
+    / (Int x) (Int y): Mulsubdiv 1 x 0 y
+
+This would avoid needing four separate primitive subroutines, four
+separate conditional cases to call them, four separate subroutine
+table entries, etc.  Though maybe a single conditional case would be
+sufficient, `Primop op x y`, with an op number, you’d still need a
+table of subroutines.
+
+For bitwise operations you could similarly use `Norshift a b c = ~(a |
+b) >> c` and definitions like these:
+
+    B~ (Int x): Norshift x 0 0
+    Nor (Int x) (Int y): Norshift x y 0
+    | (Int x) (Int y): B~ (Nor x y)
+    & (Int x) (Int y): Nor (B~ x) (B~ y)
+    &^ (Int x) (Int y): Nor (B~ x) y
+    >> (Int x) (Int y): Norshift (B~ x) 0 y
+    ^ (Int x) (Int y): Nor (Nor x y) (& x y)
+
+Probably three arguments is the maximum that would be tolerated by
+ordinary decency, but if not, you could of course incorporate
+Mulsubdiv and Norshift into a single six-argument monster.
+
+You’d also need some kind of comparison operation, minimally `>0`.
+
+Left shifts are easy enough to implement as rewrite rules with
+addition:
+
+    << (Int x) 0: x
+    << (Int x) (Int y): If (>0 y) (Shift (+ x x) (- y 1)) (Negative-left-shift x y)
+    Do (Shift x y): << x y
+
+Possibly a better way to implement that would be:
+
+    << (Int x) 0: x
+    << (Int x) (Int y): <<2 (>0 y) x y
+    <<2 Yes x y: Shift (+ x x) (- y 1)
+
+There’s a separate question of how to handle system calls, which I
+think can be bodged in pretty easily since evaluation is eager.
 
 Some sketches of assembly implementations
 -----------------------------------------
@@ -250,10 +350,10 @@ containing `cons`, `subst`, `assq`, `match`, `evlis`,
 high.  I’m pretty sure I could squeeze it down a bit more, but
 probably not below 200 bytes.  It’s still missing I/O, the reader, and
 the printer.  In the process I trimmed down `subst` itself to 20
-instructions and 55 bytes.
+instructions and 55 bytes, then later 22 instructions and 49 bytes.
 
 Adding an input reading loop cost 49 more bytes of code, plus 4 of
-data; a printer (untested) cost another 81 bytes.  Now I'm at 370
+data; a printer (untested) cost another 81 bytes.  Now I’m at 370
 bytes of code.  I think all it’s lacking now is a reader, so I’m
 pretty sure it’ll be under 512 bytes of machine code and data, thus
 under 1 KiB of executable.  I’m currently suffering 414 bytes of
@@ -318,6 +418,47 @@ allocate each subroutine in this program a single-byte opcode.  That
 would bring it down to 29 bytes, half the size of the i386
 machine code, irresponsibly extrapolating the whole Scheme program to
 137¾ bytes of machine code.
+
+A stack bytecode specifically designed for list processing might have
+a `decons-or` instruction, which unpacks the pair on top of the stack
+into a car and cdr, or if it’s not a pair, jumps to the given
+destination, because usually `pair?` is associated with subsequent
+calls to `car` and `cdr`.  We could represent that in Scheme as a
+special binding form, here introducing variables called `a` and `d`:
+
+    (define (subst t env)
+      (if-pair t (a d) (cons (subst a env) (subst d env))
+        (if (var? t) (cdr (assoc t env)) t)))
+
+In such a bytecode:
+
+    PROCEDURE subst argwords=2
+        loadword 0  ; t
+        decons-or 1f
+        loadword 1  ; env
+        call subst
+        swap
+        loadword 1
+        call subst
+        call cons
+        ret
+    1:  loadword 0
+        call var?
+        jztos 1f    ; if not a var (top of stack is 0/nil/false), skip
+        loadword 0
+        loadword 1
+        call assoc
+        call cdr
+        ret
+    1:  loadword 0
+        ret
+
+This reduces `subst` from 23 bytecode instructions to 19, and I think
+it’s likely that a single omnibus pair?-and-jztos-and-car-and-cdr
+procedure will also be smaller than three separate ones and their
+opcode table entries.  The cost is that, in the relatively infrequent
+case where only one of those three operations is called for, it costs
+you an extra byte per unwanted result.
 
 Dynamic dispatch
 ----------------
