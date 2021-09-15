@@ -2960,3 +2960,48 @@ enough baking soda to fully neutralize the acid, which I guess is less
 surprising considering that it’s potentially triprotic.  The
 litharge–glycerin cement still seems to be hard and is now even less
 shiny, like dried “satin” paint.
+
+02021-09-14
+-----------
+
+The litharge–glycerin cement has mostly remained solid, rather than
+crumbling under its own power, but can now be crumbled like dried mud
+under the pressure of a q-tip, which is similar to its previous
+uninspiring performance and significantly less impressive than I was
+hoping for.  Where it was exposed to light (with or without air) it
+has darkened from its buff color to a darker, grayer color.  It pulls
+away from the plastic yogurt cup (recycling triangle 6, polystyrene)
+with only the lightest adhesion.  Its “satin” paint luster remains
+unchanged.
+
+I bit through one of the Oogoo samples I’d previously bitten on
+02021-08-21.  If there is an acetic-acid smell, it is faint enough
+that I can’t be sure it’s present.  It’s about 18mm thick in one
+dimension, so probably the points nearest the surface were something
+like 7mm away from the surface.
+
+I rubbed the permanent marker spot off the surface of another of the
+Oogoo samples, this one about 28mm in diameter, and cut it in half
+with a razor knife; it too has no discernible acetic-acid smell.  I’m
+not sure exactly when I made this one.
+
+02021-09-15
+-----------
+
+The litharge-glycerin cement I unstuck from the yogurt cup yesterday
+has largely lost the bisque or buff color it previously had
+underneath, presumably due to being indirectly exposed to the sunlight
+through the window for a single day.  I wonder if you could use this
+property to make photographs?  It would be more useful if you could
+stabilize it, but possibly you can; plausibly the photoreaction
+product is something like lead dioxide or metallic lead, either of
+which would be much less easily dissolved by acids than litharge
+itself.
+
+I added some more water and baking soda either yesterday or the day
+before to the ammonia-scented Speed can containing the product of
+decomposition of the fertilizer.  Later, I added some hardware-store
+phosphoric acid (*Desoxidant fosfatizante TF3*, UPC 0-723540-593022,
+water-clear with unspecified additives).  This induced effervescence,
+showing that the baking soda hadn’t been entirely consumed.
+
