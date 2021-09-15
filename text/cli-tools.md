@@ -5,7 +5,8 @@ A list of handy tools (mostly CLI) developed from a chat channel.
 - `cat`, `cut`, `join`, `comm`, `sort`, `merge`, `uniq`, `grep`: basic
   text query
 - `ack`, `rg`, `awk`: advanced text query
-- `mpv`, `evince`, `mplayer`, `xpdf`, `firefox`: non-text viewing
+- `mpv`, `mplayer`, `evince`, `mupdf`, `xpdf`, `firefox`, `links`,
+  `lynx`, `ebook-viewer`: non-text viewing
 - `find`: filesystem query
 - `fzf`, `fd`: advanced filesystem query
 - `jq`, JSON query
