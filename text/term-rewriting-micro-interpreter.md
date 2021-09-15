@@ -380,6 +380,8 @@ ELF conformance he couldn’t get it below 76 bytes][3], and [with
 dynamic linking he couldn’t get it below 297 bytes][2]; still, maybe I
 can get the whole executable under 512 bytes.
 
+P.S. a reader was 287 bytes.
+
 [1]: https://www.muppetlabs.com/~breadbox/software/tiny/teensy.html
 [2]: https://www.muppetlabs.com/~breadbox/software/tiny/somewhat.html
 [3]: https://www.muppetlabs.com/~breadbox/software/tiny/revisit.html
