@@ -1,20 +1,24 @@
-A list of handy tools (mostly CLI) developed from a chat channel.
+A list of handy tools (mostly CLI) developed from a discussion on
+#scannedinavian on Libera.chat (formerly Freenode).
 
-- `less`, `bat`: text viewing
+- `most`, `less`, `bat`: text viewing
 - `vi`: text editing
-- `cat`, `cut`, `join`, `comm`, `sort`, `merge`, `uniq`, `grep`: basic
-  text query
-- `ack`, `rg`, `awk`: advanced text query
+- `cat`, `cut`, `join`, `comm`, `sort`, `merge`, `uniq`, `grep`,
+  `shuf`, `random`: basic text query
+- `ack`, `rg`, `awk`, ack-grep: advanced text query (sometimes
+  filesystem too)
 - `mpv`, `mplayer`, `evince`, `mupdf`, `xpdf`, `firefox`, `links`,
   `lynx`, `ebook-viewer`: non-text viewing
-- `find`: filesystem query
+- `find`, `xargs`: filesystem query
 - `fzf`, `fd`: advanced filesystem query
 - `jq`, JSON query
 - `history`: bunk
 - `sudo`: sandwiches
 - `ls`, `cd`, `mkdir`, `rmdir`, `mv`, `ln`, `rm`, `cp`, `du`: basic
   file manager
-- `dust`: alternative to du
+- [dust](https://github.com/bootandy/dust): alternative to du
+- [`exa`](https://github.com/ogham/exa): alternative to ls
+- `xdu`, `k4dirstat`: disk usage explorers
 - `ls`, `lsof`, `ps`, `w`, `who`, `ip`, `ifconfig`, `netstat`, `df`,
   `vmstat`, `dstat`, `top`, `htop`: system status information
 - `thunar`, `bashmount`, `mkfs.vfat`: mounting and formatting
@@ -40,12 +44,15 @@ A list of handy tools (mostly CLI) developed from a chat channel.
 - `watch -d`: GUIfication
 - `reset`: recovering a horked terminal
 - `sloccount`, `cloc`: counting lines of source
-- `asciinema`: terminal demos
+- `asciinema`, `screen`, `tmux`: terminal recording, disconnecting,
+  multiplexing
 - `visidata`: data explorer
 - `darkdraw`: ASCII art draw program
-- `dd`: sorry, I can’t tonight
+- `dd`: sorry, I can’t, tonight I’m driving
 - <https://github.com/eradman/entr>: run arbitrary commands when files
   change, turning your filesystem into an event bus (originally just a
   test runner)
 - `w`, `who`, `write`, `wall`, `talk`: a chat system
 - `xclip`, `xmessage`: sort of GUI integration
+
+Thanks to Shae Erisson for the discussion this arose from!
