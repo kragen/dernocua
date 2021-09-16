@@ -55,4 +55,5 @@ A list of handy tools (mostly CLI) developed from a discussion on
 - `w`, `who`, `write`, `wall`, `talk`: a chat system
 - `xclip`, `xmessage`: sort of GUI integration
 
-Thanks to Shae Erisson for the discussion this arose from!
+Thanks to Shae Erisson and <irc://libera.chat/janus> for the
+discussion this arose from!
