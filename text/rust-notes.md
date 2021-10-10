@@ -1,11 +1,22 @@
 I want to learn Rust, so I’m reading the Rust book by Steve Klabnik,
 Carol Nichols, et al., and I’m going to try writing an IRC bot in it.
-I’ve done a few basic Rust tutorials in previous years, and I have a
+I’ve done a few basic Rust tutorials in previous years, and I had a
 Rust compiler installed in /usr/local/bin, but it’s from 02016.
 
-The book is very approachable, but it’s a bit slow-paced and
+_The Rust Programming Language_ book is very approachable,
+but it’s a bit slow-paced and
 patronizing.  Maybe it would be great if I were extremely insecure
-about my abilities.
+about my abilities.  [The _Rust Reference_][13] is maybe closer to what
+I want, but [the 57-page _Rust for the Polyglot Programmer_][14] is a
+night-and-day improvement over either as a starting point.  For
+example, after only 23 pages, it tells me, “There is no inheritance,”,
+and on the next page, “this is how `for x in y` loops work: `y` must
+`impl IntoIterator`”. These are things I’ve been wondering about
+through hundreds of pages of TRPL.  However, it is very much not
+self-contained, so it is only a starting point.
+
+[13]: https://doc.rust-lang.org/stable/reference/
+[14]: https://diziet.dreamwidth.org/10210.html
 
 Installing Rust was kind of a pain in the ass and needed 294–1190 MB
 --------------------------------------------------------------------
@@ -116,7 +127,8 @@ hand:
     Filesystem              1K-blocks      Used Available Use% Mounted on
     /dev/mapper/debian-root 235891480 221200928   2707912  99% /
 
-So this time it’s using 1.19 gigs.
+So this time it’s using 1.19 gigs because I set the profile to
+`complete`.
 
 ### hello, world ###
 
@@ -132,6 +144,17 @@ But now it’s working:
     hello, world
 
 #### Hello World is Fucking Huge ####
+
+> Smaller runtimes have fewer features but have the advantage of
+> resulting in smaller binaries. Smaller binaries make it easier to
+> combine the language with other languages in more contexts. While
+> many languages are okay with increasing the runtime in exchange for
+> more features, Rust needs to have nearly no runtime, and cannot
+> compromise on being able to call into C in order to maintain
+> performance.
+
+— *The Rust Programming Language*, §4.1 “Using threads to run code
+simultaneously”, p. 423
 
     : user@debian:~/devel/dev3; ls -l hello
     -rwxr-xr-x 1 user user 3439804 Oct  6 22:50 hello
@@ -173,7 +196,7 @@ executable, or use `#![no_std]` to not use libstd at all.
 [Dynamically linking libstd *by default* isn’t an option because Rust
 doesn’t have an ABI][2], but [you *can* dynamically link with `-C
 prefer-dynamic`][4], which gives you a 10-kilobyte stripped binary
-which by default doesn’t work because it doesn't know where to find
+which by default doesn’t work because it doesn’t know where to find
 Rust’s libstd:
 
     : user@debian:~/devel/dev3; rustc -C prefer-dynamic hello.rs
@@ -197,7 +220,25 @@ That seems pretty reasonable.
 [2]: https://news.ycombinator.com/item?id=23498254
 [4]: https://news.ycombinator.com/item?id=16736725
 
-### Holy shit, thirty thousand files? ###
+There are, however, some other reasons that Rust compilation output is bloated:
+
+    0000000000003b00 <_ZN4core3ptr9const_ptr33_$LT$impl$u20$$BP$const$u20$T$GT$4cast17h2979c04ce50f48ccE>:
+        3b00:       48 89 f8                mov    %rdi,%rax
+        3b03:       c3                      retq
+        3b04:       90                      nop
+        3b05:       90                      nop
+        3b06:       90                      nop
+        3b07:       90                      nop
+        3b08:       90                      nop
+        3b09:       90                      nop
+        3b0a:       90                      nop
+        3b0b:       90                      nop
+        3b0c:       90                      nop
+        3b0d:       90                      nop
+        3b0e:       90                      nop
+        3b0f:       90                      nop
+
+### Holy shit, thirty thousand HTML files? ###
 
 For some reason the `rustup doc` command just opens some kind of Wine
 error dialog telling me how to install Wine.  But it looks like the
@@ -422,11 +463,12 @@ Notes on things that surprised me about the language
 I’d say “notes about the language” but I’m not going to attempt to
 describe the whole language, except very cursorily: the atomic
 (“scalar”) types are {u,i}{8,16,32,64,size}, Unicode codepoints
-(“char”), f{32,64}, and boolean.  Built-in aggregate
-(“compound” — oddly not “vector”, which is a standard library growable
-array, as in the STL) types are tuples, strings, arrays, structs
-(chapter 5), enums (ADTs, chapter 6), plus references and mutable
-references.  Hmm, what about traits and functions?
+(“char”), f{32,64}, and boolean.  Built-in aggregate types (“compound
+types” — oddly not “vector”, which is a standard library growable
+array, as in the STL) are tuples, strings, arrays, structs (chapter
+5), enums (ADTs, chapter 6), plus references, mutable references, and,
+rarely, pointers.  Hmm, what about traits and functions?  Looks like
+closure types are trait types (Fn, FnMut, FnOnce).
 
 Some of what follows probably sounds critical and might inspire
 Rustaceans to feel defensive.  I’d suggest they don’t read it, because
@@ -454,7 +496,8 @@ I was thinking that maybe the cmp method from std::cmp::Ordering
 implied that there was no operator overloading, but evidently that’s
 not true; `std::ops::Add<T>` is the trait of things that overload `+`.
 And `Vec` overloads `[]`, which is even better news for nefarious EDSL
-purposes.
+purposes.  (Though Rust’s macro system is probably a more capable way
+of doing EDSLs.)
 
 In general the error messages are really excellent:
 
@@ -502,6 +545,8 @@ it could be worse; VMS used $.
 It’s interesting that library functions are private (like C file
 `static`, I guess?) by default, if you don’t prefix them with `pub`.
 `pub fn foo`, etc.
+
+Recursive deref coercion for arguments surprised me.
 
 ### Unhandled results are just a warning ###
 
@@ -553,7 +598,7 @@ attempting to print a crash traceback because the traceback contains a
 non-ASCII character, which is actually a thing that has happened to me
 with Python 3.  And probably there won’t be files I can’t open in Rust
 because their names aren’t UTF-8.  And I’m pretty sure my Rust
-programs won’t stop compiling if I put accented letters in comments,
+programs won’t stop compiling if I put curly quotes inside my comments,
 which happened to me a lot in Python 2.
 
 ### Strings ###
@@ -607,11 +652,210 @@ lazy iterator and then never consuming it, because at least iterator
 adaptors are `#[warn(unused_must_use)]`, like Err.
 
 Because Rust has traits instead of just protocols, things like map(),
-filter(), enumerate(), zip(), sum(), collect() (like Python `list()`),
+filter(), enumerate(), zip(), sum(), reduce() (called .fold()),
+collect() (like Python `list()`, `dict()`, etc.),
 and skip() (like APL drop I guess) are methods on the iterator trait
 with default implementations, not functions in a global namespace.
 This helps to reduce nesting compared to Python, though a Python genex
 is still usually shorter and clearer.
+
+Interestingly, both .collect() and .sum() have ad-hoc polymorphism on
+their return type, similar to Perl’s scalar vs. list context, but
+generalized.  Any type that implements the FromIterator trait can be
+returned from .collect(); any type that implements Sum can be returned
+from .sum() (and similarly for Product and .product()).
+
+There is some implicit lifting into the Result and Option monads for,
+e.g., .sum() and .product().
+
+In addition to what STL calls input and output (see below!) iterators,
+I think Rust iterators can be forward iterators (by implementing Copy
+or Clone) and random-access iterators (with the `Step` trait).
+
+#### Writing through iterators ####
+
+Because Rust iterators can yield mutable references, you can use them
+as cursors into data structures you’re mutating as well, like C++
+forward iterators.  This is something Python iterators can’t do.  This
+took me 20 minutes of struggling through compiler errors, but I did
+finally get it to work:
+
+    fn copy_iter<T: Copy>(src: &mut dyn Iterator<Item=&T>,
+                          dest: &mut dyn Iterator<Item=&mut T>) {
+        loop {
+            match (src.next(), dest.next()) {
+                (Some(s), Some(d)) => *d = s.clone(),
+                (_, _) => return,
+            }
+        }
+    }
+
+    fn main() {
+        let mut v1 = vec![3, 4, 1];
+        let v2 = vec![10, 20, 100];
+        let mut i = v1.iter_mut();
+        i.next();
+
+        copy_iter(&mut v2.iter(), &mut i);
+        println!("Now it's {:?}", v1);      // outputs: Now it's [3, 10, 20]
+    }
+
+That, uh, doesn’t really emit reasonable code for `copy_iter`, though.
+It *does* get specialized for the `i32` integers it’s being invoked
+with, but, oddly enough, not for vector iteration, presumably because
+of `dyn`:
+
+    0000000000002cb0 <_ZN4iter9copy_iter17h5fd7a53461d29648E>:
+        2cb0:       48 83 ec 58             sub    $0x58,%rsp
+        2cb4:       48 89 7c 24 28          mov    %rdi,0x28(%rsp)
+        2cb9:       48 89 74 24 30          mov    %rsi,0x30(%rsp)
+        2cbe:       48 89 54 24 38          mov    %rdx,0x38(%rsp)
+        2cc3:       48 89 4c 24 40          mov    %rcx,0x40(%rsp)
+        2cc8:       48 8b 44 24 30          mov    0x30(%rsp),%rax
+        2ccd:       48 8b 7c 24 28          mov    0x28(%rsp),%rdi
+        2cd2:       ff 50 18                callq  *0x18(%rax)
+        2cd5:       48 89 44 24 20          mov    %rax,0x20(%rsp)
+        2cda:       48 8b 44 24 40          mov    0x40(%rsp),%rax
+        2cdf:       48 8b 7c 24 38          mov    0x38(%rsp),%rdi
+        2ce4:       ff 50 18                callq  *0x18(%rax)
+        2ce7:       48 89 44 24 18          mov    %rax,0x18(%rsp)
+        2cec:       48 8b 44 24 18          mov    0x18(%rsp),%rax
+        2cf1:       48 8b 4c 24 20          mov    0x20(%rsp),%rcx
+        2cf6:       48 89 4c 24 48          mov    %rcx,0x48(%rsp)
+        2cfb:       48 89 44 24 50          mov    %rax,0x50(%rsp)
+        2d00:       b8 01 00 00 00          mov    $0x1,%eax
+        2d05:       31 c9                   xor    %ecx,%ecx
+        2d07:       48 83 7c 24 48 00       cmpq   $0x0,0x48(%rsp)
+        2d0d:       48 0f 44 c1             cmove  %rcx,%rax
+        2d11:       48 83 f8 01             cmp    $0x1,%rax
+        2d15:       75 17                   jne    2d2e <_ZN4iter9copy_iter17h5fd7a53461d29648E+0x7e>
+        2d17:       b8 01 00 00 00          mov    $0x1,%eax
+        2d1c:       31 c9                   xor    %ecx,%ecx
+        2d1e:       48 83 7c 24 50 00       cmpq   $0x0,0x50(%rsp)
+        2d24:       48 0f 44 c1             cmove  %rcx,%rax
+        2d28:       48 83 f8 01             cmp    $0x1,%rax
+        2d2c:       74 05                   je     2d33 <_ZN4iter9copy_iter17h5fd7a53461d29648E+0x83>
+        2d2e:       48 83 c4 58             add    $0x58,%rsp
+        2d32:       c3                      retq
+        2d33:       48 8b 7c 24 48          mov    0x48(%rsp),%rdi
+        2d38:       48 8b 44 24 50          mov    0x50(%rsp),%rax
+        2d3d:       48 89 44 24 08          mov    %rax,0x8(%rsp)
+        2d42:       e8 09 0e 00 00          callq  3b50 <_ZN4core5clone5impls52_$LT$impl$u20$core..clone..Clone$u20$for$u20$i32$GT$5clone17h4244c5f4dce8d8e8E>
+        2d47:       89 44 24 14             mov    %eax,0x14(%rsp)
+        2d4b:       48 8b 44 24 08          mov    0x8(%rsp),%rax
+        2d50:       8b 4c 24 14             mov    0x14(%rsp),%ecx
+        2d54:       89 08                   mov    %ecx,(%rax)
+        2d56:       e9 6d ff ff ff          jmpq   2cc8 <_ZN4iter9copy_iter17h5fd7a53461d29648E+0x18>
+        2d5b:       90                      nop
+        2d5c:       90                      nop
+        2d5d:       90                      nop
+        2d5e:       90                      nop
+        2d5f:       90                      nop
+
+I mean, reading through the code, it’s not *totally* appalling, but
+does this function really need an almost-90-byte stack frame?  And
+what’s going on here?
+
+        2ce7:       48 89 44 24 18          mov    %rax,0x18(%rsp)
+        2cec:       48 8b 44 24 18          mov    0x18(%rsp),%rax
+
+And this in particular is kind of an embarrassing way to compile `*d =
+s.clone()` in a production compiler optimizing for size:
+
+        2d33:       48 8b 7c 24 48          mov    0x48(%rsp),%rdi
+        2d38:       48 8b 44 24 50          mov    0x50(%rsp),%rax
+        2d3d:       48 89 44 24 08          mov    %rax,0x8(%rsp)
+        2d42:       e8 09 0e 00 00          callq  3b50 <_ZN4core5clone5impls52_$LT$impl$u20$core..clone..Clone$u20$for$u20$i32$GT$5clone17h4244c5f4dce8d8e8E>
+        2d47:       89 44 24 14             mov    %eax,0x14(%rsp)
+        2d4b:       48 8b 44 24 08          mov    0x8(%rsp),%rax
+        2d50:       8b 4c 24 14             mov    0x14(%rsp),%ecx
+        2d54:       89 08                   mov    %ecx,(%rax)
+
+I’d think something like this would be more reasonable:
+
+        mov 0x48(%rsp), %rdi    # s
+        callq _ZN4core5clone5impls52_$LT$impl$u20$core..clone..Clone$u20$for$u20$i32$GT$5clone17h4244c5f4dce8d8e8E #WTAF
+        mov 0x50(%rsp), %rcx    # d
+        mov %eax, (%rcx)        # *d = ...
+
+That’s with `-C prefer-dynamic -C opt-level=s`.  Without the
+optimization the executable is three times the size.  opt-level=3
+doesn’t help but opt-level=1 is actually a little better, except that
+its invocation of the `next()` method is much worse:
+
+    00000000000013a0 <_ZN4iter9copy_iter17h5fd7a53461d29648E>:
+        13a0:       41 57                   push   %r15
+        13a2:       41 56                   push   %r14
+        13a4:       41 54                   push   %r12
+        13a6:       53                      push   %rbx
+        13a7:       50                      push   %rax
+        13a8:       49 89 f6                mov    %rsi,%r14
+        13ab:       49 89 ff                mov    %rdi,%r15
+        13ae:       66 90                   xchg   %ax,%ax
+        13b0:       e8 8b ff ff ff          callq  1340 <_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h074db47cc7af8891E>
+        13b5:       49 89 c4                mov    %rax,%r12
+        13b8:       4c 89 f7                mov    %r14,%rdi
+        13bb:       e8 b0 ff ff ff          callq  1370 <_ZN94_$LT$core..slice..iter..IterMut$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h50a12d7708b22495E>
+        13c0:       4d 85 e4                test   %r12,%r12
+        13c3:       74 17                   je     13dc <_ZN4iter9copy_iter17h5fd7a53461d29648E+0x3c>
+        13c5:       48 89 c3                mov    %rax,%rbx
+        13c8:       48 85 c0                test   %rax,%rax
+        13cb:       74 0f                   je     13dc <_ZN4iter9copy_iter17h5fd7a53461d29648E+0x3c>
+        13cd:       4c 89 e7                mov    %r12,%rdi
+        13d0:       e8 ab fd ff ff          callq  1180 <_ZN4core5clone5impls52_$LT$impl$u20$core..clone..Clone$u20$for$u20$i32$GT$5clone17hb0e95370c1e5efa8E>
+        13d5:       89 03                   mov    %eax,(%rbx)
+        13d7:       4c 89 ff                mov    %r15,%rdi
+        13da:       eb d4                   jmp    13b0 <_ZN4iter9copy_iter17h5fd7a53461d29648E+0x10>
+        13dc:       48 83 c4 08             add    $0x8,%rsp
+        13e0:       5b                      pop    %rbx
+        13e1:       41 5c                   pop    %r12
+        13e3:       41 5e                   pop    %r14
+        13e5:       41 5f                   pop    %r15
+        13e7:       c3                      retq
+
+(Maybe all those extra `mov`s disappear into register renaming in
+early stages of execution, though.)
+
+(On the plus side, compiling this 17-line program
+at any optimization level takes 280–290 ms,
+barely longer than the 230 ms to compile the three-line hello-world
+program.  So it’s compiling... about 300 lines a second?  Probably
+that’s just happenstance and the actual amount of code is a minimal
+factor here.)
+
+The explicit call to .iter() is necessary; maybe coercion to iterators
+happens automatically in for-in loops for `Vec`, but not here:
+
+    error[E0277]: `Vec<{integer}>` is not an iterator
+      --> iter.rs:17:15
+       |
+    17 |     copy_iter(&mut v2, &mut i);
+       |               ^^^^^^^ `Vec<{integer}>` is not an iterator
+       |
+       = help: the trait `Iterator` is not implemented for `Vec<{integer}>`
+       = note: required for the cast to the object type `dyn Iterator<Item = &_>`
+
+The body of the loop is stupid, though, because it’s explicitly
+calling .clone() on a `Copy` instance; it should instead say
+
+    match (src.next(), dest.next()) {
+        (Some(s), Some(d)) => *d = *s,
+        (_, _) => return,
+    }
+
+and, with this fix, the function is inlined into main() as it should
+be, and fully unrolled, and I think maybe dead-store-eliminated as
+well.  This also works:
+
+    while let (Some(s), Some(d)) = (src.next(), dest.next()) {
+        *d = *s;
+    }
+
+And so does this:
+
+    for (s, d) in src.zip(dest) {
+        *d = *s;
+    }
 
 FFI Callability
 ---------------
@@ -663,6 +907,11 @@ So it seems like doing this in practice would involve doing some of
 the things mentioned in the “Hello World is Fucking Huge” section
 above.  Until your library is hundreds of thousands of lines of code,
 anyway.
+
+[Fontdue](https://github.com/mooman219/fontdue) is a TrueType
+rasterizer written this way (a `no_std` crate) to facilitate calling
+from C.  It seems like I could probably learn a lot from things like
+that about how to pull this off.
 
 However, it’s notable that building libraries like this evidently
 doesn’t rely on having a working GCC toolchain, so cross-compiling is
@@ -727,7 +976,8 @@ comparison thing for structs and enums unless you opt into it with
 these with built-in arrays, slices, tuples, and hash maps.  XXX try
 it.  Vec evidently has a useful debug print format.
 
-Vec at least does the deep equality thing by default.  Given this code:
+Vec and std::collection::HashMap at least do the deep equality thing
+by default.  Given this code:
 
     let xs = vec![3, 8, 12];
 
@@ -742,6 +992,8 @@ We get this behavior:
       left: `[3, 8, 12]`,
      right: `[3, 8, 13]`', veciter.rs:6:5
     note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+And similarly for HashMap.  It formats okay with `{:?}` too.
 
 ### Backtraces ###
 
@@ -782,9 +1034,23 @@ but not if the bug is in my code.
 Failing full backtraces, what does the debugger look like?  [Evidently
 (Rust’s fork of) GDB and (Rust’s MacOS-only fork of) LLDB are
 supported][10], and Tom Tromey has been working on it, but DWARF can’t
-represent traits yet.  [There’s a crate called coredump to dump core
-on panic][11], which is potentially a useful alternative to full
-backtraces if you you have a working debugger.
+represent traits yet.
+
+There are some wrappers installed by Rustup (or Cargo?) that don’t
+work:
+
+    : user@debian:~/devel/dev3; rust-gdb
+    gdb: unrecognized option '-iex'
+    Use `gdb --help' for a complete list of options.
+    : user@debian:~/devel/dev3; rust-lldb
+    lldb not found! Please install it.
+
+You'd think there would be a `rustfilt` analogous to `c++filt` for the
+name mangling, but there doesn’t seem to be.
+
+[There’s a crate called coredump to dump core on panic][11], which is
+potentially a useful alternative to full backtraces, if you have a
+working debugger, anyway.
 
 Printf debugging in tests is feasible but requires `cargo test --
 --nocapture`.
@@ -799,3 +1065,42 @@ for these things?  For example, apparently [ureq is a lot smaller than
 reqwest for HTTP][0].
 
 [0]: https://arusahni.net/blog/2020/03/optimizing-rust-binary-size.html
+
+I guess one possibility is to look at exemplary Rust projects and see
+what dependencies *they* use.  ripgrep, for example, has 46
+dependencies (!).  Among them are the FNV hash function used by the
+Rust compiler, `atty` (which provides various OS-specific cversions of
+`isatty`), `libc` (a wrapper around libc), `itoa` (a faster version
+than the `fmt::Formatter` version), `memmap2` (a fork of memmap-rs,
+supporting mmap and similar facilities on other OSes), `ryu` (for
+float-to-string conversion), and `serde` (similar to pickle).  This
+gives something of a flavor of the stuff left out of the standard
+library.
+
+_Rust for the Polyglot Programmer_ recommends crates called `slab`,
+`slotmap`, and `generational_arena` for memory management;
+`itertools`; the locking-primitives crate `parking_lot`; the `tokio`
+runtime for async programs; the alternative `smol`; `pin-project` and
+`pin-project-lite` for dealing with some obscure async problems;
+`futures`; `cxx`, for calling C++; `inline-python` and `pyo3` for
+calling Python; `wasm-bindgen`, `web-sys`, and `rusty_v8` for WASM and
+the web; `j4rs` and `jni` for calling Java; `fehler`, `thiserror`,
+`eyre`, and/or `anyhow` for error handling; `num`, `num-traits`, and
+`num-derive` for numerical code and integer conversion; `index_vec`,
+`arrayvec`, and `indexmap` for containers; `easy-ext`; `rayon` and
+`crossbeam` for multi-thread parallelism; `chrono` and `chrono-tz` for
+datetime; `libc` or `nix`; `lazy_static` and `once_cell`; `log`;
+`tracing`; `regex`; `lazy-regex`; `glob`; `tempfile`; `rand` (also
+recommended by TRPL); `either`; `void`; `ndarray`; `ndarray-linalg`;
+`ring`; `rustls`; `bstr`; `bytemuck`; `serde`, mentioned above, but
+also with the objective of data *interchange with other languages*,
+saying they are “considerably better for many tasks than anything
+available in any other programming environment”; `reqwest` or `ureq`;
+`hyper` for raw HTTP; `rocket`, `actix-web`, `rouille` (sync), or
+`warp` as a web server framework; `structop` and `clap` or `argparse`
+for command-line parsing; etc.  It also suggests looking at “recent
+downloads” on crates.io to see what other people are using.  It
+specifically recommends avoiding `wasm-pack` and `stdweb`.
+
+I think the easiest way to make Cargo get the source for a package is
+to add it as a dependency to a project.
