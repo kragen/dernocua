@@ -1,3 +1,28 @@
+User interfaces are real-time programs.  [David Liddle says][2]:
+
+> The programming world was not designed for the kind of programming
+> we were doing.  These graphical user interfaces — that's real-time
+> computing, okay?  And so all the programming languages that were in
+> existence had been spawned, intended to do batch-like computing.
+> All real-time stuff that was out there — it was all written in
+> machine language!  I mean it was just hard coded, you know!
+> Honeywell’s probably still selling Sigma 7s [the final SDS computer,
+> bought by Xerox and then sold to Honeywell during Liddle’s tenure at
+> Xerox], because there were a bunch of countries in Latin America
+> that all got together and wrote flight simulators for the Sigma 7,
+> okay?  And nobody wanted to pay to move that stuff, and it was all
+> machine language, as *all* real-time [code] was back then!
+> 
+> Well, we were doing real-time computing!  We were tracking the mouse
+> and moving windows and all that kind of stuff.  You know how
+> frustrating it is and there's even a *short* delay from a *manual*
+> input.  So we had no choice. ... After 80 milliseconds, it’s cold
+> pizza, man.  You know?  I mean, you can tolerate a *veerrry* tiny
+> lag, okay?  But, you know, the human being wants to operate at, you
+> know, 12½ hertz or go home.
+
+[2]: https://youtu.be/k79rIfcNDfg "Oral history of David Liddle, interviewed by Hansen Hsu and Marc Weber, 02020-02-04, at 1 hour 15 minutes 18 seconds"
+
 Suppose you want to run some arbitrary scripts in an interactive
 display system, like a game, using a flexible programming language
 like Lisp, but you want to ensure that those scripts don’t cause it to
