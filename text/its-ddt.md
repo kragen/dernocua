@@ -9,6 +9,12 @@ astounding.  Why couldn’t GDB be half this good?
 [3]: https://github.com/PDP-10/its/blob/master/doc/debugging.md
 [8]: https://dspace.mit.edu/handle/1721.1/6153 "DDT Reference Manual, by Eric Osman and Tom Knight, MIT AI Lab memo 147a, September 01971"
 
+To be clear, it’s not that DDT can do anything GDB can’t.  GDB is
+vastly more powerful, and I think that was true even in its earliest
+versions.  It’s that the things DDT *can* do are done with great grace
+and fluency, and they are closely analogous to things I do all the
+time in GDB, where they are very clumsy.
+
 Summary of the video
 --------------------
 
