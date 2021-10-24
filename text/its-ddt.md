@@ -1,11 +1,13 @@
 I just watched [Lars Brinkhoff’s demo of PDP-10 programming in the DDT
-debugger under ITS][0], ([cheat sheet for mostly using it as a
-shell][2], [newbie guide to using it for debugging][3]) which is truly
+debugger under ITS][0], ([cheat sheet for mostly using DDT as a
+shell][2], [newbie guide to using DDT for debugging][3], [AIM-147a
+describing an earlier version of DDT from 01971][8]) which is truly
 astounding.  Why couldn’t GDB be half this good?
 
 [0]: https://youtu.be/7Ub36q03vkc
 [2]: https://github.com/PDP-10/its/blob/master/doc/DDT.md
 [3]: https://github.com/PDP-10/its/blob/master/doc/debugging.md
+[8]: https://dspace.mit.edu/handle/1721.1/6153 "DDT Reference Manual, by Eric Osman and Tom Knight, MIT AI Lab memo 147a, September 01971"
 
 Summary of the video
 --------------------
@@ -55,6 +57,12 @@ following it to where it points in memory with another `/`:
     ILOPR; 100>>0   0/   0   0/   0
     100/   0   ∎
 
+As it happens, `/` actually uses the *last 18 bits* of the expression
+as the pointer, because the [PDP-10 used 18-bit addressing][12].  The
+significance of this will be explored later.
+
+[12]: http://pdp10.nocrew.org/docs/instruction-set/pdp-10.html "PDP-10 machine language info file"
+
 ### Numeric display and label definition ###
 
 In this case, he types `.=` to ask for the value of `.`, the current
@@ -66,6 +74,13 @@ symbol GO with that value, all without ever hitting Enter:
 In a sense, the three spaces are like FORTH's ` ok` prompt, but don’t
 send you to a new line.  (But at this point Brinkhoff hits Enter to go
 to a new line anyway, for reasons I do not know.)
+
+(As it happens, according to the [September 01971 DDT reference
+manual, §XII, p. 38 (40/84)][8], not even this is needed; Brinkhoff could
+have just typed `go:`, leaving `.` implicit, but the ITS mentorship
+lineage has been broken, and Brinkhoff is reviving it from artifacts.
+It’s possible he’s using a version of DDT whose semantics had changed,
+too.)
 
 ### Disassembling memory in GDB ###
 
@@ -132,6 +147,48 @@ To do the same in GDB is 10 keystrokes instead of 7:
 because the last time I told it how to examine memory it was with
 `x/i`.)
 
+### Focus on the PC ###
+
+A funny thing about GDB is, not only doesn’t it disassemble the
+instruction the program counter is at by default, the default thing to
+examine is the thing after the thing you last examined, and the
+default format is the format you last examined something in.  For
+example:
+
+    (gdb) r
+    The program being debugged has been started already.
+    Start it from the beginning? (y or n) y
+
+    Starting program: ...
+
+    Breakpoint 1, 0x08048151 in main ()
+    (gdb) x
+    0x80495cb <addr+6>:     0x0000
+    (gdb) x $pc
+    0x8048151 <main>:       0x73b9
+    (gdb) x/i$pc
+    => 0x8048151 <main>:    mov    $0x8049573,%ecx
+
+That `x/i$pc↵` at the end is what DDT does by default, with no
+keystrokes, because when it hits an exception (or, I think, a
+breakpoint), it sets the current location `.` to PC.
+
+In this case the instruction contains an immediate which is in fact a
+pointer.  It might be useful to look at memory at this pointer, but in
+GDB the most convenient way to do this by copying and pasting the
+address from the screen so you can type `x 0x8049573↵`.  On the
+PDP-10, such immediates are packed into the right half of the
+instruction word (as I understand it, this instruction might have said
+[`MOVEI 2,563`][13] to load octal address 563 into accumulator 2) so you
+could just type `/`.
+
+[13]: http://pdp10.nocrew.org/docs/instruction-set/Full-Word.html
+
+Effectively, DDT turns not just the living data of your program into
+hypertext, but even the machine code, so you can just follow the link
+with a single keypress.  (It even had a `$e` command for searching all
+of memory for such pointers to a given address.)
+
 ### Switching between alternate display representations: SIXBIT and `sockaddr_in` ###
 
 Later after Brinkhoff has added an instruction, he disassembles the
@@ -186,13 +243,15 @@ byte order is not network byte order.
 
 ### Switching between alternate display representations: floats and ASCII strings ###
 
-Evidently the `;` key in DDT prints a value as floating-point instead
-of SIXBIT or octal or machine instruction or whatever.
+The `;` key in DDT prints a value in “semi-colon” mode, initially
+floating-point, instead of SIXBIT or octal or machine instruction or
+whatever.  (There are two-character commands to change semicolon mode
+to be any of the available “type-out modes”.)
 
 Sort of amusingly, DDT doesn’t remember the types of the values
 Brinkhoff stores; for example, the words starting at his label HELLO
-are actually strings (in a different encoding, I think ASCII, that
-supports lowercase but only gets five bytes per word, using `$1"`
+are actually strings (in ASCII (§X.B.5), which
+supports lowercase but only gets five bytes per 36-bit word, using `$1"`
 instead of `$1'` in the UI).  So he has to tell it again.  Here’s the
 part of the session where he first enters the strings, then starts
 looking at them, and it starts disassembling them as instructions:
@@ -254,7 +313,8 @@ explicit output format, thus `x/dh$_↵` (7 keystrokes) instead of DDT’s
 Above I mentioned that in both GDB and DDT you can move forward in
 memory you’re examining by just hitting ↵.  But later on Brinkhoff
 steps *backwards* in memory to get back to an instruction he wants to
-change, using apparently the two-keystroke sequence `^↵`:
+change, using apparently the two-keystroke sequence `↑↵`, which his
+terminal renders as `^`:
 
     LOOP+4/   0   . die:
     die/   0   .value
@@ -336,14 +396,16 @@ at, even for programs with no debug info where it obviously can’t show
 me the high-level source, by launching its TUI with `layout asm` or
 just `display/i $pc`.  It has time-travel debugging, though it’s far
 too slow to use for anything but very short runs, and watchpoints,
-which are fast.  It remembers not just one printed-out expression but
-all of them.
+which are fast.  It remembers not just 8 printed-out expressions but
+all of them.  (According to [the 01971 manual][8], DDT has a ring of
+the last 8 *locations* and another of the last 8 previous *expression
+values*.)
 
 Moreover, modern debugger UIs like WinDbg, radare2, and the IntelliJ
 IDEA debugger offer lots of improvements, like expression watch
-windows and graphical control-flow graphs.
+windows, memory view windows, and graphical control-flow graphs.
 
-Here’s an edited session where I was using GDB a few months ago:
+Here’s an edited excerpt of one of my GDB sessions a few months ago:
 
     (gdb) p *seq       
     $30 = {capacity = 0, used = 93824992367072, arena = 0x0, elements = 0x5555555c1728}
@@ -366,6 +428,20 @@ Here’s an edited session where I was using GDB a few months ago:
     $35 = {token_type = TT_UINT, {bytes = {token = 0xd <error: Cannot access memory at address 0xd>, len = 0}, sint = 13, uint = 13, 
         dbl = 6.4228533959362051e-323, flt = 1.821688e-44, seq = 0xd, user = 0xd}, index = 0, bit_length = 0, bit_offset = 0 '\000'}
 
+By contrast, following a cdr-linked list in ITS DDT was a matter of
+typing a `/` or `[` (which forces numeric output) at each node, if
+each word contained two pointers with the (18-bit) cdr packed into the
+right half of the word.  If you instead wanted to follow a pointer in
+the left half of the word, maybe a car, it was `$/` or `$[`.
+`p*$[0]↵` is not only more than three times as long, it’s also a lot
+harder to type, with two shifted keys not adjacent to the home row
+(four for me, since I've swapped `()` and `[]`, but I mean for normal
+people).
+
+(Remember that in DDT `$` is “altmode”, the ESC key, which was not
+shifted and usually in a much more convenient place than on modern
+keyboards.)
+
 It’s really thought-provoking that the things I do *most of the time*
 in GDB, which require awkward commands full of hard-to-type line noise
 characters, like following chains of pointers or getting an alternate
@@ -376,8 +452,9 @@ single-keystroke commands.  And there’s apparently no way at all to
 add a label to an address once you figure out what it means so that
 GDB will use it in its output.  I have no idea how this could have
 happened!  My best guess is that he thought a DDT-like user interface
-would be too alien to Unix programmers accustomed to adb or dbx, so
-they wouldn’t use it.
+would be too alien to Unix programmers accustomed to dbx, so they
+wouldn’t use it.  But Unix had adb, which was very similar (see
+below).
 
 Lessons for debuggers and similar programs
 ------------------------------------------
@@ -400,7 +477,8 @@ compromises here:
 
 - Use an onscreen button, perhaps contextually available.
 
-(Other uses of DDT also followed this approach; instead of `ls↵` you
+(Uses of DDT as a command shell, file manager, task manager, etc.,
+also followed this approach; instead of `ls↵` you
 would just type ^F, and instead of `bg↵` or `%&↵` you would type ^P.)
 
 Another is the importance of immediate feedback.  Even if 7 characters
@@ -416,11 +494,12 @@ any expression being entered whenever this has no side effects.
 A thing that barely reared its head here is the importance of
 reversibility for user interfaces; this is really the main reason I
 don’t use debuggers much.  Following a pointer or stepping forward
-through memory might be reversible (though I didn’t see cases of
-anything like a “back” button for unfollowing pointers in Brinkhoff’s
-DDT demo) but single-stepping a program rarely is, so when I’m using a
-debugger I often go very slowly to avoid having to restart my debugger
-session from the beginning.
+through memory is normally reversible (Brinkhoff maybe didn't know
+this, because he would start over when he followed a pointer chain too
+far, but `$↵` goes to the previous location in the `.` ring buffer)
+but single-stepping a program rarely is, so when I’m using a debugger
+I often go very slowly to avoid having to restart my debugger session
+from the beginning.
 
 By contrast, when the program runs fast enough, I can debug it by
 progressively adding tests, assertions, and logging, and running it a
@@ -442,10 +521,55 @@ frequently use `$!` to avoid having to name the same file repeatedly
 in subsequent commands, and in bash I use M-. all the time for the
 same reason.  The big difference is that, in a debugger, the values of
 interest are not numbers or filenames, but regions of memory with
-associated interpretation information — you might say “types”, but it
+associated interpretation information — you might say
+“with types”, but this information
 might also include things like how many digits of floating-point
 precision you want to display or whether child nodes should be
 collapsed or expanded.
+
+It’s surprising that GDB didn’t copy this from DDT or one of its
+predecessors, [particularly since MDB *did*][9]:
+
+> MDB retains the notion of dot (`.`) as the current address or value,
+> retained from the last successful command. A command with no
+> supplied expression uses the value of dot for its argument.
+> 
+>     > /X
+>     lotsfree:
+>     lotsfree:        f5e
+>     > . /X
+>     lotsfree:
+>     lotsfree:        f5e
+
+MDB copied this from [Stephen Bourne’s `adb`][10]; quoting [the
+ADB tutorial from 01977][11]:
+
+>  ADB maintains a current address, called dot, similar in function to
+>  the current pointer in the UNIX editor. When an address is entered,
+>  the current address is set to that location, so that:
+>
+> > **0126?i**
+> 
+> sets dot to octal 126 and prints the instruction at that
+> address. The request:
+> 
+> > **.,10/d**
+> 
+> prints 10 decimal numbers starting at dot. Dot ends up referring to
+> the address of the last item printed. When used with the **?** or
+> **/** requests, the current address can be advanced by typing
+> newline; it can be decremented by typing **^**.
+
+It’s interesting to note that `/`, `^` (or `↑` in ASCII-1963), and `.`
+have the same functions as in DDT, but in adb they required you to
+type a newline, as I think they did in some versions of DDT.  `adb`
+also, like DDT, uses `:` as a prefix for some extended commands.  I’m
+not sure whether these feature are inherited from Dennis Ritchie’s
+earlier Unix debugger DB.
+
+[9]: https://www.cs.dartmouth.edu/~sergey/cs258/2009/chpt_mdb_os.pdf
+[10]: https://en.wikipedia.org/wiki/Advanced_Debugger
+[11]: https://wolfram.schneider.org/bsd/7thEdManVol2/adb/adb.pdf
 
 Another aspect of this is the ease with which DDT switches between
 different presentations of the current value, with keys like `'`, `"`,
@@ -454,3 +578,41 @@ entirely insensitive to context, but even more useful would be an
 extensible set of pretty-printers like GDB has — obviously posing the
 difficulty of how to assign keys to them, for a keyboard
 interface — and perhaps the possibility of backtracking as parsers do.
+
+A lightweight version of this facility is present in DDT in the sense
+that by defining symbols you can enhance its future display of
+addresses and instructions: it will use those symbols to clarify its
+output; instead of `JRST MAIN+21` perhaps it will say `JRST MAINLOOP`.
+
+WinDbg can also switch between presentations of different memory
+regions without having to name the region explicitly, but it’s a
+pull-down menu, so it requires three mouse operations, roughly
+equivalent to keystrokes.  At least it by default displays the memory
+around PC, but AFAICT none of the memory-dump options is
+“disassemble”, which is usually what I want to do around PC.
+
+One benefit of command-line interfaces like GDB’s is that they provide
+an easy and somewhat readable extension mechanism: by putting a
+sequence of commands in some sort of container, you have a
+macro-command; and in GDB, hitting `↵` repeats the most recent command
+line, which thus allows you to repeat a complex command.  The GDB
+manual gives this example:
+
+> One of the ways to use a convenience variable is as a counter to be
+> incremented or a pointer to be advanced.  For example, to print a
+> field from successive elements of an array of structures:
+> 
+>      set $i = 0
+>      print bar[$i++]->contents
+> 
+> Repeat that command by typing \<RET>.
+
+A sequence of DDT commands can of course also be canned; it’s a
+keyboard macro.  And sometimes that’s the best you can do.  A simple
+improvement over most such macro facilities would be to interactively
+roll up the last N commands as a “macro” *after* the fact, once you
+realize you want to repeat them.
+
+But I suspect that a more complete programming-by-demonstration
+facility could provide a great deal of programming power in a much
+more usable way.
