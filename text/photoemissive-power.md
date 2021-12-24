@@ -84,7 +84,9 @@ compliance.
 It may be important to keep the electrodes cool to avoid loss of the
 electrodes from the anode mesh.  Using a high-work-function surface
 for the anode and the non-sunward side of the cathode may be helpful
-to reduce such losses.
+to reduce such losses.  Also, if you’re using volatile metals like
+cesium, you need to keep the electrode cool or it will evaporate off
+into space.
 
 Areal density: 2 g/m³
 ---------------------
@@ -166,13 +168,64 @@ than about 1/130, i.e., 0.8%.
 In fact the [cesium-antimony photocathodes][9] used in the first
 commercially successful photomultiplier tubes have a quantum
 efficiency of 12% at 400 nm, though the quantum efficiency of earlier
-silver-oxide-cesium photocathodes peaked at 0.4% at 800 nm.  So it
-seems likely that, using these new ultralight electrode materials,
-this photoemissive generator can probably beat silicon PV in power per
-unit mass, but it will be significantly inferior in power per unit
-area.
+silver-oxide-cesium photocathodes peaked at 0.4% at 800 nm.  This
+information seems to come from p. 4 of the [Photomultiplier
+Handbook][10]; on p. 11 it says, “on the best sensitized commercial
+photosurfaces, the maximum yield reported is as high as one electron
+for three light quanta,” which would work out to 33% QE.  This would
+give an overall solar cell efficiency of 33% · 33% = 11%, but that’s
+probably for a single wavelength; a few of the QEs of different
+materials plotted on p. 15 are above 10% at 555 nm, and some, like
+Na₂KSb, are above 20% at 450 nm, so maybe 33% · 15% ≈ 5% is more
+realistic.  In Table I on p. 16, Na₂KSb’s responsivity to tungsten
+light at 2856 K is given as 43 μA/lumen, while K₂CsSb (nominally 33%
+QE) is given as 90 μA/lumen.  Nominally lower QE materials with
+longer-wavelength peaks are even higher: GaAs:Cs-O is said to have
+720 μA/lumen despite only a 12% QE due to an 800-nm response peak, and
+semitransparent Na₂KSb:Cs on a reflecting substrate is 300 μA/lumen
+with 16% QE with a 530-nm response peak, which matches sunlight better
+than it does a tungsten lightbulb.  Presumably these are all in a
+forward-biased condition, as they are used in PMTs, not back-biased,
+but hopefully the correction is small.
+
+Rechecking the calculation from a different angle, 1000 W/m² is about
+128000 lux, so the above-the-atmosphere 1400 W/m² should be about
+180 klux = 180 klm/m², which at 300 μA/lm would be 54 A/m²; at 1.8 V
+that would be 97 W/m², which is 6.9% efficiency, close to the 6% I
+estimated above.
+
+So it seems likely that, using new ultralight electrode materials like
+aerographite, coated with modern (semiconducting?) multialkali
+photocathode materials, this photoemissive generator can probably beat
+silicon PV in power per unit mass by a factor of, say, 20 or so
+(50 W/g instead of 1.8 W/g), but it will be five times worse in power
+per unit area (6% efficiency rather than 30%).
 
 [9]: https://en.wikipedia.org/wiki/Photomultiplier_tube#Improved_photocathodes
+[10]: https://psec.uchicago.edu/links/Photomultiplier_Handbook.pdf "Burle Industries, Ⓒ 1980, 10-89, supersedes PMT-62, 8-80, TP-136"
 
 Thin-film semiconductor PV cells like CIGS can probably beat it in
 power per unit mass, too.
+
+Moreover, the Photomultiplier Handbook says, “Semiconductors,
+therefore, are superior to metals in all three steps of the
+photoemissive process: they absorb a much higher fraction of the
+incident light, photoelectrons can escape from a greater distance from
+the vacuum interface, and the threshold wavelengths can be made longer
+than those of a metal.  Thus, it is not surprising that all
+photoemitters of practical importance are semiconducting materials.”
+So in a sense this gadget *is* a semiconductor thin film solar cell.
+
+Interestingly, the “semitransparent” photocathode materials are
+“deposited on a transparent medium,” with typical film thicknesses
+around 30 nm, so as to emit electrons in the opposite direction from
+the incident light.  That suggests the possibility of reversing the
+positions of the cathode and anode and making the anode opaque, so
+there is no question of electrons escaping through holes in it.
+Conceivably supporting the photocathode thin film in a vacuum on a
+sparse grid like the anode grid described earlier, covering what would
+be holes in the grid, would get photoelectrons coming out both sides,
+so that by placing anodes on both sides you could increase the quantum
+efficiency, perhaps doubling it.  That might boost you to 14%
+efficiency or so, but still not enough to compete with existing CIGS
+and similar solid-state thin-film PV cells.
