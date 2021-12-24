@@ -143,7 +143,7 @@ holes in the anode twice.  Presumably there is at least some
 probability that they will be “emitted” into the cathode material,
 though, where they will immediately “recombine”.
 
-### Quantum efficiency in the single digit percents ###
+### Quantum efficiency can be around 15% ###
 
 So, what about the quantum efficiency?  Evidently in silicon PV it’s
 around 0.8, but these photoemissive panels might be much worse.  If
