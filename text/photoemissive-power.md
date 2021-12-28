@@ -7,7 +7,8 @@ than silicon solar cells, but will be thoroughly dominated by
 thin-film cells.
 
 I got this idea from a discussion with Luke Parrish, who suggested
-that for space-based PV panels you could just use vacuum.
+that for space-based PV panels you could just use vacuum, and
+contributed several other key ideas to what follows.
 
 Basic design
 ------------
@@ -88,18 +89,18 @@ to reduce such losses.  Also, if you’re using volatile metals like
 cesium, you need to keep the electrode cool or it will evaporate off
 into space.
 
-Areal density: 2 g/m³
+Areal density: 2 g/m²
 ---------------------
 
 This adds up to an areal density for our orbiting solar panels on the
-order of 2 g/m³ or 2 tonnes per km², roughly a hundred times lighter
+order of 2 g/m² or 2 tonnes per km², roughly a hundred times lighter
 than conventional silicon solar panels at 100 μm thickness; typically
 in space multijunction cells [with efficiency around 30%][4] are used.
 
 Calculating efficiency
 ----------------------
 
-A km² of sunlight is about 3 megawatts at Earth’s orbital distance, or
+A km² of sunlight is about 4200 megawatts at Earth’s orbital distance, or
 much more if you’re closer to the sun, but how much of that can we
 really gather?
 
@@ -134,6 +135,17 @@ corresponds to a bias voltage of 1.34 V in this photoemissive panel.
 [5]: https://en.wikipedia.org/wiki/Sunlight#Spectral_composition_of_sunlight_at_Earth%27s_surface
 [6]: https://en.wikipedia.org/wiki/Shockley%E2%80%93Queisser_limit
 
+(Note: the above is incorrect, and energy efficiency calculations
+hereafter erroneously assume that the bias voltage between the
+electrodes is 1.8 V, which is wrong.  1.34 V or 1.8 V is the amount of
+energy per electron lost in overcoming the work function of the
+photocathode material; the energy remaining to be harvested at the
+anode is whatever the photon energy is, *minus* that work function.
+So the right bias voltage might be 0.5 V or 1 V or something.  I
+should fix this but I don’t have time this year.  It means that the
+main efficiency conclusions below are too high by some unknown factor
+probably between 1 and 4.)
+
 I think the recombination losses found in semiconductor PV cells do
 not have much of an analogue in this device; the space charge is
 entirely negative, and the only way electrons can “recombine” after
@@ -159,7 +171,7 @@ eyes), which puts a lower bound on their QE of about 10 cm² · 10 W/m²
 high enough to compete with conventional solar cells; dividing by the
 estimate above of 2 g/m², we get 39 mW/g, which is much lower than the
 areal efficiency of conventional multijunction silicon solar cells,
-30% · 1400 W/ m² / (230 g/m²) ≈ 1800 mW/g, 46 times higher.
+30% · 1400 W / m² / (230 g/m²) ≈ 1800 mW/g, 46 times higher.
 
 So this approach can be mass-competitive with multijunction silicon
 solar cells if the photoemissive cathode quantum efficiency is more
@@ -216,6 +228,11 @@ than those of a metal.  Thus, it is not surprising that all
 photoemitters of practical importance are semiconducting materials.”
 So in a sense this gadget *is* a semiconductor thin film solar cell.
 
+10.1088/1361-648X/aa79bd “Super low work function of
+alkali-metal-adsorbed transition metal dichalcogenides” claims work
+functions as low as 0.7 V with a potassium film on a strained tungsten
+telluride backing.
+
 Interestingly, the “semitransparent” photocathode materials are
 “deposited on a transparent medium,” with typical film thicknesses
 around 30 nm, so as to emit electrons in the opposite direction from
@@ -229,3 +246,35 @@ so that by placing anodes on both sides you could increase the quantum
 efficiency, perhaps doubling it.  That might boost you to 14%
 efficiency or so, but still not enough to compete with existing CIGS
 and similar solid-state thin-film PV cells.
+
+Cathode meshes
+--------------
+
+Most of the mass of the cathode in the above setup comes from the
+thin-film cathode (and then I just calculated on the assumption that
+the anode mesh would have comparable mass).  An interesting way to
+reduce the mass further is to use a photocathode *mesh* or foam rather
+than a solid layer.  A mesh with holes significantly smaller than the
+wavelength of light can be essentially opaque to the light if it’s
+sufficiently conductive, so you could use a photocathode mesh with
+100-nm-wide pores separated by 1-nm-wide “wires”, thus reducing the
+necessary areal density of the cathode by 98%.
+
+Existing systems
+----------------
+
+Parrish commented that existing systems are about an order of
+magnitude heavier than the number I was using above as a
+silicon-solar-cell comparison:
+
+> [The ISS uses 8 solar array wings][11] massing about 1 ton each that
+> get 84–120kW average or up to 240 in direct sunlight.  So about
+> 30W/kg in direct sunlight.  We’re talking 3 orders of magnitude
+> improvement.
+
+[11]: https://en.wikipedia.org/wiki/Electrical_system_of_the_International_Space_Station
+
+Apparently [photoelectric solar power is a thing][12], and I should
+read about how well it works, but I don’t have time this year.
+
+[12]: https://www.sciencedirect.com/science/article/pii/S2542435117301782 "Photoelectric Solar Power Revisited"
