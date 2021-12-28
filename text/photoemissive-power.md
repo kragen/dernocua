@@ -100,7 +100,7 @@ in space multijunction cells [with efficiency around 30%][4] are used.
 Calculating efficiency
 ----------------------
 
-A km² of sunlight is about 4200 megawatts at Earth’s orbital distance, or
+A km² of sunlight is about 1400 megawatts at Earth’s orbital distance, or
 much more if you’re closer to the sun, but how much of that can we
 really gather?
 
