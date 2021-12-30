@@ -655,7 +655,7 @@ bar of it with my thumb, and upon dropping another piece on the floor
 it broke.  Also, one piece that had initially hardened on a piece of
 PET is off-white on the air side and pure white on the plastic side,
 suggesting that the water accumulation I’d observed on that side led
-to a permanent chemical difference, perhaps the dissolution of all the
+to a permanent compositional difference, perhaps the dissolution of all the
 borax.  However, they haven’t developed visible cracks, and they still
 form an intumescent refractory foam upon flaming.  It smolders for a
 few seconds upon flame removal, though, and upon continued flaming the
@@ -2846,7 +2846,7 @@ People have reported that mixing rust powder with waterglass affords a
 less intumescent refractory mix.
 
 I have some litharge and glycerin here.  [Bain McKinnon’s 01933
-dissertation at Oregon State][bm] reports (citing Harry A. Neville's
+dissertation at Oregon State][bm] reports (citing Harry A. Neville’s
 “Adsorption and Reaction II: the Setting of Litharge-Glycerine
 Cement”, J. Physical Chem., vol. 30, p. 1181, in 01926) that a 3:2
 molar ratio of litharge (223.2 g/mol, 9.53 g/cc) to glycerin
@@ -2883,7 +2883,7 @@ evident.
 
 I’d tried mixing up this litharge and glycerin before, but the solid
 mass initially formed fell apart into a powder after a day or two.
-There aren't a whole lot of things the ingredients could be other than
+There aren’t a whole lot of things the ingredients could be other than
 litharge and glycerin, though; not many things are dense enough to be
 counterfeit litharge, though plenty are cheap enough.
 
@@ -2947,7 +2947,7 @@ and added baking soda to the remainder, which fizzed enthusiastically.
 The silicone flower Mina made on 02021-08-21 has faded from its
 original lilac color to a pale cyan.  I think the magenta food
 coloring in its surface has faded from exposure to light; Mina points
-out that on the bottom, where it's been exposed to air but not light,
+out that on the bottom, where it’s been exposed to air but not light,
 it’s still lilac.
 
 02021-09-11
@@ -3005,3 +3005,264 @@ phosphoric acid (*Desoxidant fosfatizante TF3*, UPC 0-723540-593022,
 water-clear with unspecified additives).  This induced effervescence,
 showing that the baking soda hadn’t been entirely consumed.
 
+02021-10-15
+-----------
+
+The various wet substances in open containers have dried up.  I have
+thrown out some things whose identity I could no longer remember.  The
+egg white with green vitriol is quite orange.
+
+I tried heating up a flake of whitewash taken from some nearby
+political graffiti with the brass torch.  I was able to heat it to
+orange-hot, glowing visibly even in direct sunlight.  A smell of
+burning paint (like linseed oil) ensued, suggesting that it was
+contaminated with non-whitewash paint.  The hottest part gradually
+crumbled away over several minutes.
+
+02021-12-05
+-----------
+
+A laptop floppy disk casing seemed suspiciously light, leading me to
+suspect it of being magnesium.  But filings cut from it with a hacksaw
+do not ignite with the brass torch and do not react with vinegar, so
+it’s probably just aluminum.  (At first the vinegar did not wet the
+filings; some dish detergent solved that problem.)
+
+I have had some coupons of corrugated cardboard from a cardboard box
+floating in (originally) saturated aqueous muriate of lime for weeks
+now.  The one I haven’t turned over still isn’t wet on top.  I added
+another one to a bowl of just plain water a few days ago; it also
+isn’t wet on top.  Normally I would have expected capillary action to
+soak them through in a few minutes, so I guess they’re treated with
+something to make them slightly hydrophobic.  I was hoping that the
+calcium chloride would convert the sodium silicate adhesive into
+water-insoluble larnite, but in fact the layers of cardboard peeled
+apart in warm water just as easily as cardboard normally does, and a
+little rubbing got it thoroughly wet.  I’m not sure if the *paper* is
+delaminating or if the glue is, but either way the result isn’t a
+water-stable cardboard as I was hoping.
+
+02021-12-13
+-----------
+
+No visible reaction at first between the hardware-store phosphoric
+acid and aluminum foil in a plastic yogurt cup, but after an hour or
+two slow bubbling was detectable.  After some 10 hours most of the
+foil had dissolved, leaving a slightly gray transparent liquid with
+some scraps of foil floating on the top of it, so I added more foil.
+I was expecting the foil to react, but not to dissolve — although both
+aluminum and phosphate are trivalent, I think of aluminum phosphate as
+a single material, one that’s extremely water-insoluble.  But in fact
+there also exists aluminum dihydrogenphosphate (aluminum phosphate
+monobasic, 磷酸二氢铝), which might be soluble; [American Elements
+claims it is][aeadhp], and [Alfa says they sell it dissolved 50/50 in
+water][aladhp], so it might be difficult to redissolve after it
+precipitates, or perhaps disproportionate.
+
+[aeadhp]: https://www.americanelements.com/aluminum-phosphate-monobasic-13530-50-2
+[aladhp]: https://www.alfa.com/en/catalog/042858/
+
+Also, I forgot to note this earlier, but the acid had no visible
+reaction with oil of lime, presumably because the pKa of muriatic acid
+is about -3.0 and the first pKa of phosphoric is +2.14.  I suppose
+that if I partly neutralize it first with baking soda I should be able
+to precipitate various phosphates of calcium.  Interestingly,
+<https://en.wikipedia.org/wiki/Disodium_phosphate> mentions a reaction
+going the other way as well, preparing disodium phosphate from
+“dicalcium phosphate” (CaHPO₄) and sodium bisulfate (NaHSO₄), which is
+sold in hardware stores to lower the pH of your swimming pool.
+
+Sodium bisulfate itself is a GRAS intermediate byproduct of the
+Mannheim muriatic acid process, “an exothermic reaction that occurs at
+room temperature”; on heating it transforms to anhydrous (58°),
+pyrosulfate (280°), and finally sodium sulfate and sulfur trioxide
+(460°).  It’s a dry powder at room temperature that aggressively
+consumes azania.  Pyrosulfuric acid is interesting as a legal,
+stronger alternative to sulfuric acid.  The bisulfate ion is also
+available from thermal decomposition of azanium sulfate (250°),
+everybody’s favorite GRAS thermally stable azanium compound — sold for
+US$1/kg as a fertilizer, and made from gypsum and hartshorn by
+throwing down chalk.
+
+(Sodium *thio*sulfate, aka hyposulfite, Na₂S₂O₃, is a different
+material: it’s a photographic fixer, reducing agent, and antidote to
+cyanide poisoning together with sodium nitrite.)
+
+(Sodium azanium sulfate dihydrate is “[a well known
+ferroelectric][rrosasd]” and presumably the reaction product with
+azania.  Presumably if you heat it you can expel the azanium and
+regenerate the azanium absorbent.)
+
+[rrosasd]: https://iucrdata.iucr.org/x/issues/2020/09/00/wm4138/ "cc-by"
+
+Related to other useful materials to avoid witch-hunt persecution,
+NaMnO₄ (V-2 oxidant, Condy’s Fluid) can reputedly be made from MnO₂,
+NaClO, and NaOH, with an analogous route available for Ca(MnO₄)₂.
+MnSO₄ is readily available as fertilizer (US$5/kg); the nitrate
+(obtained, for example, by reacting with calcium nitrate) can be
+decomposed at 400° to yield the oxide, which can be purified by anodic
+deposition.  Dehydration of the lye using the oxide supposedly yields
+Na₂MnO₄, whose disproportionation is another possible route, the one
+originally used by Condy, but apparently a pentavalent manganese
+compound is produced additionally or instead.
+
+Another super fun material would be potassium ferrioxalate; hardware
+stores sell “salt of lemon” to remove rust stains, and I guess it
+works by complexing the insoluble ferric iron(III) ions, which I guess
+should produce K₃(Fe(C₂O₄)₃)₂.  It’s fluorescent green (literally
+fluorescent in solution) and decomposed by light or heat (reducing the
+iron back to ferric), a property that can be used to used to make
+blueprints as an alternative to ferric ammonium citrate (apparently
+[Michael J. Ware invented this in 01994 and wrote a fascinating book
+covering this and every other aspect of cyanotyping][cyanomicon]); the
+ferric iron then reacted with the potassium ferricyanide to produce
+insoluble ferric ferrocyanide, Prussian blue.
+
+[cyanomicon]: https://www.mikeware.co.uk/mikeware/downloads.html
+
+02021-12-14
+-----------
+
+Local textile pricing:
+
+- Calico doesn’t exist.
+- 180-thread-count *percal* at 260 cm width costs AR$7000/m on
+  MercadoLibre; at AR$194/US$ that’s US$36/m or US$14/m².
+- 1.6-m-wide polyester *polar soft liso* (polar fleece with a nap on
+  it to soften it further) is AR$850/m (US$4.40/m, US$2.70/m²).  A
+  roll is reported to be 22 kg and 50 meters, suggesting a weight of
+  280 g/m².
+- 1.45-m-wide *camisero* cloth falsely advertised as linen (fine
+  print: 55% linen, 45% rayon) is AR$700/m (US$3.60/m, US$2.50/m²).
+- 1.5 m *fibrana* floral-print rayon cloth is AR$430/m (US$2.20/m,
+  US$1.46/m²).
+- 1.5-m-wide 120-gram-per-linear-meter polyester *gasa muselina*,
+  muslin gauze, is AR$370/m (US$1.90/m, US$1.26/m²).
+- 160-m-wide raw cotton 20/20 *lienzo* is AR$350/m (US$1.60/m,
+  US$1.12/m²).
+- 150-μm-thick 1.4-m-wide flexible clear PVC film is AR$290/m
+  (US$1.49/m, US$1.07/m²).
+- [1.40-m-wide nonwoven polyester *friselina*][friselina], 45-gram
+  weight (/m²? though an unhappy buyer reports that it’s actually
+  20-gram cloth), goes for AR$2244 per 50-meter-roll (AR$45/m, 23¢/m,
+  16.5¢/m²) in different brilliant colors.
+- A week ago we went to town and found that burlap (*arpillera*) was
+  AR$400/m² there (US$2.10/m²).  The other prices above are all
+  MercadoLibre.  A MercadoLibre vendor offers 1-m-wide *arpillera
+  yute* at AR$289/m (US$1.49/m, US$1.49/m²).
+
+[friselina]: https://articulo.mercadolibre.com.ar/MLA-877403579-tela-friselina-45-gr-x-50mts-140-de-ancho-tela-no-tejida-_JM
+
+The *friselina* seems like probably the best material for anode bags
+and similar filtering: it’s damned cheap, probably PET, safer and
+cheaper than asbestos, perhaps more inert than glass fiber, certainly
+more inert than any natural fiber, and PET is surpassed in its
+inertness among the organic polymers only by polyethylene,
+polypropylene and fluoropolymers, which are more difficult to find in
+the form of cloth, though coarse polypropylene cloth is available for
+carpeting and tarps.  (Some vendors also offer nonwovens which purport
+to be both polypropylene and polyester, or blends of the two.)  It may
+also be useful as a lint-free cloth for cleaning.
+
+HEPA air filters are generally meltspun nonwoven polypropylene; this
+is a possible alternative source for polypropylene fabric for anode
+bags.  Surgical scrubs and lab coats are another possible source.
+
+The reduction of Prussian blue to Prussian white (produced by fading
+of Prussian blue by light!  and reversible by wet air exposure,
+therefore inexhaustible) needs to steal an electron from somewhere, so
+you can use it for photographic patterning of a surface by oxidizing
+other random things in the environment.  I don’t think anyone has done
+this.
+
+02021-12-18
+-----------
+
+I heard the other day that you can electrodeposit aluminum from
+aluminum chloride dissolved in molten methylsulfonylmethane, which is
+easily available as a dietary supplement.  (Aluminum chloride by
+itself won’t work at atmospheric pressure; it sublimes at 180°).  I
+can’t wait to try it.
+
+02021-12-21
+-----------
+
+Some time ago I deposited Elmer’s Classic Glitter Glue Silver (UPC
+either 0-026000-185073 or 0-26000-18191, depending on which label you
+believe; ingredients: deionized water, PVAc emulsion, polyvinyl
+alcohol, and craft glitter (various sizes and colors); the US
+marketing label lists no ingredients but apparently Argentine law
+requires it) on a sheet of LDPE and let it dry.  As deposited, the
+glitter flakes are dispersed almost isotropically, without any
+preferred orientation, but upon drying (I’m guessing to about a tenth
+of the original thickness, suggesting about 90% water content by
+volume) the glitter flakes were mostly parallel to the surface as
+indicated by their optical properties, ±10° or so.  The dried PVA/PVAc
+mass peeled off the thin polyethylene sheet fairly easily, as you’d
+expect.  (See file `pva-printing.md`.)  See file
+`xerogel-compacting.md` for the implications.
+
+To get a slightly more precise read on the water content than “about
+90% by volume”, I took a polypropylene bottlecap weighing 1.7 g and
+deposited 3.0 g of the glitter glue in it, for a reported total of
+5.3 g (!? fuck this scale) and allowed to dry in the sun all
+afternoon.  At night it weighed 4.3 g and was still noticeably soft,
+though with a tough glittery skin, so I propped it up in front of the
+air conditioner condenser fan.  I hope that will help it dry faster.
+
+I also have a thin membrane of the dried glue (of mysterious origin),
+thin enough to be almost entirely transparent, which I sprayed with a
+saturated aqueous solution of borax.  Upon drying, it was crinkly and
+“harder” than before; previously it was stretchy and “soft”, but now
+it’s stiff and brittle.  I rinsed it again with water and it
+immediately became a soft gel, coming apart a little, and now it is
+drying again.
+
+And I’ve deposited bits of the glue on some more LDPE, some aluminum
+foil, a PET bottle, some polystyrene, and some ABS.  My expectation is
+that, when dry, it will have failed to adhere strongly to any of them
+and will be easily peeled off; “Elmer’s” (Newell Office Brands)
+advertises that it's “ideal for paper, cloth, craft, etc.”
+
+From Podsiadlo, 9 other authors, and Kotov’s work (“Ultrastrong and
+Stiff Layered Polymer Nanocomposites”) in 02007, I learned that PVA
+can be strongly crosslinked with glutaraldehyde; yesterday I learned
+that glutaraldehyde can be easily bought from medical supply stores as
+a heavy-duty disinfectant (typically at concentrations of 2–2.5%,
+lower than the concentrations used for crosslinking).  It’s somewhat
+hazardous to the humans because it’s great at crosslinking proteins
+and they are made of proteins.  [Reportedly it does not reduce the
+solubility of pure starch][slwgfclwg] because what it does is bond
+amine groups to hydroxyls, so it can crosslink proteins to starches
+but not starches to starches, but that can’t be the whole story
+because PVA is nothing but a saturated carbon backbone with hydrogens
+and hydroxyls, and evidently glutaraldehyde is great at crosslinking
+it.  [10% chitosan apparently is effective at making starch
+cross-linkable with glutaraldehyde][gmg].
+
+[slwgfclwg]: https://link.springer.com/article/10.1007/s10924-020-01736-5 "Starch-Leather Waste Gelatin Films Cross-Linked with Glutaraldehyde, by Bianca Santinon Scopel, Gian Lucas Pretto, Júlia Isadora Postiglione Corrêa, Camila Baldasso, Aline Dettmer & Ruth Marlene Campomanes Santana, Journal of Polymers and the Environment volume 28, pages 1974–1984 (02020), 10.1007/s10924-020-01736-5"
+[gmg]: https://mdpi-res.com/d_attachment/polymers/polymers-10-00985/article_deploy/polymers-10-00985.pdf "Reinforcement of Thermoplastic Corn Starch with Crosslinked Starch/Chitosan Microparticles, by Diana Paiva, André M. Pereira, Ana L. Pires, Jorge Martins, Luísa H. Carvalho, and Fernão D. Magalhães, Polymers 02018, 10, 985; 10.3390/polym10090985"
+
+02021-12-22
+-----------
+
+The glitter glue pulled itself free of the LDPE, polystyrene, and
+aluminum foil while drying.  From the ABS and PET it didn’t peel off
+spontaneously, but it easily peeled off by hand.  In the case of the
+ABS this may be because it was spread thinly over a rougher surface,
+rather than because it had more adhesion.  Also, the polystyrene may
+have a coating on it, and all the materials may be contaminated with
+skin oil.
+
+02021-12-23
+-----------
+
+The glitter glue bottlecap brought in from outside after two days of
+drying in warm fan air weighs 2.6 g.  Upon separating from the
+bottlecap the relatively dry glue weighs 0.9 g and the bottlecap a
+reassuring 1.7.  This suggests that the 3.0 or 3.6 grams of glitter
+glue I originally deposited was at least 70% water, but unless it’s
+still retaining some water inside, it’s not close to 90%.
+
+But honestly it probably is.  I should break it up and put it in a
+desiccator with some muriate of lime.

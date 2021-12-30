@@ -7,6 +7,27 @@ batteries, though batteries might enable orders of magnitude more
 computational power.  See also file `microlisp.md` for thoughts on how
 to design a software environment for such a computer.
 
+In particular, it seems like with Sharp Memory LCDs, several of
+Ambiq’s new line of subthreshold microcontrollers, amorphous solar
+panels, and supercaps, you should be able to do a low-resolution
+black-and-white GUI on the order of what you could do on a PowerMac
+7100, SPARC 5, or 486DX2/66, without a battery, on 0.5 mW, with an
+average write bandwidth to your SD card of some 10 kilobytes per
+second (say, 10 megabytes per second at an 0.1% duty cycle).  You
+could run a Web browser and PDF viewer, though not DHTML apps like
+Slack and Fecebutt, because it would only have a few megabytes of RAM
+across all the CPUs, and PDFs might be difficult to read at the low
+resolution of the screen.  The whole computer might weigh 100 grams.
+
+It would take a week to discharge when not in sunlight, but need only
+an hour or so of sunlight per day, or a few seconds of being plugged
+in, to stay fully charged.  By scaling the clock frequency of the CPUs
+and turning more of them on, within a few milliseconds you could scale
+up to a billion instructions per second (comparable to a
+turn-of-the-millennium Pentium III or iMac G4, or an iPad 2 from
+02011, or the original Raspberry Pi), though this would be limited by
+your available energy, since it would use close to 50 milliwatts.
+
 Computation needs
 -----------------
 
@@ -206,9 +227,9 @@ the most efficient large processors from the 02000s and 02010s: the
 Lenovo ThinkPad X201s i7-640LM (15 W idle, 33 W run, 13917.89
 Dhrystone MIPS, 2400 pJ/“insn”), the Dell Inspiron 910 Atom N270 (7 W
 idle, 10 W run, 4683.57 Dhrystone MIPS, 2100 pJ/“insn”), and the SHARP
-PC-Z1 i.MX515 (2.2 W idle, 4.4 W run, 1184.58 Dhrystone MIPS, 3700
-pJ/“insn”).  Many other contemporary processors they tested (Pentium
-D, MV88F5281-D0, Xeon E5530, Core 2 Quad) were less efficient by an
+PC-Z1 i.MX515 (2.2 W idle, 4.4 W run, 1184.58 Dhrystone MIPS,
+3700 pJ/“insn”).  Many other contemporary processors they tested
+(Pentium D, MV88F5281-D0, Xeon E5530, Core 2 Quad) were less efficient by an
 order of magnitude or even more.
 
 [94]: https://ipsj.ixsq.nii.ac.jp/ej/?action=repository_action_common_download&item_id=78048&item_no=1&attribute_id=1&file_no=1 "Retrospective Study of Performance and Power Consumption of Computer Systems, 02011, Tomari and Hiraki"
@@ -667,7 +688,7 @@ Four promising bare NAND chips are the [US$3 104MHz quad SPI
 quad-SPI 128-mebibyte GigaDevice GD5F1GQ4RF9IGR][71], the [US$1
 45-ns/25000-ns 48-pin parallel 128-mebibyte Cypress
 S34MS01G200TFI900][72] (whose datasheet has been memory-holed from
-Cypress’s site but [a datasheet for a clone of which I found on Mouser
+Cypress’s site but [I found a datasheet for a clone on Mouser
 via Yandex][73] after filling out a captcha in Cyrillic), and the
 [US$2.30 50MHz quad-SPI 128-mebibyte Micron MT29F1G01ABBFDWB-IT:F
 TR][74] whose [datasheet I found the same way][75].
@@ -976,8 +997,15 @@ to 2.7 V, which would probably be enough for the pull cord.
 Me, I’d be tempted to vastly oversize the capacitor bank, but that
 could be dangerous.
 
+At 3.1 A, 5.0 V, and 1.5 F, you could fully charge the 3.4 g Maxwell
+supercap ([datasheet][63a]) to its 18.8 J full charge (5.5 J/g) in
+2.4 seconds.  It’s rated for 500,000 cycles, 4 years shelf life
+uncharged, or 10 years DC life at room temperature.  I think all of
+these are typical of supercaps.
+
 [62]: https://www.digikey.com/en/products/detail/illinois-capacitor/DGH505Q5R5/7387525
 [63]: https://www.digikey.com/en/products/detail/maxwell-technologies-korea-co-ltd/BMOD0001-P005-B02/946807
+[63a]: https://web.archive.org/web/20210415110650/https://www.maxwell.com/images/documents/5_0_1_5F_Module_ds_datasheet.pdf "Maxwell BMOD0001 P005 B02 datasheet"
 [64]: https://www.digikey.com/en/products/detail/illinois-capacitor/DGH155Q5R5/7387513
 [65]: https://www.digikey.com/en/products/detail/eaton-electronics-division/HV0810-2R7105-R/3878078
 
@@ -1035,3 +1063,10 @@ it autonomously nearly doubles its cost!  Also, 32 watts average at a
 15% capacity factor means 213 watts of solar panel, which is a whole
 square-meter panel.  It would occupy a significant fraction of the
 balcony and might attract unwanted attention.
+
+In file `garden-light-panel.md` in Derctuo, I tested a 38-mm-square
+amorphous panel at 8 mW in full sunlight, though a more careful MPPT
+calibration might yield more, and I didn’t measure the “full”
+sunlight.  Surprisingly, unlike some other amorphous panels, I wasn’t
+able to get a usable amount of power from it under indoor lighting
+conditions.

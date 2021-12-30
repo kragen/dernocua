@@ -141,6 +141,13 @@ another is to initially pour deflocculated silt over the form, so that
 it flows around the form on all sides while being barely denser than
 water, then flocculate it by adding flocculants.
 
+More generally, colloidal fillers, such as deflocculated clay,
+deflocculated silt, or especially deflocculated micron-sized barytes,
+might reduce the problem significantly; unlike sand and similar
+particles, they can flow around the aluminum, and you can adjust them
+to have density that is very close to that of aluminum to make it
+closer to neutrally buoyant.
+
 Additional fillers like ground mica, talc, mullite, glass fiber,
 basalt fiber, chopped rock wool, carbon fiber, and cellulose fiber
 should help to improve the mechanical properties of the result, as
@@ -945,3 +952,26 @@ terms, as “thick” or “very thick”.  I’d really like to know whether
 
 But Harman’s main concern here was measuring the conductivity of the
 solutions, not electrolyzing them.
+
+Weird metals
+------------
+
+[Aerographite][32] can be 180 g/m³ (180 μg/cc, six times lighter than
+air) and 1 kPa UTS, soaring in strength to 160 kPa at 8500 μg/cc.  The
+fabrication process involves CVD of graphite at 760° onto a template
+of ZnO (m.p. 1974°), which is then etched away with H₂, since zinc
+boils at only 907°.
+
+Zinc is very similar to magnesium (b.p. 1091°) in many ways, but
+electrodepositing zinc in aqueous solution is feasible, while for
+magnesium you need to use molten salt.  After selectively
+electrodepositing zinc microwires, you could change chemistry to
+electrodeposit zinc hydroxide (3.053 g/cc, 99.424 g/mol, amphoteric,
+soluble in aqueous ammonia) in the same way described above for
+brucite, then calcine it to ZnO at 125° with a loss of more than half
+its volume (5.606 g/cc, 81.406 g/mol, and thus 69 mol/ℓ to the
+hydroxide’s 30.7).  Then, you can use it as a template for CVD or PVD
+(of carbon or anything else that can withstand 907°) and hydrogen-etch
+away the ZnO.
+
+[32]: https://en.wikipedia.org/wiki/Aerographite

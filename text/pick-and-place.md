@@ -65,7 +65,7 @@ as much space.
 
 Much of the remainder is MLCCs: roughly 1.3¢ for a 1206, whether C0G,
 Y5V, or X7R, 0.4¢ for an 0603, or 0.1¢ for an 0402.  With MLCCs
-there's a tradeoff between size, voltage, capacitance, and precision.
+there’s a tradeoff between size, voltage, capacitance, and precision.
 
 In logic and quasi-logic, we have the 555 timer (7.58¢); the 74HC244
 octal tristate buffer (12.87¢); the 74HC14 hex inverting Schmitt

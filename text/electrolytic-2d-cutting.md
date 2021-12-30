@@ -27,6 +27,10 @@ electrolyte may be big enough to plastically deform the workpiece,
 possibly requiring supercritical drying if the workpiece is ever to be
 removed from water.
 
+In addition to cutting sheet metal, this process can be used to
+selectively remove a metal coating (as on a printed circuit board) or
+to etch or anodize a surface.
+
 Cathode patterns
 ----------------
 
@@ -250,6 +254,7 @@ Example setups
    will not be too readily attacked by the electrolyte and in
    particular the alkaline solution that will tend to form in contact
    with the cathode, such as glass, polyethylene terephthalate,
+   poly(methyl methacrylate), polymerized linseed oil, shellac,
    polyethylene, polypropylene, epoxy resins, teflon, fluorinated
    ethylene propylene, other polyester resins, aluminum oxide, or
    other metal oxides, among many others.  A stack of such layers may
@@ -288,7 +293,7 @@ Example setups
     pattern (a) supported on a dielectric backing (c) as described
     above, you can use a conductive plate (i) made out of any
     conductive material such as those mentioned in example 9 above
-    with a selectively patterned impermeable dielectric mask (j) on
+    with a selectively patterned impermeable dielectric “stop-off” or “mask” (j) on
     it, so that electrolysis can only proceed where the mask is absent
     or at least porous.  For example, you can use sheet steel or any
     other sheet metal with nail polish selectively painted onto it; or
@@ -303,7 +308,8 @@ Example setups
     cloisonné; dried soluble silicates, if heated between uses to
     drive out excess water; a layer of a passivating compound formed
     from the surface of the conductive plate (i) itself, for example
-    by heating or anodizing; or any other dielectric that is
+    by heating or anodizing; polymerized linseed oil; photoresists;
+    teflon; rosin; spray paint; shellac; or any other dielectric that is
     sufficiently resistant to the electrolyte.  Many of these
     dielectrics can be applied in a continuous layer and then
     selectively removed by laser ablation, for example with a
@@ -398,7 +404,8 @@ Example setups
     material at different times and etched to varying depths.  These
     “stamps” can be made in many different ways, including engraving
     or etching a solid metal or graphite surface, and bending wire.  A
-    soft wire brush is another candidate cathode.  The roller approach
+    soft wire brush is another candidate cathode,
+    as in brush electroplating.  The roller approach
     and the seal approach can be combined in a rolling seal.  A wire
     or metal tape can be used to etch a straight line of variable
     length all at once, either by hand or under the control of a
@@ -618,26 +625,32 @@ Different metals require somewhat different amounts of current, but
 the density of the electron gas you’re sucking out of the metal
 doesn’t vary nearly as much as other properties of metals such as
 hardness, toughness, mass density, and electronegativity; here are my
-calculations for the common metals:
+calculations for [a selection of metals including the
+common ones][12] (excluding the air-unstable
+sodium, potassium, calcium, strontium, and barium and the brittle
+manganese):
 
 <table>
-<tr><th>metal    <th>molar mass   <th>density    <th>valence <th>current required
-<td><th>Silver   <td>107.868 g/mol<td>10.49 g/cc <td>1       <td>9.38 A/mm²/(mm/s)
-<td><th>Gold     <td>196.967 g/mol<td>19.30 g/cc <td>1?      <td>9.45 A/mm²/(mm/s)
-<td><th>Lead     <td>207.2 g/mol  <td>11.34 g/cc <td>2       <td>10.6 A/mm²/(mm/s)
-<td><th>Tin      <td>118.710 g/mol<td>7.265 g/cc <td>2?      <td>11.8 A/mm²/(mm/s)
-<td><th>Zirconium<td>91.224 g/mol <td>6.52 g/cc  <td>4       <td>13.8 A/mm²/(mm/s)
-<td><th>Magnesium<td>24.305 g/mol <td>1.738 g/cc <td>2!      <td>13.8 A/mm²/(mm/s)
-<td><th>Titanium <td>47.867 g/mol <td>4.506 g/cc <td>4?      <td>18.2 A/mm²/(mm/s)
-<td><th>Zinc     <td>65.38 g/mol  <td>7.14 g/cc  <td>2       <td>21.1 A/mm²/(mm/s)
-<td><th>Iron     <td>55.845 g/mol <td>7.874 g/cc <td>2?      <td>27.2 A/mm²/(mm/s)
-<td><th>Copper   <td>64.546 g/mol <td>8.96 g/cc  <td>2?      <td>27.2 A/mm²/(mm/s)
-<td><th>Aluminum <td>26.98 g/mol  <td>2.70 g/cc  <td>3       <td>29.0 A/mm²/(mm/s)
-<td><th>Cobalt   <td>58.9332 g/mol<td>8.90 g/cc  <td>2?      <td>29.1 A/mm²/(mm/s)
-<td><th>Nickel   <td>58.693 g/mol <td>8.908 g/cc <td>2?      <td>29.3 A/mm²/(mm/s)
-<td><th>Chromium <td>51.9961 g/mol<td>7.19 g/cc  <td>3       <td>40.0 A/mm²/(mm/s)
-<td><th>Tungsten <td>183.84 g/mol <td>19.3 g/cc  <td>6?      <td>60.8 A/mm²/(mm/s)
+<tr><th>metal    <th>molar mass   <th>density    <th>valence <th>current required  <th>melts
+<tr><th>Silver   <td>107.868 g/mol<td>10.49 g/cc <td>1       <td>9.38 A/mm²/(mm/s) <td>1234.93 K
+<tr><th>Gold     <td>196.967 g/mol<td>19.30 g/cc <td>1?      <td>9.45 A/mm²/(mm/s) <td>1337.33 K
+<tr><th>Lead     <td>207.2 g/mol  <td>11.34 g/cc <td>2       <td>10.6 A/mm²/(mm/s) <td>600.61 K
+<tr><th>Tin      <td>118.710 g/mol<td>7.265 g/cc <td>2?      <td>11.8 A/mm²/(mm/s) <td>505.08 K
+<tr><th>Zirconium<td>91.224 g/mol <td>6.52 g/cc  <td>4       <td>13.8 A/mm²/(mm/s) <td>2128 K
+<tr><th>Magnesium<td>24.305 g/mol <td>1.738 g/cc <td>2!      <td>13.8 A/mm²/(mm/s) <td>923 K
+<tr><th>Titanium <td>47.867 g/mol <td>4.506 g/cc <td>4?      <td>18.2 A/mm²/(mm/s) <td>1941 K
+<tr><th>Zinc     <td>65.38 g/mol  <td>7.14 g/cc  <td>2       <td>21.1 A/mm²/(mm/s) <td>692.88 K
+<tr><th>Iron     <td>55.845 g/mol <td>7.874 g/cc <td>2?      <td>27.2 A/mm²/(mm/s) <td>1811 K
+<tr><th>Copper   <td>64.546 g/mol <td>8.96 g/cc  <td>2?      <td>27.2 A/mm²/(mm/s) <td>1357.77 K
+<tr><th>Aluminum <td>26.98 g/mol  <td>2.70 g/cc  <td>3       <td>29.0 A/mm²/(mm/s) <td>933.47 K
+<tr><th>Cobalt   <td>58.9332 g/mol<td>8.90 g/cc  <td>2?      <td>29.1 A/mm²/(mm/s) <td>1768 K
+<tr><th>Nickel   <td>58.693 g/mol <td>8.908 g/cc <td>2?      <td>29.3 A/mm²/(mm/s) <td>1728 K
+<tr><th>Molybdenum<td>95.95 g/mol <td>10.28 g/cc <td>3?      <td>31.0 A/mm²/(mm/s) <td>2896 K
+<tr><th>Chromium <td>51.9961 g/mol<td>7.19 g/cc  <td>3       <td>40.0 A/mm²/(mm/s) <td>2180 K
+<tr><th>Tungsten <td>183.84 g/mol <td>19.3 g/cc  <td>6?      <td>60.8 A/mm²/(mm/s) <td>3695 K
 </table>
+
+[12]: https://en.wikipedia.org/wiki/Abundance_of_elements_in_Earth's_crust
 
 (The unit A/mm²/(mm/s) is equivalently A·s/mm³, GA·s/m³, or GC/m³, but
 I find these units less intuitive.)
@@ -660,35 +673,45 @@ conductive substance, such as a metal with a more positive electrode
 potential, in which case it would need to be physically removed from
 the cut for it to proceed; or it might be an insulator.  In any case
 the grain size of the discontinuous phase would need to be smaller
-than the desired cuts.
+than the desired cuts.  A metal volume fraction of 15%, corresponding
+to a 6× ECM speedup, [seems reasonable][25]:
 
-Suitable nonconductive reinforcing discontinuous phases, ideally in
-the form of submicron particles and especially submicron-length
-whiskers or laminae, might include carborundum, carbon nanotubes,
-carbon fibers, halloysite nanotubes, other clays, boron nitride
-nanotubes, basalt fiber, goethite, sapphire, talc, cubic boron
-nitride, boron carbide, silicon nitride, topaz, diamond, silica,
-rutile, chrysoberyl, beryl, mica, aluminum magnesium boride, boron,
-iron tetraboride, titanium nitride, and zirconium nitride (?). XXX
+> There is some overlap between [metal matrix composites] and cermets,
+> with the latter typically consisting of less than 20% metal by
+> volume.
 
-Zirconium is particularly appealing here; though it is not as abundant
+[25]: https://en.wikipedia.org/wiki/Metal_matrix_composite
+
+See below for notes on suitable solid nonconductive reinforcing
+discontinuous phase materials.  Foams are appealing for increasing
+stiffness without increasing mass or cutting time.
+
+Zirconium is particularly appealing as an electrolyzable matrix
+material here; though it is not as abundant
 as iron, aluminum, magnesium, or titanium, it is more abundant (in
 Earth’s crust) than copper, zinc, nickel, chromium, tin, lead,
-molybdenum, or tungsten, on par with carbon or vanadium, it is about
-as strong as iron while being substantially less dense, having a
-higher melting point, and being biocompatible, and it should
+molybdenum, or tungsten, on par with carbon or vanadium; even as a pure
+element it is about as strong as steel ([230 MPa yield stress, 330 MPa
+ultimate tensile strength, with Young’s modulus of 94.5 GPa][17]; [grade
+705 is alloyed with 2.5% niobium to get 500 MPa yield stress, 600 MPa
+ultimate tensile strength, higher than Zircaloy][18]);
+while being substantially less dense, having a higher melting point,
+and being biocompatible; and it should
 electrolyze twice as fast as iron, copper, nickel, or
 cobalt — assuming you can sufficiently disrupt its protective oxide
 layer during electrolysis, a problem which also arises with titanium.
 You could imagine a zirconium-cemented composite consisting
 principally of submicron grains of yttrium-stabilized
-zirconia — assuming cubic zirconia adheres as well to zirconium as the
-protective oxide layer does — that can be cut electrolytically five
+zirconia (assuming cubic zirconia adheres as well to zirconium as the
+protective oxide layer does) that can be cut electrolytically five
 times as fast as steel.  Zirconium also potentially supports the
 formation of hardening carbide grains like those in steel, though I’m
 not sure if there’s a way to form a pearlite-like structure in
 zirconium.  (See file `exotic-steels.md` for more thoughts on this
 theme.)
+
+[17]: http://www.matweb.com/search/datasheet.aspx?matguid=6e8936b3ad994f13bfb29923cc1506a9&n=1&ckck=1
+[18]: http://www.matweb.com/search/DataSheet.aspx?MatGUID=084b3ac6dc06492d936cd066aa02b2a7&ckck=1
 
 (Zirconia is notable for its electrical properties, but at room
 temperature it is an insulator, because its conductance is mediated by
@@ -697,12 +720,138 @@ the mobility of oxygen ions.)
 Metallic magnesium is also appealing here because it has not only a
 high electrolysis rate but also a very low standard electrode
 potential (-2.372 V) and many conveniently soluble compounds.  [It has
-alloys with reasonable srength][11]: yield strength “typically
+alloys with reasonable strength][11]:
+yield strength of casting alloys “typically
 75–200 MPa, tensile strength 135–285 MPa … Young’s modulus is 42 GPa.”
-ASTM A36 steel, for reference, has yield strength 250 MPa, UTS 400–500
-MPa, Young’s modulus 200 GPa, so these alloys have a substantial
+ASTM A36 steel, for reference, has yield strength 250 MPa, UTS 400–500
+MPa, Young’s modulus 200 GPa, so these alloys have a substantial
 fraction of steel’s strength and (to a lesser degree) stiffness.
-Stiffness can be improved with discontinuous reinforcing fillers to a
-much greater extent than strength.
+(Pure magnesium is much weaker, only about 20 MPa, though [another
+source says 65–100 MPa][16], and some wrought alloys are stronger, [as
+high as 300 MPa yield strength][14].)  Stiffness can be improved with
+discontinuous reinforcing fillers to a much greater extent than
+strength.  Its greatest drawbacks are its inflammability, its
+intolerance of high temperatures (worse even than aluminum) and creep.
+(Fillers tend to eliminate creep.)
 
+[14]: http://www.totalmateria.com/Article138.htm
 [11]: https://en.wikipedia.org/wiki/Magnesium_alloy
+[16]: https://www.azom.com/properties.aspx?ArticleID=618
+
+Suitable nonconductive reinforcing discontinuous phases
+-------------------------------------------------------
+
+Ideally these would be in
+the form of submicron particles, especially submicron-length
+whiskers or laminae; they might include carborundum, carbon nanotubes,
+carbon fibers, halloysite nanotubes, other clays, boron nitride
+nanotubes, basalt fiber, goethite, asbestos,
+zirconia, zircon, sapphire, talc, cubic boron
+nitride, boron carbide, silicon nitride, topaz, diamond, silica,
+rutile, chrysoberyl, beryl, spinel, mica, aluminum magnesium boride,
+boron, or iron tetraboride.  (Titanium nitride and zirconium nitride
+are too conductive.)  Composites drawing most of their strength from
+such high-aspect-ratio functional fillers may actually benefit being
+bonded with a soft, malleable metal (like tin, magnesium, or zinc),
+rather than a harder, stronger metal (like tungsten, chromium, or
+cobalt), because, as with intentional weakening of the fiber–matrix
+bond in ceramic-matrix composites, it allows pullout, impeding crack
+propagation and distributing the load along the length of the fibers
+or plates.  With this sort of nanostructure it should be possible to
+take advantage of the extra strength of reinforcement whose thickness
+is below the critical dimension for flaw-insensitivity.
+
+Laminar functional fillers can enjoy flaw-insensitivity by having only
+one of their particle dimensions below the critical dimension, and can
+theoretically provide high strength in two dimensions, thus providing
+on average twice the strength of the same material as a fibrous
+filler, but high filler loadings for laminar fillers are only possible
+by aligning the laminae parallel.  I saw a paper about 10 years ago
+which achieved this with bentonite and PVA (rather than a metal) by
+depositing them in alternate layers (“layer-by-layer (LBL) assembly”),
+but I haven’t seen examples since then.  (I think some of steel’s
+strength can be attributed to pearlite and bainite having precisely
+this structure, with ceramic cementite nanolayers alternating with
+soft metallic ferrite.)  I posted the paper to kragen-fw with the
+headline “new high-strength composite made of “nanoclay” and PVA”:
+
+> > Charles Griffiths told me about this October 4 article from Physorg,
+> > “New plastic is strong as steel, transparent”:
+> 
+> > <http://www.physorg.com/news110727530.html>
+> 
+> Apparently, by alternating layers of polyvinyl alcohol and “clay
+> nanosheets”, Nicholas Kotov and a bunch of other people at UMich
+> (many from his own lab), plus some folks at Northwestern (in some
+> earlier research; see below) have fabricated an extremely
+> high-strength composite.  It gets its strength from parallel layers
+> of clay nanosheets glued together with thin layers (monolayers?) of
+> PVA. ...
+> 
+> > <http://www.sciencemag.org/cgi/content/abstract/318/5847/80>
+>  doi:10.1126/science.1143176
+>
+> Science 5 October 2007: Vol. 318. no. 5847, pp. 80-83.
+>
+> The authors are Paul Podsiadlo, Amit K. Kaushik, Ellen M. Arruda,
+> Anthony M. Waas, Bong Sup Shim, Jiadi Xu, Himabindu Nandivada,
+> Benjamin G. Pumplin, Joerg Lahann, Ayyalusamy Ramamoorthy, and
+> Nicholas A. Kotov, all of whom are from UMich and five of whom are
+> from Kotov’s lab.
+
+In [this work][22], for which Google Scholar finds 1563 citations, by
+crosslinking the polyvinyl alcohol with glutaraldehyde (widely sold
+as a disinfectant at 2–2.5% strength
+under names like Surgibac G and Sertex), they achieved
+400 MPa strengths, stronger than many steels.  They’d previously done
+the same thing with a mussel glue amino acid,
+L-3,4-dihydroxyphenylalanine, achieving lower strengths.
+
+[22]: https://arruda.engin.umich.edu/wp-content/uploads/sites/170/2014/08/2007-Ultrastrong-and-Stiff-Layered-Polymer-Nanocomposites-Science.pdf
+
+Electrodeposition would seem to
+offer a low-temperature codeposition route to
+fabricating such layered structures in bulk rather than a few
+nanometers at a time: first, compact the mass of filler to a high
+density, then electrodeposit a metal matrix in its interstices,
+similar to the [molten metal infiltration technique for tungsten
+carbide][23], [also used for Al/SiC metal matrix composites][24]:
+
+> AlSiC metal matrix composites are formed by pressure infiltrating
+> molten aluminum into silicon carbide preforms. This method of
+> casting is typically used in applications where solution
+> requirements include high strength, lightweight, custom CTE and high
+> thermal conductivity. PCC offers AlSiC with a composition varying
+> between 30% to 74% silicon carbide by volume, depending on the
+> application. This flexible material system allows PCC Composites to
+> produce a part that can be tailored to exact solution requirements.
+
+[23]: https://www.sciencedirect.com/science/article/pii/S2187076417301495 "Fabrication of hard cermets by in-situ synthesis and infiltration of metal melts into WC powder compacts, by G. Liu, S. Guo, J. Li, K. Chen, and D. Fan, 10.1016/j.jascer.2017.09.003, cc-by-nc-nd"
+[24]: http://matweb.com/search/datasheet.aspx?MatGUID=40182acd06bc4bca81c8b6a87510d57d "PCC-Advanced Forming Technology 30% AlSiC Metal Matrix Composite"
+
+Conceivably electroless plating would work better.
+
+For metal matrix composites or cermets, a crucial question is the
+adhesion of the metal matrix to the filler; as mentioned above,
+adhesion that is too strong can propagate cracks into the filler
+particles, eliminating their flaw-insensitivity, but of course in the
+limit of weak adhesion the composite is no better than a foam with
+extra dead weight.
+
+The high filler loadings that would be ideal for electrolytic
+machinability are more similar to the area of practice generally known
+as “cermets” than to the area of practice generally known as “metal
+matrix composites”.  Nonconductive reinforcing discontinuous phases
+used in cermets seem to include sapphire, glucina, magnesia
+(periclase), zirconia, phosphates of calcium, fluoroaluminosilicate
+glass, rutile, boron carbide, carborundum, aluminum nitride, sodalite,
+and quartz.
+
+A truly 2D material like graphene or a MXene would also make a great
+functional filler for this kind of thing if, like nitrides of titanium
+and zirconium or like the MAX phases, you could find one that isn’t
+conductive.  The problem with conductive fillers is that, once the
+surface of the metal is etched, they would screen the electric field
+from the metallic matrix surface in their interstices, so it would
+stop being etched.
+

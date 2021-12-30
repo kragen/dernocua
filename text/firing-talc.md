@@ -87,6 +87,10 @@ carvings” are actually alabaster or serpentine.)
 
 [a65]: https://geology.com/rocks/soapstone.shtml
 
+Reportedly [potters use 50% talc, 50% ball clay][sc] for slipcasting.
+
+[sc]: https://digitalfire.com/article/understanding+the+deflocculation+process+in+slip+casting
+
 Material qualities
 ------------------
 

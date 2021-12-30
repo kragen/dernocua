@@ -88,24 +88,34 @@ something like:
 - Osmium: [US$13000/kg][8], 22.65 g/cc, or possibly iridium at more
   than twice that price
 - Tungsten: [US$30/kg][9], 19.3 g/cc
-- Lead scrap: 95¢/kg, 11.34 g/cc
+- Tungsten carbide?  Not sure what it costs but its density is 15.6 g/cc.
+- Lead scrap: 95¢/kg, 11.3 g/cc
 - Steel scrap: [21¢/kg][10], 7.9 g/cc
-- Magnetite: [10¢/kg][11] [or so][12], 5.17 g/cc
-- Quartz (as construction sand): 3¢/kg, 2.648 g/cc
+- Magnetite: [10¢/kg][11] [or so][12], 5.2 g/cc
+- Quartz (as construction sand): 3¢/kg, 2.6 g/cc
+- Water: [.06¢/kg][22] or so, 1 g/cc
 
 [8]: https://www.metalary.com/osmium-price/
 [9]: https://www.metalary.com/tungsten-price/
 [10]: https://www.usgs.gov/centers/nmic/iron-and-steel-scrap-statistics-and-information
 [11]: https://www.usgs.gov/centers/nmic/iron-ore-statistics-and-information
 [12]: https://stockhead.com.au/resources/barry-fitzgerald-why-magnetite-is-hot-and-whos-making-it/
+[22]: http://www.scientificamerican.com/article/israel-proves-the-desalination-era-is-here/
 
 More briefly:
 
-22.65 g/cc Os (US$13000/kg), 19.3 g/cc W (US$30/kg), 11.34 g/cc Pb
-(95c/kg), 7.9 g/cc Fe (21c/kg), 5.17 g/cc Fe3O4 (10c/kg), 2.648 g/cc
-SiO2 (3c/kg)
+22.65 g/cc Os (US$13000/kg), 19.3 g/cc W (US$30/kg), 15.6 g/cc WC
+($???), 11.34 g/cc Pb (95c/kg), 7.9 g/cc Fe (21c/kg), 5.2 g/cc Fe3O4
+(10c/kg), 2.6 g/cc SiO2 (3c/kg)
 
-Mercury, litharge, minium, cinnabar, and tungsten carbide should
+I feel like [WC is probably cheaper than W, because Wikipedia
+says][23] you can make it by heating WO₃ to 900° with graphite, and
+the USGS’s Mineral Commodity Summaries put WO₃ prices at US$148–US$270
+*per tonne* for the last several years.
+
+[23]: https://en.wikipedia.org/wiki/Tungsten_carbide
+
+Mercury, litharge, minium, and cinnabar should
 probably be on the curve, too.
 
 Not making the curve but still pretty cool, in part because of their
