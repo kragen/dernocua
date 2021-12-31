@@ -1,5 +1,5 @@
-A list of handy tools (mostly CLI) developed from a discussion on
-#scannedinavian on Libera.chat (formerly Freenode).
+A list of handy tools (mostly CLI) developed from a discussion
+on #scannedinavian on Libera.chat (formerly Freenode).
 
 - `most`, `less`, `bat`: text viewing
 - `vi`: text editing

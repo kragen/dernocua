@@ -1,4 +1,4 @@
-dernocua version 020211230-4
+dernocua version 020211231-0
     by Kragen+Javier+Sitaker
 
 # Popular categories from Dercuano:
@@ -340,7 +340,7 @@ copper-forming written 02021-04-16
     updated 02021-06-12
     titled Forming+steel+with+copper+instead+of+vice+versa
     concerns copper manufacturing steel contrivances strength
-    concerns physics self-replication forming machining
+    concerns physics self-replication forming machining pulse
 strength category-titled Strength+of+materials
 
 oscopes written 02021-04-16
@@ -379,8 +379,9 @@ dsp category-titled Digital+signal+processing+(DSP)
 flash-boiler written 02021-04-28
     updated 02021-12-30
     titled A+boiler+for+submillisecond+steam+pulses
-    concerns mechanical contrivances thermodynamics electronics
+    concerns mechanical contrivances thermodynamics electronics pulse
     concerns regenerators materials physics
+pulse category-titled Pulsed+machinery
 
 three-phase-logic written 02021-04-30
     updated 02021-07-27
@@ -424,7 +425,7 @@ ecm category-titled ECM
 leaf-hypertext written 02021-05-08
     updated 02021-12-30
     concerns hypertext archival virtual-machines reproducibility
-    concerns end-user-programming hci guis
+    concerns end-user-programming hci guis caching higher-order-programming
 
 microscale written 02021-05-08
     updated 02021-12-30
@@ -529,7 +530,8 @@ broken-disks written 02021-06-02
 
 micro-impact-driver written 02021-06-02
     updated 02021-06-12
-    concerns mechanical electronics contrivances sonic-screwdrivers hand-tools
+    concerns mechanical electronics contrivances sonic-screwdrivers
+    concerns pulse hand-tools
 
 minkowski-deconvolution written 02021-06-02
     updated 02021-12-30
@@ -546,6 +548,7 @@ algebra-of-n-ary-relations written 02021-06-14
 
 nuclear-amiga written 02021-06-14
     updated 02021-07-27
+    titled Nuclear+energy+is+the+Amiga+of+energy+sources
     concerns humor energy
 
 flux-gate-downconversion written 02021-06-15
@@ -563,10 +566,11 @@ minifs written 02021-06-16
     updated 02021-07-27
     titled How+little+code+can+a+filesystem+be?
     concerns small-is-beautiful bootstrapping independence
-    concerns filesystems programming oses
+    concerns filesystems programming oses unix
 
 pdf-format written 02021-06-16
     updated 02021-07-27
+    titled Notes+on+the+PDF+file+format
     concerns pdf file-formats
 
 ps2-arduino written 02021-06-20
@@ -577,7 +581,7 @@ ps2-arduino written 02021-06-20
 
 self-hosting-kernel written 02021-06-21
     updated 02021-12-30
-    concerns bootstrapping independence programming oses
+    concerns bootstrapping independence programming oses unix
 oses category-titled Operating+systems
 
 stack-syntax written 02021-06-22
@@ -658,7 +662,7 @@ glass-powder-bed-printing written 02021-06-29
 rator-port-gui written 02021-06-29
     updated 02021-12-30
     titled Rator-port+GUIs
-    concerns hci guis composability zuis rewind-replay
+    concerns hci guis composability zuis rewind-replay higher-order-programming
 zuis category-titled Zooming+user+interfaces+(ZUIs)
 
 sulfur-jet-metal-cutting written 02021-06-30
@@ -690,7 +694,7 @@ ecm-nonmetals written 02021-07-05
 
 sonic-screwdriver-resonance written 02021-07-06
     updated 02021-12-30
-    concerns sonic-screwdrivers hand-tools contrivances
+    concerns sonic-screwdrivers hand-tools contrivances pulse
 
 thermochromic-scan written 02021-07-06
     updated 02021-12-30
@@ -719,7 +723,7 @@ smolsay written 02021-07-12
     titled Smolsay:+the+Ur-Lisp,+but+with+dicts+instead+of+conses
     concerns programming-languages lun js bytecode virtual-machines lisp
     concerns debugging gc programming luajit lua syntax dynamic-dispatch sa
-    concerns small-is-beautiful
+    concerns small-is-beautiful higher-order-programming
 
 electrolytic-berlinite written 02021-07-12
     updated 02021-12-30
@@ -741,6 +745,7 @@ faygoo written 02021-07-14
     updated 02021-12-30
     titled Faygoo:+a+yantra-smashing+ersatz+version+of+Piumarta+and+Warth’s+COLA
     concerns dynamic-dispatch sa assembly performance jit compilers
+    concerns small-is-beautiful higher-order-programming
 
 firing-talc written 02021-07-14
     updated 02021-12-30
@@ -752,7 +757,7 @@ stack-bounding-yielding written 02021-07-14
     titled Improvements+on+C+for+low-level+programming+such+as+block+arguments
     concerns programming c smalltalk failure-free safety block-arguments
     concerns dynamic-dispatch golang typing pascal ocaml memory-models
-    concerns call-by-name
+    concerns call-by-name higher-order-programming
 
 fiberglass-cmc written 02021-07-15
     updated 02021-07-27
@@ -829,7 +834,7 @@ block-arguments written 02021-07-29
     titled Compilation+of+block+arguments+to+high-performance+code
     concerns block-arguments compilers assembly performance programming
     concerns smalltalk postscript tcl call-by-name pascal risc-v forth
-    concerns safety
+    concerns safety higher-order-programming
 postscript category-titled PostScript
 
 material-observations written 02021-07-29
@@ -841,7 +846,7 @@ material-observations written 02021-07-29
 
 dipropylene-glycol written 02021-08-01
     updated 02021-08-15
-    concerns materials pricing
+    concerns materials pricing toxicology
 
 fire-mud written 02021-08-05
     updated 02021-08-15
@@ -962,6 +967,84 @@ mig-printing-feedback written 02021-08-30
     titled Negative+feedback+control+to+prevent+runaway+positive+feedback+in+3-D+MIG+welding+printing
     concerns 3d-printing welding control digital-fabrication
 
+
+freezer-seacrete written 02021-09-01
+    updated 02021-12-30
+    titled Fast+electrolytic+mineral+accretion+(seacrete)+for+digital+fabrication?
+    concerns 3d-printing electrolysis materials solubility magnesium
+    concerns aluminum-foil filled-systems phosphates composites
+
+laser-marking-metal written 02021-09-03
+    updated 02021-12-30
+    titled Patterning+metal+surfaces+by+coating+decomposition+with+lasers+or+plasma?
+    concerns lasers patterning materials toxicology plasma digital-fabrication
+
+rockwool written 02021-09-03
+    updated 02021-12-30
+    titled Rock-wool-filled+composites
+    concerns composites strength pla filled-systems
+
+weighing-balance-design written 02021-09-06
+    updated 02021-12-30
+    concerns weighing metrology electronics bootstrapping ghettobotics
+    concerns precision mechanical contrivances
+
+fast-slicing-ecm written 02021-09-08
+    updated 02021-12-30
+    titled Fast-slicing+ECM
+    concerns ecm machining electrolysis manufacturing contrivances
+
+fast-pulse-current written 02021-09-09
+    updated 02021-12-30
+    titled Switching+kiloamps+in+microseconds
+    concerns pulse power-supplies electronics pricing
+
+spot-welding written 02021-09-09
+    updated 02021-12-30
+    concerns welding manufacturing physics thermodynamics pulse pricing
+
+term-rewriting-micro-interpreter written 02021-09-10
+    updated 02021-09-15
+    concerns qfitzah term-rewriting small-is-beautiful aardappel scheme lisp
+    concerns syntax bootstrapping assembly performance bytecode dynamic-dispatch
+    concerns higher-order-programming
+
+cli-tools written 02021-09-15
+    updated 02021-09-16
+    titled A+short+list+of+the+most+useful+Unix+CLI+tools
+    concerns unix cli history
+
+three-phase-differential-data written 02021-09-22
+    updated 02021-12-30
+    concerns electronics protocols setun physical-computation
+setun category-titled Setun+(Сетунь)
+
+waterglass-loctite written 02021-09-22
+    updated 02021-12-30
+    titled Waterglass+“Loctite”?
+    concerns waterglass manufacturing
+
+qfitzah-internals written 02021-09-24
+    updated 02021-12-30
+    concerns qfitzah term-rewriting
+
+blowing-agents written 02021-09-29
+    updated 02021-12-30
+    concerns foam materials manufacturing
+
+compliance-spectroscopy written 02021-09-29
+    updated 02021-12-30
+    concerns scanning-probe-microscopy contrivances vibrators sensors
+
+planning-apples written 02021-09-29
+    updated 02021-12-30
+    concerns employment incentives
+
+handrolled-capacitor written 02021-09-30
+    updated 02021-12-30
+    titled Liquid+dielectrics+for+hand-rolled+self-healing+capacitors
+    concerns electronics contrivances physics materials
+
 2d-cutting-workflow written 02021-10-15
     updated 02021-12-30
 adversarial-control written 02021-10-25
@@ -978,8 +1061,6 @@ beyond-op-streams written 02021-10-11
     updated 02021-12-30
 beyond-overstrike written 02021-10-10
     updated 02021-12-30
-blowing-agents written 02021-09-29
-    updated 02021-12-30
 cantbelievesort written 02021-10-05
     updated 02021-12-30
 capacitive-displacement written 02021-12-11
@@ -987,10 +1068,6 @@ capacitive-displacement written 02021-12-11
 china-nukes written 02021-11-09
     updated 02021-12-30
 chording-commands written 02021-11-26
-    updated 02021-12-30
-cli-tools written 02021-09-15
-    updated 02021-09-16
-compliance-spectroscopy written 02021-09-29
     updated 02021-12-30
 constant-weight-dithering written 02021-10-28
     updated 02021-12-30
@@ -1016,19 +1093,11 @@ exotic-steels written 02021-12-01
     updated 02021-12-30
 exponential-forming written 02021-12-15
     updated 02021-12-30
-fast-pulse-current written 02021-09-09
-    updated 02021-12-30
-fast-slicing-ecm written 02021-09-08
-    updated 02021-12-30
 fet-geiger written 02021-12-17
     updated 02021-12-30
 filecoin-problem written 02021-12-30
     updated 02021-12-30
 flexure-mount written 02021-10-18
-    updated 02021-12-30
-freezer-seacrete written 02021-09-01
-    updated 02021-12-30
-handrolled-capacitor written 02021-09-30
     updated 02021-12-30
 house-blocks written 02021-12-13
     updated 02021-12-30
@@ -1038,8 +1107,6 @@ iron-marking-pencil written 02021-11-06
     updated 02021-12-30
 its-ddt written 02021-10-22
     updated 02021-10-23
-laser-marking-metal written 02021-09-03
-    updated 02021-12-30
 latex-3dp written 02021-10-03
     updated 02021-12-30
 layers-plus-electroforming written 02021-12-16
@@ -1072,23 +1139,17 @@ pinn-gan-rendering written 02021-11-11
     updated 02021-12-30
 pipelined-piece-chain-painting written 02021-10-10
     updated 02021-12-30
-planning-apples written 02021-09-29
-    updated 02021-12-30
 polynomial-pascal written 02021-10-20
     updated 02021-12-30
 public-domain-02021 written 02021-11-20
     updated 02021-12-30
 pva-printing written 02021-12-15
     updated 02021-12-30
-qfitzah-internals written 02021-09-24
-    updated 02021-12-30
 recursive-shingling written 02021-10-30
     updated 02021-12-30
 regenerative-muffle-kiln written 02021-12-21
     updated 02021-12-30
 reuleaux-constructor written 02021-11-17
-    updated 02021-12-30
-rockwool written 02021-09-03
     updated 02021-12-30
 rust-notes written 02021-10-06
     updated 02021-10-10
@@ -1108,17 +1169,11 @@ spark-pen written 02021-10-10
     updated 02021-10-12
 sparse-fem written 02021-10-20
     updated 02021-12-30
-spot-welding written 02021-09-09
-    updated 02021-12-30
 spring-connector written 02021-12-28
     updated 02021-12-30
 statement-algebra-apl written 02021-10-10
     updated 02021-12-30
-term-rewriting-micro-interpreter written 02021-09-10
-    updated 02021-09-15
 thread-rolling-roller-screw written 02021-11-04
-    updated 02021-12-30
-three-phase-differential-data written 02021-09-22
     updated 02021-12-30
 # rejected because too incomplete:
 #transaction-upgrade written 02021-05-15
@@ -1132,10 +1187,6 @@ uv-led-triggered-spark-gap written 02021-10-20
 vernier-indicator written 02021-11-22
     updated 02021-12-30
 viscoelastic-probing written 02021-11-04
-    updated 02021-12-30
-waterglass-loctite written 02021-09-22
-    updated 02021-12-30
-weighing-balance-design written 02021-09-06
     updated 02021-12-30
 wire-brush-microscope written 02021-11-06
     updated 02021-12-30

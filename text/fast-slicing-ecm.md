@@ -1,4 +1,4 @@
-Electrochemical machining can remove material at a speed limited by
+ECM can remove material at a speed limited by
 the area of the interelectrode process gap, assuming adequate
 flushing.  That is, with the same current density distributed over
 twice as much electrode area, you can remove twice the volume of
