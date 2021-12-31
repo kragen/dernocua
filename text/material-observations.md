@@ -1436,7 +1436,7 @@ a couple of cases as I weighed it and opened the package, I have seen
 bubbles of glass floating around in the air.  A small puff of air from
 my lips can shatter some of the foam into glistening fragments.
 
-https://ibb.co/4WrfjQs
+<https://ibb.co/4WrfjQs>
 
 On the tongue the delicate bubble surfaces feel a bit like gelatin
 bubbles, but have no taste, leaving a slight slipperiness and tingling
@@ -1491,7 +1491,7 @@ white.  The video has some other problems, like being 310 MB.  I was
 able to take some stills, especially after I learned about the
 voice-activation feature of the cellphone.
 
-https://ibb.co/PgCdb4p
+<https://ibb.co/PgCdb4p>
 
 There was some of the “cockroach” smell from heating the lime-treated
 part of the waterglass, even though no chopsticks were present, and
@@ -1529,7 +1529,7 @@ melted was much more difficult.  I dropped half of it on the floor
 from a standing position when I finished; a small piece broke off from
 the impact.
 
-https://ibb.co/sFVgsXk
+<https://ibb.co/sFVgsXk>
 
 With my teeth, I took a tiny bite of one of the areas affected by the
 water, about 21:34.  The material is gritty between my teeth, like

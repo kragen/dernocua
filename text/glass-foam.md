@@ -220,7 +220,7 @@ a hot wire, like styrofoam, is very appealing, especially if its
 density can be decreased further.  Although it’s quite weak, it could
 be very useful for supporting granular slightly-denser materials such
 as perlite, vermiculite, alumina foam, and cheap carbon foam, for
-example while an adhesive sets (see file `leaf-resin-roof.md` for one
+example while an adhesive sets (see file `leaf-vein-roof.md` for one
 use for this).  Because of its relatively low melting point and very
 low density, it might be possible to “burn it out” in such cases,
 leaving only a thin layer of residue.

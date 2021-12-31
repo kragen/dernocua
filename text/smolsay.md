@@ -408,7 +408,7 @@ We can use closures as methods, of course, or we could supply
 syntactic sugar like Lua’s `obj:method(args)`, which translates to
 `obj.method(obj, args)`, although both `:` and `->` are already taken
 in the syntax above.  `obj.method[args]`, `obj << method(args)`, `obj
-<- method(args)`, `^method(obj, args)`, `@method(obj, args), and
+<- method(args)`, `^method(obj, args)`, `@method(obj, args)`, and
 `method = generic(:method) ... method(obj, args)` come to mind.  But
 we’d like to be able to do this in a way that can be compiled
 efficiently in a dynamically-typed system, which means we need some

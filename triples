@@ -1,4 +1,4 @@
-dernocua version 020211230-3
+dernocua version 020211230-4
     by Kragen+Javier+Sitaker
 
 # Popular categories from Dercuano:
@@ -418,7 +418,7 @@ planetary-worm-drive written 02021-05-07
 fresnel-mirror-electropolishing written 02021-05-08
     updated 02021-12-30
     concerns electrolysis digital-fabrication optics electropolishing ecm
-    concerns small-things machining
+    concerns small-things machining aluminum
 ecm category-titled ECM
 
 leaf-hypertext written 02021-05-08
@@ -466,6 +466,7 @@ pva category-titled Poly(vinyl+alcohol)+(PVA)
 acicular-low-binder-pastes written 02021-05-19
     updated 02021-12-30
     concerns powder-bed 3d-printing digital-fabrication filled-systems materials
+    concerns anisotropic-fillers
 
 cutting-clay written 02021-05-19
     updated 02021-12-30
@@ -491,11 +492,11 @@ electroforming-rivets written 02021-05-22
 
 metal-welding-fuel written 02021-05-23
     updated 02021-12-30
-    concerns welding manufacturing physics materials
+    concerns welding manufacturing physics materials aluminum magnesium
 
 aluminum-foil written 02021-05-24
     updated 02021-09-11
-    concerns aluminum-foil digital-fabrication origami optics
+    concerns aluminum-foil digital-fabrication origami optics aluminum
     concerns strength alloys pricing solar experiment-report
     concerns ecm electrolysis electropolishing machining
 
@@ -528,7 +529,7 @@ broken-disks written 02021-06-02
 
 micro-impact-driver written 02021-06-02
     updated 02021-06-12
-    concerns mechanical electronics contrivances sonic-screwdrivers
+    concerns mechanical electronics contrivances sonic-screwdrivers hand-tools
 
 minkowski-deconvolution written 02021-06-02
     updated 02021-12-30
@@ -669,13 +670,178 @@ two-binder-powder-bed-printing written 02021-06-30
     titled Powder-bed+3-D+printing+with+a+sacrificial+binder
     concerns powder-bed 3d-printing cements waterglass
 
+
+self-amalgamating-tape written 02021-07-02
+    updated 02021-12-30
+    titled Stochastically+generated+self-amalgamating+tape+variations+for+composite+fabrication
+    concerns tape manufacturing composites filled-systems materials python humor
+    concerns anisotropic-fillers
+
+spin-coating-clay written 02021-07-02
+    updated 02021-12-30
+    titled Spin-coating+clay-filled+plastics+to+make+composites+with+high+anisotropic+filler+loadings
+    concerns clay filled-systems materials anisotropic-fillers manufacturing
+
+ecm-nonmetals written 02021-07-05
+    updated 02021-07-27
+    titled ECM+for+machining+nonmetals?
+    concerns electrolysis ecm machining manufacturing sandblasting materials
+    concerns solubility
+
+sonic-screwdriver-resonance written 02021-07-06
+    updated 02021-12-30
+    concerns sonic-screwdrivers hand-tools contrivances
+
+thermochromic-scan written 02021-07-06
+    updated 02021-12-30
+    titled Subnanosecond+thermochromic+light+modulation+for+real-time+holography+and+displays
+    concerns displays vanadia slms lidar holography communication contrivances optics
+lidar category-titled LiDAR
+slms category-titled Spatial+light+modulators+(SLMs)
+
+water-treatment written 02021-07-07
+    updated 02021-07-27
+    titled Notes+on+Richards+et+al.’s+nascent+catalytic+ROS+water+treatment+process
+    concerns materials peroxide drinking-water pricing life-support
+
+memory-view written 02021-07-09
+    updated 02021-12-30
+    concerns pdf parsing hci jupyter python
+
+spreadtool written 02021-07-10
+    updated 02021-12-30
+    concerns spreadtools hand-tools mechanical contrivances physics machining
+    concerns manufacturing snaps strength steel 2d-cutting argentina
+    concerns digital-fabrication pricing
+
+smolsay written 02021-07-12
+    updated 02021-07-27
+    titled Smolsay:+the+Ur-Lisp,+but+with+dicts+instead+of+conses
+    concerns programming-languages lun js bytecode virtual-machines lisp
+    concerns debugging gc programming luajit lua syntax dynamic-dispatch sa
+
+electrolytic-berlinite written 02021-07-12
+    updated 02021-12-30
+    concerns electrolysis phosphates 3d-printing digital-fabrication materials
+    concerns minerals filled-systems cements cmcs
+cmcs category-titled Ceramic-matrix+composites+(CMCs)
+
+glauber-drywall written 02021-07-12
+    updated 02021-12-30
+    titled Making+mirabilite+and+calcite+from+drywall
+    concerns materials minerals
+
+refractories written 02021-07-14
+    updated 02021-09-11
+    titled Potential+local+sources++and+prices+of+refractory+materials
+    concerns materials pricing argentina waterglass
+
+faygoo written 02021-07-14
+    updated 02021-12-30
+    titled Faygoo:+a+yantra-smashing+ersatz+version+of+Piumarta+and+Warth’s+COLA
+    concerns dynamic-dispatch sa assembly performance jit compilers
+
+firing-talc written 02021-07-14
+    updated 02021-12-30
+    concerns talc ceramic materials minerals self-replication forsterite
+    concerns enstatite experiment-report
+
+stack-bounding-yielding written 02021-07-14
+    updated 02021-12-30
+    titled Improvements+on+C+for+low-level+programming+such+as+block+arguments
+    concerns programming c smalltalk failure-free safety block-arguments
+    concerns dynamic-dispatch golang typing pascal ocaml memory-models
+    concerns call-by-name
+
+fiberglass-cmc written 02021-07-15
+    updated 02021-07-27
+    titled Fiberglass+CMCs?
+    concerns materials fiberglass cmcs pricing strength composites    
+
+ideal-workshop written 02021-07-16
+    updated 02021-07-27
+    titled My+ideal+workshop+(unfinished)
+    concerns fiction
+
+sorel-cement-3dp written 02021-07-16
+    updated 02021-07-27
+    titled Can+you+3-D+print+Sorel+cement+by+inhibiting+setting+with+X-rays?
+    concerns materials 3d-printing digital-fabrication
+
+tetrahedral-expanded-metal written 02021-07-16
+    updated 02021-07-27
+    concerns materials manufacturing welding
+
+glass-foam written 02021-07-16
+    updated 02021-08-15
+    concerns glass foam materials waterglass experiment-report manufacturing
+    concerns strength
+
+leaf-vein-roof written 02021-07-16
+    updated 02021-09-11
+    concerns roofing pricing life-support sandwich-panels composites strength
+    concerns clay ceramic vermiculite
+
+aluminum-fuel written 02021-07-17
+    updated 02021-12-30
+    concerns energy materials independence aluminum batteries
+
+shs-booster written 02021-07-17
+    updated 02021-12-30
+    titled Boosters+for+self-propagating+high-temperature+synthesis+(SHS)
+    concerns shs materials enthalpy
+shs category-titled Self-propagating+high-temperature+synthesis+(SHS)
+
+compressed-appendable-file written 02021-07-19
+    updated 02021-07-27
+    concerns pdf file-formats compression
+
+shs-magnesium-phosphate written 02021-07-22
+    updated 02021-07-27
+    titled SHS+of+magnesium+phosphate
+    concerns shs materials magnesium phosphates cements pricing
+
+back-drivable-differential-windlass written 02021-07-23
+    updated 02021-07-27
+    titled Back-drivable+differential+windlass
+    concerns mechanical materials strength physics uhmwpe wc friction
+uhmwpe category-titled UHMWPE
+wc category-titled Tungsten+carbide
+
+magnesia written 02021-07-25
+    updated 02021-08-15
+    titled Synthesizing+reactive+magnesia?
+    concerns magnesium materials microwave-heating
+
+magnesium-silicate written 02021-07-25
+    updated 02021-08-15
+    titled Synthesizing+amorphous+magnesium+silicate
+    concerns magnesium minerals experiment-report
+
+hash-consing-ropes written 02021-07-27
+    updated 02021-07-27
+    titled Ropes+with+constant-time+concatenation+and+equality+comparisons+with+monoidal+hash+consing
+    concerns programming algorithms performance
+
+block-arguments written 02021-07-29
+    updated 02021-12-30
+    titled Compilation+of+block+arguments+to+high-performance+code
+    concerns block-arguments compilers assembly performance programming
+    concerns smalltalk postscript tcl call-by-name pascal risc-v forth
+    concerns safety
+postscript category-titled PostScript
+
+material-observations written 02021-07-29
+    updated 02021-12-30
+    concerns materials borax waterglass vermiculite foam glass pva refractory
+    concerns pumice experiment-report argentina pricing phosphates oogoo
+    concerns alabaster bootstrapping aluminum aluminum-foil
+
 2d-cutting-workflow written 02021-10-15
     updated 02021-12-30
 adversarial-control written 02021-10-25
     updated 02021-12-30
 against-subjectivism written 02021-12-15
-    updated 02021-12-30
-aluminum-fuel written 02021-07-17
     updated 02021-12-30
 aluminum-refining written 02021-12-20
     updated 02021-12-30
@@ -683,15 +849,11 @@ aqueous-scanning-probe-microscopy written 02021-11-12
     updated 02021-12-30
 arc-maker written 02021-08-07
     updated 02021-12-30
-back-drivable-differential-windlass written 02021-07-23
-    updated 02021-07-27
 balanced-ropes written 02021-10-16
     updated 02021-12-30
 beyond-op-streams written 02021-10-11
     updated 02021-12-30
 beyond-overstrike written 02021-10-10
-    updated 02021-12-30
-block-arguments written 02021-07-29
     updated 02021-12-30
 blowing-agents written 02021-09-29
     updated 02021-12-30
@@ -709,8 +871,6 @@ cola-flavor written 02021-08-10
     updated 02021-08-15
 compliance-spectroscopy written 02021-09-29
     updated 02021-12-30
-compressed-appendable-file written 02021-07-19
-    updated 02021-07-27
 constant-current-buck written 02021-08-10
     updated 02021-08-15
 constant-weight-dithering written 02021-10-28
@@ -731,15 +891,11 @@ dipropylene-glycol written 02021-08-01
     updated 02021-08-15
 drama-word-list written 02021-10-08
     updated 02021-12-30
-ecm-nonmetals written 02021-07-05
-    updated 02021-07-27
 electrochromic-metals written 02021-12-16
     updated 02021-12-30
 electrodeposition-welding written 02021-08-25
     updated 02021-09-11
 electrolytic-2d-cutting written 02021-12-16
-    updated 02021-12-30
-electrolytic-berlinite written 02021-07-12
     updated 02021-12-30
 electrowinning written 02021-11-21
     updated 02021-12-30
@@ -755,36 +911,22 @@ fast-pulse-current written 02021-09-09
     updated 02021-12-30
 fast-slicing-ecm written 02021-09-08
     updated 02021-12-30
-faygoo written 02021-07-14
-    updated 02021-12-30
 fet-geiger written 02021-12-17
     updated 02021-12-30
-fiberglass-cmc written 02021-07-15
-    updated 02021-07-27
 filecoin-problem written 02021-12-30
     updated 02021-12-30
 fire-mud written 02021-08-05
     updated 02021-08-15
-firing-talc written 02021-07-14
-    updated 02021-12-30
 flexure-mount written 02021-10-18
     updated 02021-12-30
 freezer-seacrete written 02021-09-01
     updated 02021-12-30
-glass-foam written 02021-07-16
-    updated 02021-08-15
 glass-wood written 02021-08-21
-    updated 02021-12-30
-glauber-drywall written 02021-07-12
     updated 02021-12-30
 handrolled-capacitor written 02021-09-30
     updated 02021-12-30
-hash-consing-ropes written 02021-07-27
-    updated 02021-07-27
 house-blocks written 02021-12-13
     updated 02021-12-30
-ideal-workshop written 02021-07-16
-    updated 02021-07-27
 inverse-perspective written 02021-10-11
     updated 02021-12-30
 iodine-patterning written 02021-08-11
@@ -801,17 +943,7 @@ layers-plus-electroforming written 02021-12-16
     updated 02021-12-30
 lazy-heapsort written 02021-08-22
     updated 02021-09-11
-leaf-vein-roof written 02021-07-16
-    updated 02021-09-11
 literate-haskell-like written 02021-11-06
-    updated 02021-12-30
-magnesia written 02021-07-25
-    updated 02021-08-15
-magnesium-silicate written 02021-07-25
-    updated 02021-08-15
-material-observations written 02021-07-29
-    updated 02021-12-30
-memory-view written 02021-07-09
     updated 02021-12-30
 methane-bag written 02021-08-10
     updated 02021-08-15
@@ -867,8 +999,6 @@ recursive-bearings written 02021-08-23
     updated 02021-12-30
 recursive-shingling written 02021-10-30
     updated 02021-12-30
-refractories written 02021-07-14
-    updated 02021-09-11
 regenerative-muffle-kiln written 02021-12-21
     updated 02021-12-30
 residual-stream-windowing written 02021-08-21
@@ -883,30 +1013,18 @@ sandwich-panel-optimization written 02021-08-21
     updated 02021-09-11
 screw-heads written 02021-08-25
     updated 02021-09-11
-self-amalgamating-tape written 02021-07-02
-    updated 02021-12-30
 selfrep-redundancy written 02021-11-12
     updated 02021-12-30
 shower-heating-tces written 02021-08-11
     updated 02021-08-15
-shs-booster written 02021-07-17
-    updated 02021-12-30
 shs-construction-set written 02021-08-24
     updated 02021-09-11
-shs-magnesium-phosphate written 02021-07-22
-    updated 02021-07-27
 simplest-blinker written 02021-12-01
     updated 02021-12-30
 simplest-power-supply written 02021-10-14
     updated 02021-12-30
-smolsay written 02021-07-12
-    updated 02021-07-27
 solar-air-conditioned-trailer written 02021-10-11
     updated 02021-12-30
-sonic-screwdriver-resonance written 02021-07-06
-    updated 02021-12-30
-sorel-cement-3dp written 02021-07-16
-    updated 02021-07-27
 sorption-pipeline written 02021-08-24
     updated 02021-09-11
 spanish-phonology written 02021-10-05
@@ -917,24 +1035,14 @@ spark-pen written 02021-10-10
     updated 02021-10-12
 sparse-fem written 02021-10-20
     updated 02021-12-30
-spin-coating-clay written 02021-07-02
-    updated 02021-12-30
 spot-welding written 02021-09-09
     updated 02021-12-30
-spreadtool written 02021-07-10
-    updated 02021-12-30
 spring-connector written 02021-12-28
-    updated 02021-12-30
-stack-bounding-yielding written 02021-07-14
     updated 02021-12-30
 statement-algebra-apl written 02021-10-10
     updated 02021-12-30
 term-rewriting-micro-interpreter written 02021-09-10
     updated 02021-09-15
-tetrahedral-expanded-metal written 02021-07-16
-    updated 02021-07-27
-thermochromic-scan written 02021-07-06
-    updated 02021-12-30
 thread-rolling-roller-screw written 02021-11-04
     updated 02021-12-30
 three-phase-differential-data written 02021-09-22
@@ -954,8 +1062,6 @@ viscoelastic-probing written 02021-11-04
     updated 02021-12-30
 waterglass-loctite written 02021-09-22
     updated 02021-12-30
-water-treatment written 02021-07-07
-    updated 02021-07-27
 weighing-balance-design written 02021-09-06
     updated 02021-12-30
 wiki-models written 02021-08-19

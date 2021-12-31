@@ -108,7 +108,6 @@ firing.
 200-mesh talc is [US$0.40/kg][a2] (AR$1550/25kg).  Talc is very
 interesting; see file `firing-talc.md`.
 
-[a61]: https://nvlpubs.nist.gov/nistpubs/jres/15/jresv15n5p551_A1b.pdf
 [a2]: https://articulo.mercadolibre.com.ar/MLA-862336010-talco-200-x-25-kgs-_JM
 
 200-mesh calcite is [US$0.20/kg][a3] (AR$790/25kg).

@@ -12,6 +12,7 @@ continuum][a63], but the cristobalite crystals remain solid until
 [a66]: https://www.eurotalc.eu/what-talc
 [a63]: http://www.geo.umass.edu/courses/geo321/Lecture%208%20Binary%20Systems.pdf
 [a62]: http://deanpresnall.org/files/90Enst.melting.pdf
+[a61]: https://nvlpubs.nist.gov/nistpubs/jres/15/jresv15n5p551_A1b.pdf
 
 Potential for inorganic cyclic fabrication systems
 --------------------------------------------------
