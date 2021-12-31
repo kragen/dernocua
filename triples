@@ -1,4 +1,4 @@
-dernocua version 020211230-0
+dernocua version 020211230-1
     by Kragen+Javier+Sitaker
 
 # Popular categories from Dercuano:
@@ -124,6 +124,64 @@ tag-bdd-index written 02021-01-26
     updated 02021-01-27
     titled Trying+and+failing+to+design+an+efficient+index+for+folksonomy+data+based+on+BDDs
     concerns databases programming algorithms performance folksonomies
+
+
+silver-solar-cells written 02021-02-02
+    updated 02021-09-11
+    titled The+use+of+silver+in+solar+cells
+    concerns solar energy manufacturing the-future materials silver minerals
+    concerns pricing economics
+
+snap-logic-ii written 02021-02-08
+    updated 02021-02-08
+    titled Snap+logic,+revisited,+and+four-phase+logic
+    concerns physical-computation electronics falstad four-phase-logic
+four-phase-logic category-titled Four-phase+logic
+
+ghz-dds written 02021-02-08
+    updated 02021-02-24
+    titled Can+you+do+direct+digital+synthesis+(DDS)+at+over+a+gigahertz?
+    concerns radio communication electronics pricing microcontrollers
+
+unicode-graphics written 02021-02-10
+    updated 02021-02-24
+    titled ASCII+art,+but+in+Unicode,+with+Braille+and+other+alternatives
+    concerns ascii-art art graphics programming unicode python terminals
+
+skew-tilesets written 02021-02-14
+    updated 02021-02-24
+    concerns ascii-art tiled graphics history basic python overstrike plato
+plato category-titled Illinois+PLATO
+basic category-titled BASIC
+tiled category-titled Tiled+graphics
+ascii-art category-titled ASCII+art
+
+threechet written 02021-02-16
+    updated 02021-02-24
+    concerns graphics art math history
+
+thumbraille written 02021-02-17
+    updated 02021-02-24
+    titled Thumbnail+views+in+a+terminal+with+Braille
+    concerns ascii-art temrinals unicode graphics
+
+energy-autonomous-computing written 02021-02-18
+    updated 02021-12-30
+    concerns independence electronics pricing energy displays microcontrollers 
+    concerns sa ereaders ghettobotics ambiq risc-v batteries contrivances solar
+sa category-titled Systems+architecture
+
+microlisp written 02021-02-23
+    updated 02021-08-18
+    titled How+do+you+fit+a+high-level+language+into+a+microcontroller?+Let’s+look+at+BBN+Lisp
+    concerns lisp programming microcontrollers history memory-models
+    concerns bytecode performance
+
+panelization written 02021-02-25
+    updated 02021-02-26
+    titled Panelization+in+PCB+manufacturing
+    concerns electronics pricing contrivances manufacturing
+
 
 2d-cutting-workflow written 02021-10-15
     updated 02021-12-30
@@ -257,8 +315,6 @@ electrowinning written 02021-11-21
     updated 02021-12-30
 emm-book written 02021-11-25
     updated 02021-12-30
-energy-autonomous-computing written 02021-02-18
-    updated 02021-12-30
 example-based-regexp written 02021-10-24
     updated 02021-12-30
 exotic-steels written 02021-12-01
@@ -299,8 +355,6 @@ geneva-wheel-stopwork written 02021-04-07
     updated 02021-04-08
 ghetto-edm written 02021-05-31
     updated 02021-12-30
-ghz-dds written 02021-02-08
-    updated 02021-02-24
 glass-foam written 02021-07-16
     updated 02021-08-15
 glass-powder-bed-printing written 02021-06-29
@@ -375,8 +429,6 @@ methane-bag written 02021-08-10
     updated 02021-08-15
 micro-impact-driver written 02021-06-02
     updated 02021-06-12
-microlisp written 02021-02-23
-    updated 02021-08-18
 micro-marx written 02021-10-20
     updated 02021-10-22
 micro-ramjet written 02021-11-22
@@ -419,8 +471,6 @@ paeth-vq written 02021-11-06
     updated 02021-12-30
 palette-font-tile written 02021-11-18
     updated 02021-12-30
-panelization written 02021-02-25
-    updated 02021-02-26
 paper-scanning-notebook written 02021-12-18
     updated 02021-12-30
 pbkdf-content-addressing written 02021-10-08
@@ -505,20 +555,14 @@ shs-magnesium-phosphate written 02021-07-22
     updated 02021-07-27
 silicone-curing written 02021-05-19
     updated 02021-12-30
-silver-solar-cells written 02021-02-02
-    updated 02021-09-11
 simplest-blinker written 02021-12-01
     updated 02021-12-30
 simplest-power-supply written 02021-10-14
     updated 02021-12-30
-skew-tilesets written 02021-02-14
-    updated 02021-02-24
 slow-flash-refresh written 02021-03-02
     updated 02021-03-02
 smolsay written 02021-07-12
     updated 02021-07-27
-snap-logic-ii written 02021-02-08
-    updated 02021-02-08
 solar-air-conditioned-trailer written 02021-10-11
     updated 02021-12-30
 sonic-screwdriver-resonance written 02021-07-06
@@ -565,14 +609,10 @@ thixotropic-electrodeposition written 02021-05-04
     updated 02021-07-27
 thread-rolling-roller-screw written 02021-11-04
     updated 02021-12-30
-threechet written 02021-02-16
-    updated 02021-02-24
 three-phase-differential-data written 02021-09-22
     updated 02021-12-30
 three-phase-logic written 02021-04-30
     updated 02021-07-27
-thumbraille written 02021-02-17
-    updated 02021-02-24
 trailer-netstrings written 02021-04-21
     updated 02021-07-27
 transaction-upgrade written 02021-05-15
@@ -589,8 +629,7 @@ udanax-green-notes written 02021-10-05
     updated 02021-10-08
 ui-ideas written 02021-05-04
     updated 02021-07-27
-unicode-graphics written 02021-02-10
-    updated 02021-02-24
+
 uv-led-triggered-spark-gap written 02021-10-20
     updated 02021-10-23
 variable-length-unaligned-bytecode written 02021-03-02

@@ -570,6 +570,7 @@ are more often limited by interface speeds:
 <tr><th>NOR Flash      <td>20MB/s  <td>5kB/s
 <tr><th>NAND Flash     <td>10MB/s  <td>1MB/s
 <tr><th>Ambiq MCU      <td>50MB/s  <td>50MB/s
+</table>
 
 Even with this expanded power budget, we can still read faster from
 Flash than from parallel SRAM because the Flash chips use so little
