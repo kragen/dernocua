@@ -37,7 +37,7 @@ intermittent-fan written 02021-01-03
 layout-typescript written 02021-01-04
     updated 02021-01-04
     concerns layout post-teletype terminals history video hci programming
-    concerns lisp emacs programming
+    concerns lisp emacs programming oses
 
 principled-apl-redux written 02021-01-03
     updated 02021-01-27
@@ -61,6 +61,7 @@ trie-pegs written 02021-01-15
     updated 02021-01-15
     titled Trie+PEGs
     concerns parsing compilers programming tries performance caching pegs packrat
+pegs category-titled Parsing+expression+grammars+(PEGs)
 
 ccn-chat written 02021-01-15
     updated 02021-01-16
@@ -338,7 +339,7 @@ copper-forming written 02021-04-16
     updated 02021-06-12
     titled Forming+steel+with+copper+instead+of+vice+versa
     concerns copper manufacturing steel contrivances strength
-    concerns physics self-replication forming
+    concerns physics self-replication forming machining
 strength category-titled Strength+of+materials
 
 oscopes written 02021-04-16
@@ -416,7 +417,7 @@ planetary-worm-drive written 02021-05-07
 fresnel-mirror-electropolishing written 02021-05-08
     updated 02021-12-30
     concerns electrolysis digital-fabrication optics electropolishing ecm
-    concerns small-things
+    concerns small-things machining
 ecm category-titled ECM
 
 leaf-hypertext written 02021-05-08
@@ -495,7 +496,7 @@ aluminum-foil written 02021-05-24
     updated 02021-09-11
     concerns aluminum-foil digital-fabrication origami optics
     concerns strength alloys pricing solar experiment-report
-    concerns ecm electrolysis electropolishing
+    concerns ecm electrolysis electropolishing machining
 
 mathematical-argument written 02021-05-27
     updated 02021-12-30
@@ -518,14 +519,161 @@ ghetto-edm written 02021-05-31
     concerns edm manufacturing ghettobotics materials pricing
 edm category-titled Electrical+discharge+machining+(EDM)
 
+
+broken-disks written 02021-06-02
+    updated 02021-06-12
+    titled Broken+hard+disks+are+the+cheapest+source+of+ultraprecision+components
+    concerns precision ghettobotics contrivances pricing electronics
+
+micro-impact-driver written 02021-06-02
+    updated 02021-06-12
+    concerns mechanical electronics contrivances sonic-screwdrivers
+
+minkowski-deconvolution written 02021-06-02
+    updated 02021-12-30
+    concerns scanning-probe-microscopy precision math
+
+greek-operating-systems written 02021-06-04
+    updated 02021-06-12
+    concerns puns humor programming
+
+algebra-of-n-ary-relations written 02021-06-14
+    updated 02021-07-27
+    titled The+algebra+of+N-ary+relations
+    concerns math databases programming kleene-algebras
+
+nuclear-amiga written 02021-06-14
+    updated 02021-07-27
+    concerns humor energy
+
+flux-gate-downconversion written 02021-06-15
+    updated 02021-07-27
+    titled Flux-gate+downconversion+in+a+loopstick+antenna?
+    concerns radio electronics contrivances
+
+backwards-peg written 02021-06-16
+    updated 02021-07-27
+    titled PEG-like+flexibility+for+parsing+right-to-left?
+    concerns pegs algorithms parsing pdf programming
+pdf category-titled The+Portable+Document+Format+(PDF)
+
+minifs written 02021-06-16
+    updated 02021-07-27
+    titled How+little+code+can+a+filesystem+be?
+    concerns small-is-beautiful bootstrapping independence
+    concerns filesystems programming oses
+
+pdf-format written 02021-06-16
+    updated 02021-07-27
+    concerns pdf file-formats
+
+ps2-arduino written 02021-06-20
+    updated 02021-12-30
+    titled Notes+on+what+would+be+needed+to+drive+a+PS/2+keyboard+from+an+Arduino
+    concerns arduino electronics input-devices keyboards
+    concerns experiment-report programming protocols
+
+self-hosting-kernel written 02021-06-21
+    updated 02021-12-30
+    concerns bootstrapping independence programming oses
+oses category-titled Operating+systems
+
+stack-syntax written 02021-06-22
+    updated 02021-07-27
+    concerns stack-machines syntax file-formats programming
+
+bead-hypertext written 02021-06-22
+    updated 02021-12-30
+    concerns hypertext hci guis programming pdf
+
+bitstuffing-attack written 02021-06-22
+    updated 02021-12-31
+    titled Does+USB+bitstuffing+create+a+timing-channel+vulnerability?
+    concerns protocols security
+
+verstickulite written 02021-06-23
+    updated 02021-07-27
+    concerns refractory materials sugar vermiculite materials
+    concerns waterglass cements
+
+delimiters written 02021-06-24
+    updated 02021-12-30
+    titled Simple+linear-time+linear-space+nested+delimiter+parsing
+    concerns parsing algorithms programming facepalm
+
+economic-history written 02021-06-25
+    updated 02021-07-27
+    concerns usa history economics incentives
+usa category-titled The+United+States+of+America+(USA)
+
+more-cements written 02021-06-26
+    updated 02021-08-15
+    concerns materials cements foam sapphire phosphates
+
+base-3-gage-blocks written 02021-06-27
+    updated 02021-12-30
+    concerns metrology contrivances math composability machining
+    concerns manufacturing
+
+counter-rotating-side-milling written 02021-06-27
+    updated 02021-12-30
+    titled Multiple+counter-rotating+milling+cutters+to+eliminate+side+loading
+    concerns machining manufacturing contrivances
+
+layered-ecm written 02021-06-27
+    updated 02021-12-30
+    titled Layered+ECM
+    concerns electrolysis ecm machining manufacturing
+
+shell-syscalls written 02021-06-27
+    updated 02021-12-30
+    titled A+kernel+you+can+type+commands+to
+    concerns oses sa hci post-teletype
+
+zirconia-ecm written 02021-06-27
+    updated 02021-12-30
+    titled Can+you+use+stabilized+cubic+zirconia+as+an+ECM+cathode+in+molten+salt?
+    concerns ecm zirconia manufacturing machining electrolysis materials magnesia
+    concerns carborundum history nernst-lamps molten-salts
+
+electrolytic-glass-machining written 02021-06-28
+    updated 02021-12-30
+    concerns precision ecm manufacturing machining electrolysis glass materials
+
+super-ghetto-digital-fabrication written 02021-06-28
+    updated 02021-12-30
+    concerns ghettobotics precision welding grinding machining manufacturing
+    concerns bootstrapping control aluminum-foil foam cardboard clay ceramic
+    concerns sandblasting oogoo silicone electroforming refractory materials
+    concerns carborundum sapphire control haplink
+
+glass-powder-bed-printing written 02021-06-29
+    updated 02021-12-30
+    titled Glass+powder-bed+3-D+printing
+    concerns glass powder-bed 3d-printing digital-fabrication fluxing materials
+    concerns experiment-report
+
+rator-port-gui written 02021-06-29
+    updated 02021-12-30
+    titled Rator-port+GUIs
+    concerns hci guis composability zuis rewind-replay
+zuis category-titled Zooming+user+interfaces+(ZUIs)
+
+sulfur-jet-metal-cutting written 02021-06-30
+    updated 02021-12-30
+    concerns materials manufacturing machining
+
+two-binder-powder-bed-printing written 02021-06-30
+    updated 02021-12-30
+    titled Powder-bed+3-D+printing+with+a+sacrificial+binder
+    concerns powder-bed 3d-printing cements waterglass
+
 2d-cutting-workflow written 02021-10-15
     updated 02021-12-30
 adversarial-control written 02021-10-25
     updated 02021-12-30
 against-subjectivism written 02021-12-15
     updated 02021-12-30
-algebra-of-n-ary-relations written 02021-06-14
-    updated 02021-07-27
 aluminum-fuel written 02021-07-17
     updated 02021-12-30
 aluminum-refining written 02021-12-20
@@ -536,26 +684,16 @@ arc-maker written 02021-08-07
     updated 02021-12-30
 back-drivable-differential-windlass written 02021-07-23
     updated 02021-07-27
-backwards-peg written 02021-06-16
-    updated 02021-07-27
 balanced-ropes written 02021-10-16
-    updated 02021-12-30
-base-3-gage-blocks written 02021-06-27
-    updated 02021-12-30
-bead-hypertext written 02021-06-22
     updated 02021-12-30
 beyond-op-streams written 02021-10-11
     updated 02021-12-30
 beyond-overstrike written 02021-10-10
     updated 02021-12-30
-bitstuffing-attack written 02021-06-22
-    updated 02021-12-30
 block-arguments written 02021-07-29
     updated 02021-12-30
 blowing-agents written 02021-09-29
     updated 02021-12-30
-broken-disks written 02021-06-02
-    updated 02021-06-12
 cantbelievesort written 02021-10-05
     updated 02021-12-30
 capacitive-displacement written 02021-12-11
@@ -578,13 +716,9 @@ constant-weight-dithering written 02021-10-28
     updated 02021-12-30
 copper-sls written 02021-08-30
     updated 02021-12-30
-counter-rotating-side-milling written 02021-06-27
-    updated 02021-12-30
 c-stack-bytecode written 02021-08-17
     updated 02021-09-13
 date-calc-dsl written 02021-11-14
-    updated 02021-12-30
-delimiters written 02021-06-24
     updated 02021-12-30
 democracy-stability written 02021-12-22
     updated 02021-12-30
@@ -605,8 +739,6 @@ electrodeposition-welding written 02021-08-25
 electrolytic-2d-cutting written 02021-12-16
     updated 02021-12-30
 electrolytic-berlinite written 02021-07-12
-    updated 02021-12-30
-electrolytic-glass-machining written 02021-06-28
     updated 02021-12-30
 electrowinning written 02021-11-21
     updated 02021-12-30
@@ -636,20 +768,14 @@ firing-talc written 02021-07-14
     updated 02021-12-30
 flexure-mount written 02021-10-18
     updated 02021-12-30
-flux-gate-downconversion written 02021-06-15
-    updated 02021-07-27
 freezer-seacrete written 02021-09-01
     updated 02021-12-30
 glass-foam written 02021-07-16
     updated 02021-08-15
-glass-powder-bed-printing written 02021-06-29
-    updated 02021-12-30
 glass-wood written 02021-08-21
     updated 02021-12-30
 glauber-drywall written 02021-07-12
     updated 02021-12-30
-greek-operating-systems written 02021-06-04
-    updated 02021-06-12
 handrolled-capacitor written 02021-09-30
     updated 02021-12-30
 hash-consing-ropes written 02021-07-27
@@ -670,8 +796,6 @@ laser-marking-metal written 02021-09-03
     updated 02021-12-30
 latex-3dp written 02021-10-03
     updated 02021-12-30
-layered-ecm written 02021-06-27
-    updated 02021-12-30
 layers-plus-electroforming written 02021-12-16
     updated 02021-12-30
 lazy-heapsort written 02021-08-22
@@ -690,30 +814,20 @@ memory-view written 02021-07-09
     updated 02021-12-30
 methane-bag written 02021-08-10
     updated 02021-08-15
-micro-impact-driver written 02021-06-02
-    updated 02021-06-12
 micro-marx written 02021-10-20
     updated 02021-10-22
 micro-ramjet written 02021-11-22
     updated 02021-12-30
 mig-printing-feedback written 02021-08-30
     updated 02021-12-30
-minifs written 02021-06-16
-    updated 02021-07-27
 minimal-c-subset written 02021-08-12
-    updated 02021-12-30
-minkowski-deconvolution written 02021-06-02
     updated 02021-12-30
 miranda-pins written 02021-11-11
     updated 02021-12-30
-more-cements written 02021-06-26
-    updated 02021-08-15
 mosfet-ranking written 02021-10-11
     updated 02021-12-30
 my-h8 written 02021-11-03
     updated 02021-12-30
-nuclear-amiga written 02021-06-14
-    updated 02021-07-27
 orthogonal-rational-vectors written 02021-11-04
     updated 02021-12-30
 paeth-vq written 02021-11-06
@@ -724,8 +838,6 @@ paper-scanning-notebook written 02021-12-18
     updated 02021-12-30
 pbkdf-content-addressing written 02021-10-08
     updated 02021-10-08
-pdf-format written 02021-06-16
-    updated 02021-07-27
 pex-pipe written 02021-08-07
     updated 02021-12-30
 phosphates-fraction written 02021-08-21
@@ -744,15 +856,11 @@ polynomial-pascal written 02021-10-20
     updated 02021-12-30
 power-transistors written 02021-08-07
     updated 02021-12-30
-ps2-arduino written 02021-06-20
-    updated 02021-12-30
 public-domain-02021 written 02021-11-20
     updated 02021-12-30
 pva-printing written 02021-12-15
     updated 02021-12-30
 qfitzah-internals written 02021-09-24
-    updated 02021-12-30
-rator-port-gui written 02021-06-29
     updated 02021-12-30
 recursive-bearings written 02021-08-23
     updated 02021-12-30
@@ -776,11 +884,7 @@ screw-heads written 02021-08-25
     updated 02021-09-11
 self-amalgamating-tape written 02021-07-02
     updated 02021-12-30
-self-hosting-kernel written 02021-06-21
-    updated 02021-12-30
 selfrep-redundancy written 02021-11-12
-    updated 02021-12-30
-shell-syscalls written 02021-06-27
     updated 02021-12-30
 shower-heating-tces written 02021-08-11
     updated 02021-08-15
@@ -822,13 +926,7 @@ spring-connector written 02021-12-28
     updated 02021-12-30
 stack-bounding-yielding written 02021-07-14
     updated 02021-12-30
-stack-syntax written 02021-06-22
-    updated 02021-07-27
 statement-algebra-apl written 02021-10-10
-    updated 02021-12-30
-sulfur-jet-metal-cutting written 02021-06-30
-    updated 02021-12-30
-super-ghetto-digital-fabrication written 02021-06-28
     updated 02021-12-30
 term-rewriting-micro-interpreter written 02021-09-10
     updated 02021-09-15
@@ -843,8 +941,6 @@ three-phase-differential-data written 02021-09-22
 # rejected because too incomplete:
 #transaction-upgrade written 02021-05-15
 #    updated 02021-12-30
-two-binder-powder-bed-printing written 02021-06-30
-    updated 02021-12-30
 two-finger-multitouch written 02021-12-11
     updated 02021-12-30
 udanax-green-notes written 02021-10-05
@@ -853,8 +949,6 @@ uv-led-triggered-spark-gap written 02021-10-20
     updated 02021-10-23
 vernier-indicator written 02021-11-22
     updated 02021-12-30
-verstickulite written 02021-06-23
-    updated 02021-07-27
 viscoelastic-probing written 02021-11-04
     updated 02021-12-30
 waterglass-loctite written 02021-09-22
@@ -869,7 +963,3 @@ wire-brush-microscope written 02021-11-06
     updated 02021-12-30
 xerogel-compacting written 02021-12-22
     updated 02021-12-30
-zirconia-ecm written 02021-06-27
-    updated 02021-12-30
-economic-history written 02021-06-25
-    updated 02021-07-27

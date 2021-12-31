@@ -176,7 +176,7 @@ powder is mixed with dry glass fibers of length comparable to the
 particle size, even slight polymerization would form a continuous
 network.  Amorphous silica can handle iron’s sintering temperatures
 for the little while that’s necessary, and then you can remove it with
-molten lye or hydrofluoric acid without damaging the iron.l
+molten lye or hydrofluoric acid without damaging the iron.
 
 Shrinkage is [already a big problem in ordinary pressed powder
 metallurgy][0], and the sacrificial-binder approach can solve it
@@ -184,5 +184,3 @@ almost completely, at the cost of increased porosity.
 
 [0]: https://www.hoganas.com/globalassets/download-media/sharepoint/handbooks---all-documents/handbook-2_production_of_sintered_components_december_2013_0675hog_interactive.pdf
 
-
-### Vulcanized rubber ###
