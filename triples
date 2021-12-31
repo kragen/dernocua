@@ -28,6 +28,7 @@ first-class-locations written 02021-01-04
     concerns programming programming-languages ownership
 imgui category-titled Immediate-mode+GUIs
 post-teletype category-titled Post-teletype+terminal+design
+hci category-titled Human-computer+interaction
 
 intermittent-fan written 02021-01-03
     updated 02021-01-04
@@ -80,6 +81,7 @@ zvs-converter written 02021-01-16
     updated 02021-01-16
     titled Notes+on+simulating+a+ZVS+converter+(Baxandall+converter)
     concerns falstad electronics power-supplies ghettobotics
+falstad category-titled Falstad’s+circuit+simulator
 
 ghetto-linreg written 02021-01-21
     updated 02021-01-27
@@ -105,6 +107,7 @@ loop-graph written 02021-01-23
     updated 02021-01-27
     concerns programming assembly performance
     titled Compiling+machine-code+loops+to+pipelined+dataflow+graphs
+assembly category-titled Assembly-language+programming
 
 risc-v written 02021-01-24
     updated 02021-07-27
