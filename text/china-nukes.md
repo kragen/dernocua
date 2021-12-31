@@ -3,7 +3,7 @@ Comment on <https://news.ycombinator.com/item?id=29151741>.
 “The cost of China’s new nuclear ambition has been estimated at US$440
 billion.”  But it doesn’t say how much power that is, just that it’s
 150 new reactors, so it’s about US$3B per reactor.
-https://archive.md/A5B6S shows that the article didn’t say how much
+<https://archive.md/A5B6S> shows that the article didn’t say how much
 power it was 9 hours ago either.  So, is this 15 GW, 150 GW, or 1500
 GW?
 
@@ -14,7 +14,7 @@ single-axis tracking, which pushes it to 30%) that would be 440 GW,
 but China’s historical PV capacity factor has been terrible, more like
 12% IIRC (maybe due to a Chinese version of the irrational
 misregulation robomartin documents in California in
-https://news.ycombinator.com/item?id=29155094).  12% would make it
+<https://news.ycombinator.com/item?id=29155094>).  12% would make it
 more like 260 GW.  But a PV power plant includes things that aren’t
 panels; balance of plant (inverter, wiring, grid connection,
 monitoring, mounting, security) is typically roughly equal to the
@@ -31,16 +31,16 @@ cost of US nuclear plants in the 01970s about US$1/We
 provide 440 GW.
 
 The threads at
-https://birdsite.xanny.family/pretentiouswhat/status/1293961095892279296
+<https://birdsite.xanny.family/pretentiouswhat/status/1293961095892279296>
 and
-https://birdsite.xanny.family/pretentiouswhat/status/1318838054891573249#m
+<https://birdsite.xanny.family/pretentiouswhat/status/1318838054891573249#m>
 provide some more context, suggesting that the “HPR1000, aka Hualong
 One 华龙一号”, is the reactor being used at these 150 sites.
-https://www.sciencedirect.com/science/article/pii/S2095809916301515
+<https://www.sciencedirect.com/science/article/pii/S2095809916301515>
 says the HPR1000 is 3.050 GW thermal, 1.070 GW electric, net. (See
 also
-https://www.ukhpr1000.co.uk/the-uk-hpr1000-technology/hpr1000-design/
-and https://en.wikipedia.org/wiki/Hualong_One.)  So 150 of them would
+<https://www.ukhpr1000.co.uk/the-uk-hpr1000-technology/hpr1000-design/>
+and <https://en.wikipedia.org/wiki/Hualong_One>.)  So 150 of them would
 produce 161 GW electric, which (if that’s US$440B) would put the cost
 around US$3/We, about twice the cost of the same generation capacity
 via PV with single-axis tracking, not including any cost of storage.

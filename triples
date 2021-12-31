@@ -77,7 +77,7 @@ transactions-n%2B1 written 02021-01-16
 parson-rpn written 02021-01-15
     updated 02021-06-12
     titled Some+notes+on+compiling+and+notations+for+grammars,+starting+from+the+inspiring+RPN+example+in+Parson
-    concerns parsing compilers kleene-algebras math syntax
+    concerns parsing compilers kleene-algebras math syntax dsls
 
 zvs-converter written 02021-01-16
     updated 02021-01-16
@@ -536,7 +536,7 @@ micro-impact-driver written 02021-06-02
 
 minkowski-deconvolution written 02021-06-02
     updated 02021-12-30
-    concerns scanning-probe-microscopy precision math
+    concerns scanning-probe-microscopy precision math sensors
 
 greek-operating-systems written 02021-06-04
     updated 02021-06-12
@@ -619,7 +619,7 @@ more-cements written 02021-06-26
 
 base-3-gage-blocks written 02021-06-27
     updated 02021-12-30
-    concerns metrology contrivances math composability machining
+    concerns metrology length contrivances math composability machining
     concerns manufacturing
 
 counter-rotating-side-milling written 02021-06-27
@@ -712,13 +712,13 @@ water-treatment written 02021-07-07
 
 memory-view written 02021-07-09
     updated 02021-12-30
-    concerns pdf parsing hci jupyter python
+    concerns pdf parsing hci jupyter python dsls
 
 spreadtool written 02021-07-10
     updated 02021-12-30
     concerns spreadtools hand-tools mechanical contrivances physics machining
     concerns manufacturing snaps strength steel 2d-cutting argentina
-    concerns digital-fabrication pricing
+    concerns digital-fabrication pricing flexures
 
 smolsay written 02021-07-12
     updated 02021-07-27
@@ -1015,6 +1015,7 @@ cli-tools written 02021-09-15
     updated 02021-09-16
     titled A+short+list+of+the+most+useful+Unix+CLI+tools
     concerns unix cli history
+cli category-titled Command-line+interfaces+(CLI)
 
 three-phase-differential-data written 02021-09-22
     updated 02021-12-30
@@ -1064,7 +1065,7 @@ spanish-phonology written 02021-10-05
 udanax-green-notes written 02021-10-05
     updated 02021-10-08
     titled Some+notes+on+perusing+the+Udanax+Green+codebase
-    concerns hypertext history c programming namespaces
+    concerns hypertext history c programming namespaces reading
 
 cantbelievesort written 02021-10-05
     updated 02021-12-30
@@ -1182,12 +1183,12 @@ its-ddt written 02021-10-22
 example-based-regexp written 02021-10-24
     updated 02021-12-30
     concerns hci programming kleene-algebras program-calculator control-flow
-    concerns comfy
+    concerns comfy dsls
 
 adversarial-control written 02021-10-25
     updated 02021-12-30
     concerns control programming optimization dreaming anns gradient-descent
-    concerns digital-fabrication manufacturing
+    concerns digital-fabrication manufacturing gans
 
 constant-weight-dithering written 02021-10-28
     updated 02021-12-30
@@ -1199,29 +1200,123 @@ recursive-shingling written 02021-10-30
     titled Hashing+text+with+recursive+shingling+to+find+duplication+efficiently
     concerns hashing algorithms performance
 
+
+my-h8 written 02021-11-03
+    updated 02021-12-30
+    titled My+Heathkit+H8
+    concerns history basic
+
+orthogonal-rational-vectors written 02021-11-04
+    updated 02021-12-30
+    concerns math
+
+thread-rolling-roller-screw written 02021-11-04
+    updated 02021-12-30
+    concerns mechanical roller-screws contrivances hand-tools
+
+viscoelastic-probing written 02021-11-04
+    updated 02021-12-30
+    concerns sensors piezoelectrics electronics
+
+iron-marking-pencil written 02021-11-06
+    updated 02021-12-30
+    titled An+aluminum+pencil+for+marking+iron?
+    concerns materials steel aluminum hand-tools contrivances
+
+literate-haskell-like written 02021-11-06
+    updated 02021-12-30
+    titled Embedding+runnable+code+in+text+paragraphs+for+numerical+modeling
+    concerns hci numerical-modeling editors end-user-programming bicicleta
+
+paeth-vq written 02021-11-06
+    updated 02021-12-30
+    concerns paeth graphics compression
+    titled Paeth+prediction+and+vector+quantization
+
+wire-brush-microscope written 02021-11-06
+    updated 02021-12-30
+    concerns scanning-probe-microscopy contrivances sensors
+
+china-nukes written 02021-11-09
+    updated 02021-12-30
+    concerns nuclear energy china the-future
+    titled New+nuclear+power+in+the+People’s+Republic+of+China
+
+miranda-pins written 02021-11-11
+    updated 02021-12-30
+    titled Ivan+Miranda’s+snap-pin+fasteners+and+similar+snaps
+    concerns snaps contrivances fasteners flexures
+
+pinn-gan-rendering written 02021-11-11
+    updated 02021-12-30
+    titled Rendering+3-D+graphics+with+PINNs+and+GANs?
+    concerns graphics anns numerical-modeling gans optics
+gans category-titled Generative+adversarial+networks+(GANs)
+
+aqueous-scanning-probe-microscopy written 02021-11-12
+    updated 02021-12-30
+    concerns scanning-probe-microscopy contrivances physics sensors
+
+selfrep-redundancy written 02021-11-12
+    updated 02021-12-30
+    titled Redundancy+in+self-replicating+systems+such+as+hundred-eyed+chickens
+    concerns self-replication
+
+date-calc-dsl written 02021-11-14
+    updated 02021-12-30
+    titled DSLs+for+calculations+on+dates
+    concerns dsls hci cli
+dsls category-titled Domain-specific+languages+(DSLs)
+
+reuleaux-constructor written 02021-11-17
+    updated 02021-12-30
+    titled Some+notes+on+reading+parts+of+Reuleaux’s+engineering+handbook
+    concerns history mechanical contrivances reading
+
+palette-font-tile written 02021-11-18
+    updated 02021-12-30
+    titled A+simple+2-D+programmable+graphics+pipeline+to+unify+tiles+and+palettes
+    concerns tiled graphics displays sa electronics
+
+public-domain-02021 written 02021-11-20
+    updated 02021-12-30
+    titled Interesting+works+that+entered+the+public+domain+in+02021,+in+the+US+and+elsewhere
+    concerns reading usa copyright law history
+
+electrowinning written 02021-11-21
+    updated 02021-12-30
+    titled At+small+scales,+electrowinning+may+be+cheaper+than+smelting
+    concerns small-things materials refining minerals steel aluminum copper
+    concerns electrolysis
+
+micro-ramjet written 02021-11-22
+    updated 02021-12-30
+    concerns small-things flying physics facepalm
+
+vernier-indicator written 02021-11-22
+    updated 02021-12-30
+    concerns hand-tools contrivances metrology length flexures
+
+emm-book written 02021-11-25
+    updated 02021-12-30
+    titled Some+notes+on+Bhattacharyya’s+ECM+book
+    concerns reading ecm materials electrolysis
+
+chording-commands written 02021-11-26
+    updated 02021-12-30
+    concerns hci editors emacs keyboards
+
 against-subjectivism written 02021-12-15
     updated 02021-12-30
 aluminum-refining written 02021-12-20
     updated 02021-12-30
-aqueous-scanning-probe-microscopy written 02021-11-12
-    updated 02021-12-30
 capacitive-displacement written 02021-12-11
-    updated 02021-12-30
-china-nukes written 02021-11-09
-    updated 02021-12-30
-chording-commands written 02021-11-26
-    updated 02021-12-30
-date-calc-dsl written 02021-11-14
     updated 02021-12-30
 democracy-stability written 02021-12-22
     updated 02021-12-30
 electrochromic-metals written 02021-12-16
     updated 02021-12-30
 electrolytic-2d-cutting written 02021-12-16
-    updated 02021-12-30
-electrowinning written 02021-11-21
-    updated 02021-12-30
-emm-book written 02021-11-25
     updated 02021-12-30
 exotic-steels written 02021-12-01
     updated 02021-12-30
@@ -1233,56 +1328,24 @@ filecoin-problem written 02021-12-30
     updated 02021-12-30
 house-blocks written 02021-12-13
     updated 02021-12-30
-iron-marking-pencil written 02021-11-06
-    updated 02021-12-30
 layers-plus-electroforming written 02021-12-16
-    updated 02021-12-30
-literate-haskell-like written 02021-11-06
-    updated 02021-12-30
-micro-ramjet written 02021-11-22
-    updated 02021-12-30
-miranda-pins written 02021-11-11
-    updated 02021-12-30
-my-h8 written 02021-11-03
-    updated 02021-12-30
-orthogonal-rational-vectors written 02021-11-04
-    updated 02021-12-30
-paeth-vq written 02021-11-06
-    updated 02021-12-30
-palette-font-tile written 02021-11-18
     updated 02021-12-30
 paper-scanning-notebook written 02021-12-18
     updated 02021-12-30
 photoemissive-power written 02021-12-23
     updated 02021-12-28
-pinn-gan-rendering written 02021-11-11
-    updated 02021-12-30
-public-domain-02021 written 02021-11-20
-    updated 02021-12-30
 pva-printing written 02021-12-15
     updated 02021-12-30
 regenerative-muffle-kiln written 02021-12-21
-    updated 02021-12-30
-reuleaux-constructor written 02021-11-17
-    updated 02021-12-30
-selfrep-redundancy written 02021-11-12
     updated 02021-12-30
 simplest-blinker written 02021-12-01
     updated 02021-12-30
 spring-connector written 02021-12-28
     updated 02021-12-30
-thread-rolling-roller-screw written 02021-11-04
-    updated 02021-12-30
 # rejected because too incomplete:
 #transaction-upgrade written 02021-05-15
 #    updated 02021-12-30
 two-finger-multitouch written 02021-12-11
-    updated 02021-12-30
-vernier-indicator written 02021-11-22
-    updated 02021-12-30
-viscoelastic-probing written 02021-11-04
-    updated 02021-12-30
-wire-brush-microscope written 02021-11-06
     updated 02021-12-30
 xerogel-compacting written 02021-12-22
     updated 02021-12-30
