@@ -71,6 +71,57 @@ transactions-n%2B1 written 02021-01-16
     concerns transactions programming performance
     titled Can+transactions+solve+the+N%2B1+performance+problem+on+web+pages?
 
+parson-rpn written 02021-01-15
+    updated 02021-06-12
+    titled Some+notes+on+compiling+and+notations+for+grammars,+starting+from+the+inspiring+RPN+example+in+Parson
+    concerns parsing compilers kleene-algebras math syntax
+
+zvs-converter written 02021-01-16
+    updated 02021-01-16
+    titled Notes+on+simulating+a+ZVS+converter+(Baxandall+converter)
+    concerns falstad electronics power-supplies ghettobotics
+
+ghetto-linreg written 02021-01-21
+    updated 02021-01-27
+    titled A+ghetto+linear+voltage+regulator+from+discrete+components
+    concerns falstad electronics power-supplies ghettobotics
+
+intel-dollar-auction written 02021-01-21
+    updated 02021-01-27
+    titled Intel+engineering+positions+considered+as+a+dollar+auction
+    concerns incentives intel economics employment
+
+fast-camera written 02021-01-22
+    updated 02021-12-30
+    titled iPhone+replacement+cameras+as+6-μs+streak+cameras
+    concerns ultrafast metrology contrivances cameras
+
+putty written 02021-01-22
+    updated 02021-01-27
+    titled Duplicating+Durham’s+Rock-Hard+Putty
+    concerns materials pricing alabaster
+
+loop-graph written 02021-01-23
+    updated 02021-01-27
+    concerns programming assembly performance
+    titled Compiling+machine-code+loops+to+pipelined+dataflow+graphs
+
+risc-v written 02021-01-24
+    updated 02021-07-27
+    titled Some+preliminary+notes+on+the+amazing+RISC-V+architecture
+    concerns instruction-sets risc-v assembly
+risc-v category-titled RISC-V
+
+schmitt-oscillators written 02021-01-26
+    updated 02021-01-27
+    concerns electronics falstad oscillators power-supplies
+    titled Trying+to+design+a+simple+switchmode+power+supply+using+Schmitt-trigger+relaxation+oscillators
+
+tag-bdd-index written 02021-01-26
+    updated 02021-01-27
+    titled Trying+and+failing+to+design+an+efficient+index+for+folksonomy+data+based+on+BDDs
+    concerns databases programming algorithms performance folksonomies
+
 2d-cutting-workflow written 02021-10-15
     updated 02021-12-30
 acicular-low-binder-pastes written 02021-05-19
@@ -213,8 +264,6 @@ exponential-forming written 02021-12-15
     updated 02021-12-30
 fantasy-platform written 02021-03-21
     updated 02021-03-22
-fast-camera written 02021-01-22
-    updated 02021-01-27
 fast-pulse-current written 02021-09-09
     updated 02021-12-30
 fast-slicing-ecm written 02021-09-08
@@ -247,8 +296,6 @@ geneva-wheel-stopwork written 02021-04-07
     updated 02021-04-08
 ghetto-edm written 02021-05-31
     updated 02021-12-30
-ghetto-linreg written 02021-01-21
-    updated 02021-01-27
 ghz-dds written 02021-02-08
     updated 02021-02-24
 glass-foam written 02021-07-16
@@ -271,8 +318,6 @@ human-ssa written 02021-04-21
     updated 02021-06-12
 ideal-workshop written 02021-07-16
     updated 02021-07-27
-intel-dollar-auction written 02021-01-21
-    updated 02021-01-27
 inverse-perspective written 02021-10-11
     updated 02021-12-30
 iodine-patterning written 02021-08-11
@@ -307,8 +352,6 @@ locking-telescope written 02021-04-07
     updated 02021-04-08
 logarithmic-low-power-serdes written 02021-04-08
     updated 02021-04-08
-loop-graph written 02021-01-23
-    updated 02021-01-27
 lvdt-4d-matrix-keyboard written 02021-05-12
     updated 02021-12-30
 magnesia written 02021-07-25
@@ -377,9 +420,6 @@ panelization written 02021-02-25
     updated 02021-02-26
 paper-scanning-notebook written 02021-12-18
     updated 02021-12-30
-parson-rpn written 02021-01-15
-    updated 02021-06-12
-
 pbkdf-content-addressing written 02021-10-08
     updated 02021-10-08
 pdf-format written 02021-06-16
@@ -414,8 +454,6 @@ ps2-arduino written 02021-06-20
     updated 02021-12-30
 public-domain-02021 written 02021-11-20
     updated 02021-12-30
-putty written 02021-01-22
-    updated 02021-01-27
 pva-printing written 02021-12-15
     updated 02021-12-30
 qfitzah-internals written 02021-09-24
@@ -436,8 +474,6 @@ residual-stream-windowing written 02021-08-21
     updated 02021-09-11
 reuleaux-constructor written 02021-11-17
     updated 02021-12-30
-risc-v written 02021-01-24
-    updated 02021-07-27
 rockwool written 02021-09-03
     updated 02021-12-30
 rust-notes written 02021-10-06
@@ -446,8 +482,6 @@ sandwich-panel-optimization written 02021-08-21
     updated 02021-09-11
 scaling-laws written 02021-05-19
     updated 02021-12-30
-schmitt-oscillators written 02021-01-26
-    updated 02021-01-27
 screw-heads written 02021-08-25
     updated 02021-09-11
 self-amalgamating-tape written 02021-07-02
@@ -516,8 +550,6 @@ sulfur-jet-metal-cutting written 02021-06-30
     updated 02021-12-30
 super-ghetto-digital-fabrication written 02021-06-28
     updated 02021-12-30
-tag-bdd-index written 02021-01-26
-    updated 02021-01-27
 term-rewriting-micro-interpreter written 02021-09-10
     updated 02021-09-15
 terser-pattern-match written 02021-03-24
@@ -586,7 +618,5 @@ xosm written 02021-03-21
     updated 02021-03-24
 zirconia-ecm written 02021-06-27
     updated 02021-12-30
-zvs-converter written 02021-01-16
-    updated 02021-01-16
 economic-history written 02021-06-25
     updated 02021-07-27

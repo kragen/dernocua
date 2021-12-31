@@ -593,8 +593,7 @@ All of the above was from looking at the 2017 2.2 spec.  The [current
 version of the user-level ISA spec is 20191213][18] and is about
 another hundred pages, 238 pp. in total.
 
-[18]: https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf "The RISC-V Instruction Set Manual, Volume I: User-Level ISA, Document Version
-20191213, Editors Andrew Waterman and Krste Asanović, RISC-V Foundation, December 2019."
+[18]: https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf "The RISC-V Instruction Set Manual, Volume I: User-Level ISA, Document Version 20191213, Editors Andrew Waterman and Krste Asanović, RISC-V Foundation, December 2019."
 
 This answers a bunch of my questions above about hart initiation, why
 the RV64I \*W instructions are the way they are, etc.
