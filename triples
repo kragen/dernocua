@@ -1,4 +1,4 @@
-dernocua version 020211230-2
+dernocua version 020211230-3
     by Kragen+Javier+Sitaker
 
 # Popular categories from Dercuano:
@@ -101,7 +101,7 @@ fast-camera written 02021-01-22
 putty written 02021-01-22
     updated 02021-01-27
     titled Duplicating+Durham’s+Rock-Hard+Putty
-    concerns materials pricing alabaster
+    concerns materials pricing alabaster thixotropy talc
 
 loop-graph written 02021-01-23
     updated 02021-01-27
@@ -338,7 +338,7 @@ copper-forming written 02021-04-16
     updated 02021-06-12
     titled Forming+steel+with+copper+instead+of+vice+versa
     concerns copper manufacturing steel contrivances strength
-    concerns physics self-replication
+    concerns physics self-replication forming
 strength category-titled Strength+of+materials
 
 oscopes written 02021-04-16
@@ -385,9 +385,140 @@ three-phase-logic written 02021-04-30
     concerns jlcpcb electronics manufacturing pricing
     concerns physical-computation falstad oscillators
 
-2d-cutting-workflow written 02021-10-15
+backward-exponential written 02021-05-04
+    updated 02021-06-12
+    titled How+fast+do+von+Neumann+probes+need+to+reproduce+to+colonize+space+in+our+lifetimes?
+    concerns the-future space self-replication digital-fabrication
+
+thixotropic-electrodeposition written 02021-05-04
+    updated 02021-12-31
+    concerns digital-fabrication materials thixotropy ceramic clay
+
+ui-ideas written 02021-05-04
+    updated 02021-07-27
+    titled List+of+random+GUI+ideas
+    concerns hci guis
+
+cheap-cutting-jig written 02021-05-06
     updated 02021-12-30
+    concerns clay ceramic digital-fabrication 2d-cutting ghettobotics
+2d-cutting category-titled 2-D+cutting
+
+differential-filming written 02021-05-07
+    updated 02021-12-30
+    concerns cameras sensors algorithms
+
+planetary-worm-drive written 02021-05-07
+    updated 02021-12-30
+    titled Planetary+roller+screw+worm+drive
+    concerns mechanical gears contrivances roller-screws
+
+fresnel-mirror-electropolishing written 02021-05-08
+    updated 02021-12-30
+    concerns electrolysis digital-fabrication optics electropolishing ecm
+    concerns small-things
+ecm category-titled ECM
+
+leaf-hypertext written 02021-05-08
+    updated 02021-12-30
+    concerns hypertext archival virtual-machines reproducibility
+    concerns end-user-programming hci guis
+
+microscale written 02021-05-08
+    updated 02021-12-30
+    titled Weighing+an+eyelash+on+an+improvised+Kibble+balance
+    concerns weighing metrology contrivances precision bootstrapping
+    concerns kibble-balances stochastic-resonance ghettobotics small-things
+
+trickler written 02021-05-09
+    updated 02021-12-30
+    titled Precisely+measuring+out+particulates+with+a+trickler
+    concerns digital-fabrication powder-bed 3d-printing materials particulates
+3d-printing category-titled 3-D+printing
+
+lvdt-4d-matrix-keyboard written 02021-05-12
+    updated 02021-12-30
+    titled A+four-dimensional+keyboard+matrix+made+of+linear+voltage+differential+transformers+(LVDTs)+to+get+30+or+180+keys+on+five+pins
+    concerns keyboards hci contrivances input-devices electronics
+
+planetary-screw-potentiometer written 02021-05-12
+    updated 02021-12-30
+    concerns roller-screws mechanical contrivances input-devices electronics
+
+carbohydrate-3d-printing written 02021-05-16
+    updated 02021-12-30
+    titled 3-D+printing+in+carbohydrates
+    concerns sugar materials 3d-printing glutaraldehyde cross-linking digital-fabrication
+
+clay-pla written 02021-05-17
+    updated 02021-12-30
+    titled Clay-filled+PLA+filament+for+firing+to+ceramic
+    concerns 3d-printing digital-fabrication materials clay ceramic pla filled-systems
+pla category-titled Poly(lactic+acid)+(PLA)
+
+multicolor-filament written 02021-05-17
+    updated 02021-12-30
+    concerns 3d-printing digital-fabrication materials pla pva filled-systems
+pva category-titled Poly(vinyl+alcohol)+(PVA)
+
 acicular-low-binder-pastes written 02021-05-19
+    updated 02021-12-30
+    concerns powder-bed 3d-printing digital-fabrication filled-systems materials
+
+cutting-clay written 02021-05-19
+    updated 02021-12-30
+    concerns 2d-cutting digital-fabrication clay forming self-replication
+    concerns filled-systems sugar
+
+scaling-laws written 02021-05-19
+    updated 02021-12-30
+    concerns small-things physics history galileo
+
+silicone-curing written 02021-05-19
+    updated 02021-12-30
+    titled Selectively+curing+one-component+silicone+by+injecting+water
+    concerns silicone materials 3d-printing digital-fabrication
+
+clay-wire-cutter written 02021-05-21
+    updated 02021-12-30
+    concerns digital-fabrication clay foam control
+
+electroforming-rivets written 02021-05-22
+    updated 02021-12-30
+    concerns electroforming manufacturing welding forming
+
+metal-welding-fuel written 02021-05-23
+    updated 02021-12-30
+    concerns welding manufacturing physics materials
+
+aluminum-foil written 02021-05-24
+    updated 02021-09-11
+    concerns aluminum-foil digital-fabrication origami optics
+    concerns strength alloys pricing solar experiment-report
+    concerns ecm electrolysis electropolishing
+
+mathematical-argument written 02021-05-27
+    updated 02021-12-30
+    titled The+nature+of+mathematical+discourse
+    concerns epistemology math history reproducibility
+
+curiosity written 02021-05-30
+    updated 02021-12-30
+    concerns gradient-descent optimization dreaming anns flow
+anns category-titled Artificial+neural+networks
+optimization category-titled Mathematical+optimization
+
+omnidirectional-wheels written 02021-05-30
+    updated 02021-12-30
+    concerns mechanical contrivances
+
+ghetto-edm written 02021-05-31
+    updated 02021-12-30
+    titled Ghetto+electrical+discharge+machining+(EDM)
+    concerns edm manufacturing ghettobotics materials pricing
+edm category-titled Electrical+discharge+machining+(EDM)
+
+2d-cutting-workflow written 02021-10-15
     updated 02021-12-30
 adversarial-control written 02021-10-25
     updated 02021-12-30
@@ -395,8 +526,6 @@ against-subjectivism written 02021-12-15
     updated 02021-12-30
 algebra-of-n-ary-relations written 02021-06-14
     updated 02021-07-27
-aluminum-foil written 02021-05-24
-    updated 02021-09-11
 aluminum-fuel written 02021-07-17
     updated 02021-12-30
 aluminum-refining written 02021-12-20
@@ -407,8 +536,6 @@ arc-maker written 02021-08-07
     updated 02021-12-30
 back-drivable-differential-windlass written 02021-07-23
     updated 02021-07-27
-backward-exponential written 02021-05-04
-    updated 02021-06-12
 backwards-peg written 02021-06-16
     updated 02021-07-27
 balanced-ropes written 02021-10-16
@@ -433,17 +560,9 @@ cantbelievesort written 02021-10-05
     updated 02021-12-30
 capacitive-displacement written 02021-12-11
     updated 02021-12-30
-carbohydrate-3d-printing written 02021-05-16
-    updated 02021-12-30
-cheap-cutting-jig written 02021-05-06
-    updated 02021-12-30
 china-nukes written 02021-11-09
     updated 02021-12-30
 chording-commands written 02021-11-26
-    updated 02021-12-30
-clay-pla written 02021-05-17
-    updated 02021-12-30
-clay-wire-cutter written 02021-05-21
     updated 02021-12-30
 cli-tools written 02021-09-15
     updated 02021-09-16
@@ -463,10 +582,6 @@ counter-rotating-side-milling written 02021-06-27
     updated 02021-12-30
 c-stack-bytecode written 02021-08-17
     updated 02021-09-13
-curiosity written 02021-05-30
-    updated 02021-12-30
-cutting-clay written 02021-05-19
-    updated 02021-12-30
 date-calc-dsl written 02021-11-14
     updated 02021-12-30
 delimiters written 02021-06-24
@@ -476,8 +591,6 @@ democracy-stability written 02021-12-22
 dense-fillers written 02021-08-25
     updated 02021-12-30
 deriving-binary-search written 02021-10-01
-    updated 02021-12-30
-differential-filming written 02021-05-07
     updated 02021-12-30
 dipropylene-glycol written 02021-08-01
     updated 02021-08-15
@@ -489,8 +602,6 @@ electrochromic-metals written 02021-12-16
     updated 02021-12-30
 electrodeposition-welding written 02021-08-25
     updated 02021-09-11
-electroforming-rivets written 02021-05-22
-    updated 02021-12-30
 electrolytic-2d-cutting written 02021-12-16
     updated 02021-12-30
 electrolytic-berlinite written 02021-07-12
@@ -529,10 +640,6 @@ flux-gate-downconversion written 02021-06-15
     updated 02021-07-27
 freezer-seacrete written 02021-09-01
     updated 02021-12-30
-fresnel-mirror-electropolishing written 02021-05-08
-    updated 02021-12-30
-ghetto-edm written 02021-05-31
-    updated 02021-12-30
 glass-foam written 02021-07-16
     updated 02021-08-15
 glass-powder-bed-printing written 02021-06-29
@@ -569,13 +676,9 @@ layers-plus-electroforming written 02021-12-16
     updated 02021-12-30
 lazy-heapsort written 02021-08-22
     updated 02021-09-11
-leaf-hypertext written 02021-05-08
-    updated 02021-12-30
 leaf-vein-roof written 02021-07-16
     updated 02021-09-11
 literate-haskell-like written 02021-11-06
-    updated 02021-12-30
-lvdt-4d-matrix-keyboard written 02021-05-12
     updated 02021-12-30
 magnesia written 02021-07-25
     updated 02021-08-15
@@ -583,11 +686,7 @@ magnesium-silicate written 02021-07-25
     updated 02021-08-15
 material-observations written 02021-07-29
     updated 02021-12-30
-mathematical-argument written 02021-05-27
-    updated 02021-12-30
 memory-view written 02021-07-09
-    updated 02021-12-30
-metal-welding-fuel written 02021-05-23
     updated 02021-12-30
 methane-bag written 02021-08-10
     updated 02021-08-15
@@ -596,8 +695,6 @@ micro-impact-driver written 02021-06-02
 micro-marx written 02021-10-20
     updated 02021-10-22
 micro-ramjet written 02021-11-22
-    updated 02021-12-30
-microscale written 02021-05-08
     updated 02021-12-30
 mig-printing-feedback written 02021-08-30
     updated 02021-12-30
@@ -613,14 +710,10 @@ more-cements written 02021-06-26
     updated 02021-08-15
 mosfet-ranking written 02021-10-11
     updated 02021-12-30
-multicolor-filament written 02021-05-17
-    updated 02021-12-30
 my-h8 written 02021-11-03
     updated 02021-12-30
 nuclear-amiga written 02021-06-14
     updated 02021-07-27
-omnidirectional-wheels written 02021-05-30
-    updated 02021-12-30
 orthogonal-rational-vectors written 02021-11-04
     updated 02021-12-30
 paeth-vq written 02021-11-06
@@ -642,10 +735,6 @@ photoemissive-power written 02021-12-23
 pinn-gan-rendering written 02021-11-11
     updated 02021-12-30
 pipelined-piece-chain-painting written 02021-10-10
-    updated 02021-12-30
-planetary-screw-potentiometer written 02021-05-12
-    updated 02021-12-30
-planetary-worm-drive written 02021-05-07
     updated 02021-12-30
 planning-apples written 02021-09-29
     updated 02021-12-30
@@ -683,8 +772,6 @@ rust-notes written 02021-10-06
     updated 02021-10-10
 sandwich-panel-optimization written 02021-08-21
     updated 02021-09-11
-scaling-laws written 02021-05-19
-    updated 02021-12-30
 screw-heads written 02021-08-25
     updated 02021-09-11
 self-amalgamating-tape written 02021-07-02
@@ -703,8 +790,6 @@ shs-construction-set written 02021-08-24
     updated 02021-09-11
 shs-magnesium-phosphate written 02021-07-22
     updated 02021-07-27
-silicone-curing written 02021-05-19
-    updated 02021-12-30
 simplest-blinker written 02021-12-01
     updated 02021-12-30
 simplest-power-supply written 02021-10-14
@@ -751,24 +836,19 @@ tetrahedral-expanded-metal written 02021-07-16
     updated 02021-07-27
 thermochromic-scan written 02021-07-06
     updated 02021-12-30
-thixotropic-electrodeposition written 02021-05-04
-    updated 02021-07-27
 thread-rolling-roller-screw written 02021-11-04
     updated 02021-12-30
 three-phase-differential-data written 02021-09-22
     updated 02021-12-30
-transaction-upgrade written 02021-05-15
-    updated 02021-12-30
-trickler written 02021-05-09
-    updated 02021-12-30
+# rejected because too incomplete:
+#transaction-upgrade written 02021-05-15
+#    updated 02021-12-30
 two-binder-powder-bed-printing written 02021-06-30
     updated 02021-12-30
 two-finger-multitouch written 02021-12-11
     updated 02021-12-30
 udanax-green-notes written 02021-10-05
     updated 02021-10-08
-ui-ideas written 02021-05-04
-    updated 02021-07-27
 uv-led-triggered-spark-gap written 02021-10-20
     updated 02021-10-23
 vernier-indicator written 02021-11-22

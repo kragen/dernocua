@@ -32,3 +32,9 @@ the easiest way to realize arbitrary high-precision three-dimensional
 geometry.  Often, though, the thixotropic substance itself doesn’t
 have the desired properties; mayonnaise, for example, noticeably lacks
 structural strength.
+
+[Note that the above uses the wrong definition of thixotropy: I
+thought thixotropy was the phenomenon where viscosity increases
+instantaneously at low shear rates, but actually thixotropy is where
+viscosity increases progressively over time at low shear rates, which
+is a phenomenon that does happen with dulce de leche.]

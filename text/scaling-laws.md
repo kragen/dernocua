@@ -19,6 +19,9 @@ its own weight:
 > changing their shape until the form and appearance of the animals
 > suggest a monstrosity.
 
+Different properties
+--------------------
+
 Suppose we scale some physical system up by some factor *f*, or down
 if *f* < 1.  Not only will some of its static properties change, as
 Galileo points out above, but also some of its other behaviors will
@@ -164,6 +167,8 @@ will multiply *ω* by 1/*f*; larger LC circuits oscillate
 proportionally slower.
 
 ### RL time constant ###
+
+### etc. ###
 
 electromagnetic relays
 
