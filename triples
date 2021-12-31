@@ -1,4 +1,4 @@
-dernocua version 020211231-1
+dernocua version 020211231-2
     by Kragen+Javier+Sitaker
 
 # Popular categories from Dercuano:
@@ -53,15 +53,18 @@ fibonacci-scan written 02021-01-10
 relayout-with-heaps written 02021-01-10
     updated 02021-01-15
     concerns algorithms hci performance python layout prefix-sums programming
+    concerns caching real-time
 
 transactional-editor written 02021-01-14
     updated 02021-01-15
-    concerns emacs hci transactions editors lisp qemacs experiment-report programming safety
+    concerns emacs hci transactions editors lisp qemacs experiment-report
+    concerns programming safety incremental-search
 
 trie-pegs written 02021-01-15
     updated 02021-01-15
     titled Trie+PEGs
     concerns parsing compilers programming tries performance caching pegs packrat
+    concerns algorithms
 pegs category-titled Parsing+expression+grammars+(PEGs)
 
 ccn-chat written 02021-01-15
@@ -77,7 +80,7 @@ transactions-n%2B1 written 02021-01-16
 parson-rpn written 02021-01-15
     updated 02021-12-31
     titled Some+notes+on+compiling+and+notations+for+grammars,+starting+from+the+inspiring+RPN+example+in+Parson
-    concerns parsing compilers kleene-algebras math syntax dsls
+    concerns parsing compilers kleene-algebras math syntax dsls rpn
 
 zvs-converter written 02021-01-16
     updated 02021-01-16
@@ -179,7 +182,7 @@ microlisp written 02021-02-23
     updated 02021-08-18
     titled How+do+you+fit+a+high-level+language+into+a+microcontroller?+Let’s+look+at+BBN+Lisp
     concerns lisp programming microcontrollers history memory-models
-    concerns bytecode virtual-machines performance safety
+    concerns bytecode virtual-machines performance safety rpn
 safety category-titled Safe+programming+languages
 
 panelization written 02021-02-25
@@ -232,7 +235,7 @@ allocation-performance written 02021-03-13
     updated 02021-04-08
     titled Garbage-collected+allocation+performance+on+current+computers
     concerns gc performance programming facepalm luajit sbcl ocaml lisp
-    concerns allocation-performance
+    concerns allocation-performance real-time
 gc category-titled Garbage+collection
 sbcl category-titled Steel+Bank+Common+Lisp
 ocaml category-titled OCaml
@@ -293,6 +296,7 @@ opamp-oscillators written 02021-03-23
 framescript written 02021-03-23
     updated 02021-10-12
     concerns hci real-time guis latency transactions allocation-performance safety
+    concerns interrupts
     titled Running+scripts+once+per+frame+for+guaranteed+GUI+responsivity
 guis category-titled GUIs
 
@@ -511,6 +515,7 @@ mathematical-argument written 02021-05-27
 
 curiosity written 02021-05-30
     updated 02021-12-30
+    titled Designing+curiosity+and+dreaming+into+optimizing+systems
     concerns gradient-descent optimization dreaming anns flow
 anns category-titled Artificial+neural+networks
 optimization category-titled Mathematical+optimization
@@ -580,11 +585,11 @@ ps2-arduino written 02021-06-20
     updated 02021-12-30
     titled Notes+on+what+would+be+needed+to+drive+a+PS/2+keyboard+from+an+Arduino
     concerns arduino electronics input-devices keyboards
-    concerns experiment-report programming protocols encoding
+    concerns experiment-report programming protocols encoding real-time interrupts
 
 self-hosting-kernel written 02021-06-21
     updated 02021-12-30
-    concerns bootstrapping independence programming oses unix
+    concerns bootstrapping independence programming oses unix small-is-beautiful
 oses category-titled Operating+systems
 
 stack-syntax written 02021-06-22
@@ -667,6 +672,8 @@ rator-port-gui written 02021-06-29
     updated 02021-12-30
     titled Rator-port+GUIs
     concerns hci guis composability zuis rewind-replay higher-order-programming
+    concerns rpn real-time
+rpn category-titled Reverse+Polish+notation+(RPN)
 zuis category-titled Zooming+user+interfaces+(ZUIs)
 
 sulfur-jet-metal-cutting written 02021-06-30
@@ -791,7 +798,7 @@ glass-foam written 02021-07-16
 leaf-vein-roof written 02021-07-16
     updated 02021-09-11
     concerns roofing pricing life-support sandwich-panels composites strength
-    concerns clay ceramic vermiculite
+    concerns clay ceramic vermiculite alabaster insulation
 
 aluminum-fuel written 02021-07-17
     updated 02021-12-30
@@ -832,7 +839,7 @@ magnesium-silicate written 02021-07-25
 hash-consing-ropes written 02021-07-27
     updated 02021-07-27
     titled Ropes+with+constant-time+concatenation+and+equality+comparisons+with+monoidal+hash+consing
-    concerns programming algorithms performance hashing ropes
+    concerns programming algorithms performance hashing ropes real-time
 
 block-arguments written 02021-07-29
     updated 02021-12-30
@@ -847,6 +854,8 @@ material-observations written 02021-07-29
     concerns materials borax waterglass vermiculite foam glass pva refractory
     concerns pumice experiment-report argentina pricing phosphates oogoo
     concerns alabaster bootstrapping aluminum aluminum-foil heating
+    concerns kingery
+kingery category-titled Kingery,+the+father+of+modern+ceramics
 
 
 dipropylene-glycol written 02021-08-01
@@ -855,9 +864,10 @@ dipropylene-glycol written 02021-08-01
 
 fire-mud written 02021-08-05
     updated 02021-08-15
-    titled The+ayurvedic+“fire+mud”+of+Bhudeb+Mookerji
+    titled The+ayurvedic+“fire+mud”+of+Bhudeb+Mookerji+and+modern+castable+refractories
     concerns ayurveda contrivances refractory materials phosphates
     concerns history clay ceramic strength pricing filled-systems
+    concerns weighing units kingery
 
 arc-maker written 02021-08-07
     updated 02021-12-30
@@ -875,7 +885,7 @@ power-transistors written 02021-08-07
 
 pocket-kiln written 02021-08-09
     updated 02021-08-15
-    concerns refractory contrivances thermodynamics heating
+    concerns refractory contrivances thermodynamics heating insulation
 
 cola-flavor written 02021-08-10
     updated 02021-08-15
@@ -902,14 +912,14 @@ tces category-titled TCES+energy+storage
 minimal-c-subset written 02021-08-12
     updated 02021-12-30
     titled Subset+of+C+for+the+simplest+self-compiling+compiler
-    concerns c compilers small-is-beautiful bootstrapping
+    concerns c compilers small-is-beautiful bootstrapping control-flow
 
 c-stack-bytecode written 02021-08-17
     updated 02021-09-13
     titled A+compact+bytecode+sketch+that+should+average+about+3+bytes+per+line+of+C
     concerns c compilers bytecode microcontrollers performance forth
     concerns instruction-sets virtual-machines avr asm lisp history pascal
-    concerns arduino ambiq sorting
+    concerns arduino ambiq sorting rpn
 avr category-titled AVR8+microcontrollers
 
 wiki-models written 02021-08-19
@@ -934,10 +944,11 @@ phosphates-fraction written 02021-08-21
     updated 02021-12-30
     titled Maximizing+phosphate+density+from+aqueous+reaction
     concerns phosphates materials aluminum filled-systems composites vermiculite
+    concerns kingery
 
 lazy-heapsort written 02021-08-22
     updated 02021-09-11
-    concerns programming algorithms performance sorting
+    concerns programming algorithms performance sorting latency real-time
 
 recursive-bearings written 02021-08-23
     updated 02021-12-30
@@ -1090,7 +1101,7 @@ rust-notes written 02021-10-06
 pbkdf-content-addressing written 02021-10-08
     updated 02021-10-08
     concerns security namespaces ccn passwords hashing pricing crypto
-    concerns quantum-computing programming
+    concerns quantum-computing programming decentralization
 
 drama-word-list written 02021-10-08
     updated 02021-12-30
@@ -1165,6 +1176,7 @@ spark-gap-exploding-wire written 02021-10-19
 micro-marx written 02021-10-20
     updated 02021-12-31
     concerns pulse electronics leds avalanche-breakdown pricing lidar numerical-modeling
+    concerns sparks
     titled Implementation+and+applications+of+low-voltage+Marx+generators+with+solid-state+avalanche+breakdown?
 leds category-titled LEDs
 
@@ -1192,7 +1204,7 @@ its-ddt written 02021-10-22
 example-based-regexp written 02021-10-24
     updated 02021-12-30
     concerns hci programming kleene-algebras program-calculator control-flow
-    concerns comfy dsls
+    concerns comfy dsls incremental-search
 
 adversarial-control written 02021-10-25
     updated 02021-12-30
@@ -1244,7 +1256,7 @@ paeth-vq written 02021-11-06
 
 wire-brush-microscope written 02021-11-06
     updated 02021-12-30
-    concerns scanning-probe-microscopy contrivances sensors
+    concerns scanning-probe-microscopy contrivances sensors precision
 
 china-nukes written 02021-11-09
     updated 02021-12-30
@@ -1304,7 +1316,7 @@ micro-ramjet written 02021-11-22
 
 vernier-indicator written 02021-11-22
     updated 02021-12-30
-    concerns hand-tools contrivances metrology length flexures
+    concerns hand-tools contrivances metrology length flexures precision
 
 emm-book written 02021-11-25
     updated 02021-12-30
@@ -1365,6 +1377,7 @@ electrolytic-2d-cutting written 02021-12-16
     titled Electrolytic+2-D+cutting+and+related+electrolytic+digital+fabrication+processes
     concerns 2d-cutting digital-fabrication electrolysis patterning composites
     concerns pva anisotropic-fillers glutaraldehyde codeposition filled-systems lasers
+    concerns aluminum magnesium
 
 layers-plus-electroforming written 02021-12-16
     updated 02021-12-30
@@ -1387,6 +1400,7 @@ aluminum-refining written 02021-12-20
 regenerative-muffle-kiln written 02021-12-21
     updated 02021-12-30
     concerns regenerators thermodynamics contrivances energy clay ceramic heating
+    concerns insulation
 
 democracy-stability written 02021-12-22
     updated 02021-12-30
@@ -1406,6 +1420,7 @@ spring-connector written 02021-12-28
     updated 02021-12-31
     titled Toggling+eccentrics+for+removing+preload+from+spring+clamps
     concerns spreadtools physics flexures hand-tools mechanical contrivances
+    concerns 2d-cutting digital-fabrication
 
 filecoin-problem written 02021-12-30
     updated 02021-12-30

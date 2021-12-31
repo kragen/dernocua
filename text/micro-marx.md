@@ -7,8 +7,8 @@ more, perhaps from a 5-volt source using only tiny surface-mount
 components.  This led me to dig a bit into the existing literature on
 similar devices.
 
-Possible characteristics of such LED-switched Marx generators
--------------------------------------------------------------
+Possible characteristics of such semiconductor-switched Marx generators
+-----------------------------------------------------------------------
 
 The average achievable power of the device probably will not be large,
 since especially base-emitter junctions are not optimized for power
@@ -167,7 +167,7 @@ says consistently avalanches around 100V, saying:
 
 > Avalanche transistors can be used to generate fast rise time
 > pulses. Their usage in the hobby world was made popular following an
-> application note ([Linear] [AN72][2] [[now at Analog][9]]) by Jim
+> application note ([Linear] AN72 [2] [now at Analog[9]]) by Jim
 > Williams and was further publicized via [this EEVBlog video][3]. ...
 > 
 > R2, C1 along with the NPN transistor form a relaxation oscillator.
@@ -369,22 +369,22 @@ transistor.
 For more information about avalanche transistors for pulse generation
 Williams refers us to these references:
 
-\17. Williams, J. “High Speed Amplifier Techniques,” Linear Technology
+17: Williams, J. “High Speed Amplifier Techniques,” Linear Technology
 Corporation, Application Note 47 (August 1991)
 
-\20. Tektronix, Inc., Type 111 Pretrigger Pulse Generator Operating
+20: Tektronix, Inc., Type 111 Pretrigger Pulse Generator Operating
 and Service Manual, Tektronix, Inc. (1960) (Williams says his method
 “borrows heavily from” this device.)
 
-\22. Williams, J., “Practical Circuitry for Measurement and Control
+22: Williams, J., “Practical Circuitry for Measurement and Control
 Problems,” Linear Technology Corporation, Application Note 61 (August
 1994)
 
-\27. Haas, Isy, “Millimicrosecond Avalanche Switching Circuits
+27: Haas, Isy, “Millimicrosecond Avalanche Switching Circuits
 Utilizing Double-Diffused Silicon Transistors,” Fairchild
 Semiconductor, Application Note 8/2 (December 1961)
 
-\28. Beeson, R. H., Haas, I., Grinich, V. H., “Thermal Response of
+28: Beeson, R. H., Haas, I., Grinich, V. H., “Thermal Response of
 Transistors in the Avalanche Mode,” Fairchild Semiconductor, Technical
 Paper 6 (October 1959)
 

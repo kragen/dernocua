@@ -84,7 +84,7 @@ by manually cloning the port before invoking the operation.
 “rations”.)
 
 Sometimes a rator might return *both* a new data value for its own
-port *and* a data value to display in a new port --- a random number
+port *and* a data value to display in a new port — a random number
 generator, for example.
 
 Rators with continuous parameters
@@ -275,7 +275,7 @@ variable name to each port involved:
 	v2 := v2 + v3.      “Add them together.”
 
 This slighly silly transcript contains three free variables ---
-`Number`, `v2`, and `v3` --- which are in some sense inputs; and it
+`Number`, `v2`, and `v3` — which are in some sense inputs; and it
 ends with one unconsumed result in `v2`.  So, when you are interacting
 with concrete values in this way, you are also “programming by
 example” or “programming by demonstration”, building up a script that

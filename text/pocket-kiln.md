@@ -4,7 +4,7 @@ reproducible temperature somewhere in the 500°–1500° range for
 probably considerably longer than 20 minutes.
 
 The thermal aspect of this seems like an eminently feasible thing to
-do with the intumescent refractory recipes explored above: I can mix
+do with the intumescent refractory recipes explored therein: I can mix
 up some intumescent mix, maybe with a bunch of vermiculite filler,
 mold it to a rough shape, and heat it with the torch enough to get it
 to bubble up; then I can cut and grind it to shape with saws, knives,

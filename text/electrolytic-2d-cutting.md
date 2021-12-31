@@ -519,10 +519,10 @@ efficiency of the setup should be near perfect with aluminum.  It’s
 27.0 g/mol.  At 96485.34 coulombs per mole, times three, we have 10.7
 megacoulombs per kilogram:
 
-You have: avogadro 3 e / (aluminum g/mol)
-You want: MC/kg
-	* 10.727928
-	/ 0.093214641
+    You have: avogadro 3 e / (aluminum g/mol)
+    You want: MC/kg
+            * 10.727928
+            / 0.093214641
 
 At an ordinary electroplating current density of 10 A/dm² and 2.70
 g/cc this is almost a year per meter:

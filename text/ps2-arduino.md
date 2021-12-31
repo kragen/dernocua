@@ -79,7 +79,7 @@ However, this interface has a couple of major drawbacks:
 The implementation also has a couple of drawbacks:
 
 - It uses 52 bytes of RAM for buffering the keys.
-- It uses an interrupt --- though this is probably unavoidable with
+- It uses an interrupt — though this is probably unavoidable with
   any decent interface.
 - It always puts three separate 409-byte keymaps in ROM (US-English,
   French, German).

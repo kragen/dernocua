@@ -7,7 +7,7 @@ Public domain work<br />
 ⁘⁛⁛⁘</i><br /><br /></p>
 
 Dernocua is my notebook from 02021 CE, the second year of the covid
-panemid.  It’s the sequel to [Dercuano] and
+pandemic.  It’s the sequel to [Dercuano] and
 [Derctuo].  It contains about 410000 words, about 1100 pages, in 267
 notes on various different topics: programming, machining,
 electronics, digital fabrication, math, physics, economics, history,
