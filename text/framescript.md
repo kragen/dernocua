@@ -75,8 +75,8 @@ should we abort scripts from #2 or not?  And the answer depends on
 whether #3 needs more or less than 3.1 milliseconds to reliably run to
 completion.
 
-One plausible way to handle this is to analyze the isochronous code in
-#3 for its worst-case execution time (WCET) and use that to compute
+One plausible way to handle this is to analyze the isochronous code
+in #3 for its worst-case execution time (WCET) and use that to compute
 the deadline, so the deadline will always be hit.  A different
 alternative is to measure how long it takes, and how variable that
 timing usually is, and use something like the mean of the last 30

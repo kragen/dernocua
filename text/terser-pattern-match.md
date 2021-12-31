@@ -14,6 +14,9 @@ then you can define, say (p. 81, §3.4.2, slightly tweaked):
            (+ (leaf-sum left-tree) (leaf-sum right-tree)))
          (else (error "leaf-sum: Invalid tree" tree))))
 
+Polymorphic variants in OCaml
+-----------------------------
+
 This is pretty closely analogous to polymorphic variants in OCaml,
 except that the fields are named; in the last case, the `symbol` field
 is unused and so not mentioned.  In OCaml we can define this without
@@ -52,6 +55,9 @@ the type for a given tag to be consistent:
                   [> `Interior of float * [> `Leaf of int ] * [> `Leaf of int ] ] ]
            but an expression was expected of type 'a
            Types for tag `Interior are incompatible
+
+Named fields for terser code
+----------------------------
 
 Usually you have more than one function operating on a given type, so
 it occurred to me that the Scheme code is somewhat redundant; as long

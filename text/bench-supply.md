@@ -8,6 +8,9 @@ supplies, larger voltages, very precise regulation, linear regulation,
 foldback current limiting, high efficiency, and thermal protection
 would be nice but are less essential.
 
+A super ghetto flyback design
+-----------------------------
+
 The standard design for this kind of thing involves a lot of analog
 components, but computers are cheaper than transistors now, so it
 might be better to use an analog circuit that’s as simple as possible
@@ -182,6 +185,9 @@ can generate an AC voltage on the output instead, with an arbitrary
 waveform limited only by the PWM frequency.  (You could just use a
 DC-blocking capacitor on the output, but then you could *only* use it
 as an AC supply, instead of changing mode under software control.)
+
+A slightly better flyback design
+--------------------------------
 
 Here’s [a revised version][0] with 12V, 100kHz, leakage inductance
 simulation and protection, a higher-breakdown Schottky, and a MOSFET

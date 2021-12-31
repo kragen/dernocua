@@ -1,5 +1,5 @@
 I was playing with Falstad’s simulator and managed to rig up [an analog
-oscillator with a single op-amp and a phase-delay network].
+oscillator with a single op-amp and a phase-delay network][0].
 
     $ 1 0.0000049999999999999996 9.384708165144016 72 5 43 5e-11
     r 144 368 208 368 0 1000

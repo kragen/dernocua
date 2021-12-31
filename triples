@@ -1,4 +1,4 @@
-dernocua version 020211230-1
+dernocua version 020211230-2
     by Kragen+Javier+Sitaker
 
 # Popular categories from Dercuano:
@@ -123,7 +123,7 @@ schmitt-oscillators written 02021-01-26
 tag-bdd-index written 02021-01-26
     updated 02021-01-27
     titled Trying+and+failing+to+design+an+efficient+index+for+folksonomy+data+based+on+BDDs
-    concerns databases programming algorithms performance folksonomies
+    concerns databases programming algorithms performance folksonomies facepalm
 
 
 silver-solar-cells written 02021-02-02
@@ -169,18 +169,137 @@ energy-autonomous-computing written 02021-02-18
     updated 02021-12-30
     concerns independence electronics pricing energy displays microcontrollers 
     concerns sa ereaders ghettobotics ambiq risc-v batteries contrivances solar
+    concerns memory-hardware
 sa category-titled Systems+architecture
 
 microlisp written 02021-02-23
     updated 02021-08-18
     titled How+do+you+fit+a+high-level+language+into+a+microcontroller?+Let’s+look+at+BBN+Lisp
     concerns lisp programming microcontrollers history memory-models
-    concerns bytecode performance
+    concerns bytecode virtual-machines performance
 
 panelization written 02021-02-25
     updated 02021-02-26
     titled Panelization+in+PCB+manufacturing
     concerns electronics pricing contrivances manufacturing
+
+
+ipl-vi written 02021-03-02
+    updated 02021-03-02
+    titled Some+notes+on+IPL-VI,+Lisp’s+01958+precursor
+    concerns lisp programming history ownership
+ownership category-titled Memory+ownership
+
+slow-flash-refresh written 02021-03-02
+    updated 02021-03-02
+    titled Refreshing+Flash+memory+periodically+for+archival
+    concerns electronics archival contrivances memory-hardware
+
+variable-length-unaligned-bytecode written 02021-03-02
+    updated 02021-03-03
+    concerns instruction-sets arm assembly performance virtual-machines
+arm category-titled The+ARM+Acorn+RISC+Machine
+
+veskeno-exploration written 02021-03-02
+    updated 02021-09-11
+    titled A+survey+of+imperative+programming+operations’+prevalence
+    concerns experiment-report programming instruction-sets performance
+    concerns c python scheme js java perl elisp lua sh tcl m4 forth bytecode
+    concerns veskeno virtual-machines
+veskeno category-titled The+Veskeno+virtual+machine
+sh category-titled The+Bourne+shell
+js category-titled The+JS+programming+language
+m4 category-titled m4
+forth category-titled FORTH
+
+pratt-control-flow written 02021-03-04
+    updated 02021-03-20
+    titled Vaughan+Pratt+and+Henry+Baker’s+COMFY+control-flow+combinators
+    concerns programming compilers control-flow lisp constraints history comfy
+
+letter-frequencies written 02021-03-10
+    updated 02021-03-22
+    titled Generating+novel+unique+pronounceable+identifiers+with+letter+frequency+data
+    concerns experiment-report programming perl python nlp randomness
+nlp category-titled Natural-language+processing
+
+allocation-performance written 02021-03-13
+    updated 02021-04-08
+    titled Garbage-collected+allocation+performance+on+current+computers
+    concerns gc performance programming facepalm luajit sbcl ocaml lisp
+    concerns allocation-performance
+gc category-titled Garbage+collection
+sbcl category-titled Steel+Bank+Common+Lisp
+ocaml category-titled OCaml
+luajit category-titled LuaJIT
+
+lao-yuxi written 02021-03-19
+    updated 02021-04-14
+    titled How+Lao+Yuxi+painted+a+cock
+    concerns fiction learning
+
+bench-supply written 02021-03-19
+    updated 02021-12-30
+    concerns ghettobotics power-supplies electronics falstad
+
+recursive-rns written 02021-03-20
+    updated 02021-03-22
+    titled Recursive+residue+number+systems?
+    concerns math algorithms facepalm
+
+brute-force-speech written 02021-03-21
+    updated 02021-03-22
+    concerns programming audio speech-synthesis experiment-report
+
+electron-speed written 02021-03-21
+    updated 02021-03-22
+    titled When+is+it+better+to+compute+by+moving+atoms+rather+than+electrons?
+    concerns physical-computation physics
+
+fantasy-platform written 02021-03-21
+    updated 02021-03-22
+    concerns veskeno instruction-sets reproducibility emulation file-formats
+    concerns chip-8 history chifir brainfuck history virtual-machines
+    titled Veskeno+is+a+“fantasy+platform”+like+TIC-80
+chip-8 category-titled CHIP-8
+
+truffleruby written 02021-03-21
+    updated 02021-03-22
+    titled Some+notes+on+reading+Chris+Seaton’s+TruffleRuby+dissertation
+    concerns performance compilers gc virtual-machines
+
+xosm written 02021-03-21
+    updated 02021-03-24
+    concerns instruction-sets virtual-machines stack-machines mup21
+mup21 category-titled MuP21
+
+open-coded-primitives written 02021-03-22
+    updated 02021-03-22
+    concerns compilers performance assembly sbcl lisp ocaml gc
+    concerns allocation-performance comfy experiment-report
+comfy category-titled COMFY-*
+
+opamp-oscillators written 02021-03-23
+    updated 02021-03-24
+    concerns oscillators electronics falstad facepalm
+    titled Failing+to+stabilize+the+amplitude+of+an+opamp+phase-delay+oscillator
+
+framescript written 02021-03-23
+    updated 02021-10-12
+    concerns hci real-time guis latency transactions allocation-performance
+    titled Running+scripts+once+per+frame+for+guaranteed+GUI+responsivity
+guis category-titled GUIs
+
+terser-pattern-match written 02021-03-24
+    updated 02021-04-08
+    concerns lisp programming pattern-matching scheme ocaml syntax performance
+    concerns programming-languages
+    titled Minor+improvements+to+pattern+matching
+
+bitcoin-puzzling written 02021-03-31
+    updated 02021-07-27
+    titled Why+Bitcoin+is+puzzling+to+people+in+rich+countries
+    concerns bitcoin politics incentives history economics argentina
 
 
 2d-cutting-workflow written 02021-10-15
@@ -193,8 +312,6 @@ against-subjectivism written 02021-12-15
     updated 02021-12-30
 algebra-of-n-ary-relations written 02021-06-14
     updated 02021-07-27
-allocation-performance written 02021-03-13
-    updated 02021-04-08
 aluminum-foil written 02021-05-24
     updated 02021-09-11
 aluminum-fuel written 02021-07-17
@@ -217,14 +334,10 @@ base-3-gage-blocks written 02021-06-27
     updated 02021-12-30
 bead-hypertext written 02021-06-22
     updated 02021-12-30
-bench-supply written 02021-03-19
-    updated 02021-08-18
 beyond-op-streams written 02021-10-11
     updated 02021-12-30
 beyond-overstrike written 02021-10-10
     updated 02021-12-30
-bitcoin-puzzling written 02021-03-31
-    updated 02021-07-27
 bitstuffing-attack written 02021-06-22
     updated 02021-12-30
 block-arguments written 02021-07-29
@@ -235,8 +348,6 @@ bounded-forth written 02021-04-21
     updated 02021-06-12
 broken-disks written 02021-06-02
     updated 02021-06-12
-brute-force-speech written 02021-03-21
-    updated 02021-03-22
 cantbelievesort written 02021-10-05
     updated 02021-12-30
 capacitive-displacement written 02021-12-11
@@ -309,8 +420,6 @@ electrolytic-berlinite written 02021-07-12
     updated 02021-12-30
 electrolytic-glass-machining written 02021-06-28
     updated 02021-12-30
-electron-speed written 02021-03-21
-    updated 02021-03-22
 electrowinning written 02021-11-21
     updated 02021-12-30
 emm-book written 02021-11-25
@@ -321,8 +430,6 @@ exotic-steels written 02021-12-01
     updated 02021-12-30
 exponential-forming written 02021-12-15
     updated 02021-12-30
-fantasy-platform written 02021-03-21
-    updated 02021-03-22
 fast-pulse-current written 02021-09-09
     updated 02021-12-30
 fast-slicing-ecm written 02021-09-08
@@ -345,8 +452,6 @@ flexure-mount written 02021-10-18
     updated 02021-12-30
 flux-gate-downconversion written 02021-06-15
     updated 02021-07-27
-framescript written 02021-03-23
-    updated 02021-10-12
 freezer-seacrete written 02021-09-01
     updated 02021-12-30
 fresnel-mirror-electropolishing written 02021-05-08
@@ -379,14 +484,10 @@ inverse-perspective written 02021-10-11
     updated 02021-12-30
 iodine-patterning written 02021-08-11
     updated 02021-08-15
-ipl-vi written 02021-03-02
-    updated 02021-03-02
 iron-marking-pencil written 02021-11-06
     updated 02021-12-30
 its-ddt written 02021-10-22
     updated 02021-10-23
-lao-yuxi written 02021-03-19
-    updated 02021-04-14
 laser-marking-metal written 02021-09-03
     updated 02021-12-30
 latex-3dp written 02021-10-03
@@ -401,8 +502,6 @@ leaf-hypertext written 02021-05-08
     updated 02021-12-30
 leaf-vein-roof written 02021-07-16
     updated 02021-09-11
-letter-frequencies written 02021-03-10
-    updated 02021-03-22
 literate-haskell-like written 02021-11-06
     updated 02021-12-30
 locking-telescope written 02021-04-07
@@ -459,10 +558,6 @@ nuclear-amiga written 02021-06-14
     updated 02021-07-27
 omnidirectional-wheels written 02021-05-30
     updated 02021-12-30
-opamp-oscillators written 02021-03-23
-    updated 02021-03-24
-open-coded-primitives written 02021-03-22
-    updated 02021-03-22
 orthogonal-rational-vectors written 02021-11-04
     updated 02021-12-30
 oscopes written 02021-04-16
@@ -501,8 +596,6 @@ polynomial-pascal written 02021-10-20
     updated 02021-12-30
 power-transistors written 02021-08-07
     updated 02021-12-30
-pratt-control-flow written 02021-03-04
-    updated 02021-03-20
 ps2-arduino written 02021-06-20
     updated 02021-12-30
 public-domain-02021 written 02021-11-20
@@ -515,8 +608,6 @@ rator-port-gui written 02021-06-29
     updated 02021-12-30
 recursive-bearings written 02021-08-23
     updated 02021-12-30
-recursive-rns written 02021-03-20
-    updated 02021-03-22
 recursive-shingling written 02021-10-30
     updated 02021-12-30
 refractories written 02021-07-14
@@ -559,8 +650,6 @@ simplest-blinker written 02021-12-01
     updated 02021-12-30
 simplest-power-supply written 02021-10-14
     updated 02021-12-30
-slow-flash-refresh written 02021-03-02
-    updated 02021-03-02
 smolsay written 02021-07-12
     updated 02021-07-27
 solar-air-conditioned-trailer written 02021-10-11
@@ -599,8 +688,6 @@ super-ghetto-digital-fabrication written 02021-06-28
     updated 02021-12-30
 term-rewriting-micro-interpreter written 02021-09-10
     updated 02021-09-15
-terser-pattern-match written 02021-03-24
-    updated 02021-04-08
 tetrahedral-expanded-metal written 02021-07-16
     updated 02021-07-27
 thermochromic-scan written 02021-07-06
@@ -619,8 +706,6 @@ transaction-upgrade written 02021-05-15
     updated 02021-12-30
 trickler written 02021-05-09
     updated 02021-12-30
-truffleruby written 02021-03-21
-    updated 02021-03-22
 two-binder-powder-bed-printing written 02021-06-30
     updated 02021-12-30
 two-finger-multitouch written 02021-12-11
@@ -629,17 +714,12 @@ udanax-green-notes written 02021-10-05
     updated 02021-10-08
 ui-ideas written 02021-05-04
     updated 02021-07-27
-
 uv-led-triggered-spark-gap written 02021-10-20
     updated 02021-10-23
-variable-length-unaligned-bytecode written 02021-03-02
-    updated 02021-03-03
 vernier-indicator written 02021-11-22
     updated 02021-12-30
 verstickulite written 02021-06-23
     updated 02021-07-27
-veskeno-exploration written 02021-03-02
-    updated 02021-09-11
 viscoelastic-probing written 02021-11-04
     updated 02021-12-30
 waterglass-loctite written 02021-09-22
@@ -656,8 +736,6 @@ wire-brush-microscope written 02021-11-06
     updated 02021-12-30
 xerogel-compacting written 02021-12-22
     updated 02021-12-30
-xosm written 02021-03-21
-    updated 02021-03-24
 zirconia-ecm written 02021-06-27
     updated 02021-12-30
 economic-history written 02021-06-25
