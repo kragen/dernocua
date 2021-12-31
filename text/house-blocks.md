@@ -16,7 +16,8 @@ short legs.
 (I read a book from the 01970s recently that mentions in passing that
 the author’s friends did something like this in their shitty apartment
 in La Boca in Buenos Aires.  I think it might have been Hennessey and
-Papanek’s _Nomadic Furniture 2_.)
+Papanek’s _Nomadic Furniture 2_ or Papanek’s _Design in the Real
+World_.)
 
 Some of the deficiencies of existing dwelling spaces that can be thus
 remedied:

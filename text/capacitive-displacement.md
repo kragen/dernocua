@@ -1,10 +1,10 @@
 I was thinking about the kind of capacitive linear encoder sensor used
-by digital calipers today.  It occurred to me that it's a wonderful
+by digital calipers today.  It occurred to me that it’s a wonderful
 way to increase the precision of machinery, stage by stage, and it
 ought to be straightforward to manufacture a bootstrapping version by
 hand.
 
-The basic primitive is that you have a couple of "combs" with the same
+The basic primitive is that you have a couple of “combs” with the same
 spacing on two different circuit boards.  Each comb consists of a
 sequence of parallel wide conductive lines with wide spaces between
 them, which are all connected electrically together with some sort of
@@ -34,7 +34,7 @@ combs is probably only about 1 pF.  If we assume the graphite itself
 has a resistance on the order of a kilohm, then the circuit becomes
 primarily resistive above about 600 kHz.  Above that frequency it
 becomes harder to detect small changes in the capacitance because the
-graphite's resistance hides them.  (Measuring the time constant of a
+graphite’s resistance hides them.  (Measuring the time constant of a
 step function response is probably a more practical measurement
 method, whether with analog or digital circuits.)
 
@@ -49,18 +49,18 @@ is realistic, as will be seen below.
 
 This setup is particularly appealing because of how many forms of
 manufacturing error it tends to cancel out or average out.  It really
-only cares about the surfaces being flat or cylindrical (so there's a
+only cares about the surfaces being flat or cylindrical (so there’s a
 constant separation), the right total length, and having the right
 number of lines distributed over that length, so that the *average*
 spacing of a comb is correct.  If all the teeth on one circuit board
 or the other are too big or too small, that affects the absolute
-capacitance but almost doesn't affect the ratio in a given position at
+capacitance but almost doesn’t affect the ratio in a given position at
 all.
 
 Random errors in the shape of a single comb tooth are averaged out
 across all the comb teeth; in the above setup, there are 33 total
 teeth on the interleaved plate, 11 in each of the three combs, so this
-doesn't help that much: an 0.5 mm standard deviation in edge location
+doesn’t help that much: an 0.5 mm standard deviation in edge location
 averages out to an 0.15 mm standard deviation in average edge
 location. However, with larger numbers of teeth, this is very
 powerful.  Consider, for example, 30-micron-wide teeth separated by

@@ -107,14 +107,14 @@ putty written 02021-01-22
 
 loop-graph written 02021-01-23
     updated 02021-01-27
-    concerns programming assembly performance
+    concerns programming asm performance
     titled Compiling+machine-code+loops+to+pipelined+dataflow+graphs
-assembly category-titled Assembly-language+programming
+asm category-titled Assembly-language+programming
 
 risc-v written 02021-01-24
     updated 02021-07-27
     titled Some+preliminary+notes+on+the+amazing+RISC-V+architecture
-    concerns instruction-sets risc-v assembly
+    concerns instruction-sets risc-v asm
 risc-v category-titled RISC-V
 
 schmitt-oscillators written 02021-01-26
@@ -201,7 +201,7 @@ slow-flash-refresh written 02021-03-02
 
 variable-length-unaligned-bytecode written 02021-03-02
     updated 02021-03-03
-    concerns instruction-sets arm assembly performance virtual-machines
+    concerns instruction-sets arm asm performance virtual-machines
 arm category-titled The+ARM+Acorn+RISC+Machine
 
 veskeno-exploration written 02021-03-02
@@ -280,7 +280,7 @@ mup21 category-titled MuP21
 
 open-coded-primitives written 02021-03-22
     updated 02021-03-22
-    concerns compilers performance assembly sbcl lisp ocaml gc
+    concerns compilers performance asm sbcl lisp ocaml gc
     concerns allocation-performance comfy experiment-report
 comfy category-titled COMFY-*
 
@@ -364,7 +364,7 @@ bounded-forth written 02021-04-21
 human-ssa written 02021-04-21
     updated 02021-06-12
     titled Manually+writing+code+in+static+single+assignment+(SSA)+form,+inspired+by+Kemeny’s+DOPE,+isn’t+worth+it
-    concerns basic history assembly forth facepalm
+    concerns basic history asm forth facepalm
 
 trailer-netstrings written 02021-04-21
     updated 02021-07-27
@@ -746,7 +746,7 @@ refractories written 02021-07-14
 faygoo written 02021-07-14
     updated 02021-12-30
     titled Faygoo:+a+yantra-smashing+ersatz+version+of+Piumarta+and+Warth’s+COLA
-    concerns dynamic-dispatch sa assembly performance jit compilers
+    concerns dynamic-dispatch sa asm performance jit compilers
     concerns small-is-beautiful higher-order-programming
 
 firing-talc written 02021-07-14
@@ -774,7 +774,7 @@ ideal-workshop written 02021-07-16
 sorel-cement-3dp written 02021-07-16
     updated 02021-07-27
     titled Can+you+3-D+print+Sorel+cement+by+inhibiting+setting+with+X-rays?
-    concerns materials 3d-printing digital-fabrication
+    concerns materials 3d-printing digital-fabrication x-rays
 
 tetrahedral-expanded-metal written 02021-07-16
     updated 02021-07-27
@@ -834,7 +834,7 @@ hash-consing-ropes written 02021-07-27
 block-arguments written 02021-07-29
     updated 02021-12-30
     titled Compilation+of+block+arguments+to+high-performance+code
-    concerns block-arguments compilers assembly performance programming
+    concerns block-arguments compilers asm performance programming
     concerns smalltalk postscript tcl call-by-name pascal risc-v forth
     concerns safety higher-order-programming
 postscript category-titled PostScript
@@ -905,7 +905,7 @@ c-stack-bytecode written 02021-08-17
     updated 02021-09-13
     titled A+compact+bytecode+sketch+that+should+average+about+3+bytes+per+line+of+C
     concerns c compilers bytecode microcontrollers performance forth
-    concerns instruction-sets virtual-machines avr assembly
+    concerns instruction-sets virtual-machines avr asm
 
 wiki-models written 02021-08-19
     updated 02021-12-30
@@ -1008,7 +1008,7 @@ spot-welding written 02021-09-09
 term-rewriting-micro-interpreter written 02021-09-10
     updated 02021-09-15
     concerns qfitzah term-rewriting small-is-beautiful aardappel scheme lisp
-    concerns syntax bootstrapping assembly performance bytecode dynamic-dispatch
+    concerns syntax bootstrapping asm performance bytecode dynamic-dispatch
     concerns higher-order-programming
 
 cli-tools written 02021-09-15
@@ -1070,7 +1070,7 @@ udanax-green-notes written 02021-10-05
 cantbelievesort written 02021-10-05
     updated 02021-12-30
     titled Fung’s+“I+can’t+believe+it+can+sort”+algorithm+and+others
-    concerns sorting algorithms performance small-is-beautiful assembly
+    concerns sorting algorithms performance small-is-beautiful asm
     concerns c programming
 
 rust-notes written 02021-10-06
@@ -1178,7 +1178,7 @@ fem category-titled Finite-element+methods+(FEM)
 its-ddt written 02021-10-22
     updated 02021-10-23
     titled The+astounding+UI+responsivity+of+PDP-10+DDT+on+ITS
-    concerns history debugging hci end-user-programming assembly programming
+    concerns history debugging hci end-user-programming asm programming
 
 example-based-regexp written 02021-10-24
     updated 02021-12-30
@@ -1304,48 +1304,106 @@ emm-book written 02021-11-25
 
 chording-commands written 02021-11-26
     updated 02021-12-30
-    concerns hci editors emacs keyboards
+    concerns hci editors emacs chording keyboards
+
+
+exotic-steels written 02021-12-01
+    updated 02021-12-30
+    titled Exotic+steel+analogues+in+other+metals
+    concerns steel materials strength cmcs
+
+simplest-blinker written 02021-12-01
+    updated 02021-12-30
+    concerns pulse electronics leds physical-computation
+
+capacitive-displacement written 02021-12-11
+    updated 02021-12-30
+    titled Capacitive+linear+encoder+sensors
+    concerns bootstrapping precision ghettobotics electronics
+
+two-finger-multitouch written 02021-12-11
+    updated 02021-12-30
+    concerns multitouch hci guis composability
+
+house-blocks written 02021-12-13
+    updated 02021-12-31
+    titled The+Habitaculum:+a+modular+dwelling+machine
+    concerns household life-support composability
 
 against-subjectivism written 02021-12-15
     updated 02021-12-30
-aluminum-refining written 02021-12-20
-    updated 02021-12-30
-capacitive-displacement written 02021-12-11
-    updated 02021-12-30
-democracy-stability written 02021-12-22
-    updated 02021-12-30
-electrochromic-metals written 02021-12-16
-    updated 02021-12-30
-electrolytic-2d-cutting written 02021-12-16
-    updated 02021-12-30
-exotic-steels written 02021-12-01
-    updated 02021-12-30
+    concerns ontology
+
 exponential-forming written 02021-12-15
     updated 02021-12-30
-fet-geiger written 02021-12-17
-    updated 02021-12-30
-filecoin-problem written 02021-12-30
-    updated 02021-12-30
-house-blocks written 02021-12-13
-    updated 02021-12-30
-layers-plus-electroforming written 02021-12-16
-    updated 02021-12-30
-paper-scanning-notebook written 02021-12-18
-    updated 02021-12-30
-photoemissive-power written 02021-12-23
-    updated 02021-12-28
+    titled Solid+rock+on+a+gossamer+skeleton+through+exponential+deposition
+    concerns digital-fabrication aluminum-foil foam waterglass phosphates materials
+
 pva-printing written 02021-12-15
     updated 02021-12-30
+    titled 3-D+printing+in+poly(vinyl+alcohol)
+    concerns 3d-printing digital-fabrication pva materials cross-linking
+    concerns glutaraldehyde
+
+electrochromic-metals written 02021-12-16
+    updated 02021-12-30
+    titled Ghetto+electrochromic+displays+for+ultra-low-power+computing?
+    concerns materials slms displays electrolysis bootstrapping ghettobotics
+    concerns optics copper silver
+
+electrolytic-2d-cutting written 02021-12-16
+    updated 02021-12-30
+    titled Electrolytic+2-D+cutting+and+related+electrolytic+digital+fabrication+processes
+    concerns 2d-cutting digital-fabrication electrolysis patterning composites
+    concerns pva anisotropic-fillers glutaraldehyde codeposition filled-systems
+
+layers-plus-electroforming written 02021-12-16
+    updated 02021-12-30
+    concerns 2d-cutting digital-fabrication welding ecm electrolysis
+
+fet-geiger written 02021-12-17
+    updated 02021-12-30
+    titled MOSFET+body+diodes+as+Geiger+counter+avalanche+detectors?
+    concerns electronics sensors x-rays physics
+
+paper-scanning-notebook written 02021-12-18
+    updated 02021-12-30
+    titled The+user+interface+potentialities+of+a+barcoded+paper+notebook
+    concerns hci barcodes
+
+aluminum-refining written 02021-12-20
+    updated 02021-12-30
+    concerns aluminum refining electrolysis materials
+
 regenerative-muffle-kiln written 02021-12-21
     updated 02021-12-30
-simplest-blinker written 02021-12-01
+    concerns regenerators thermodynamics contrivances energy clay ceramic
+
+democracy-stability written 02021-12-22
     updated 02021-12-30
+    titled Is+liberal+democracy’s+stability+conditioned+on+historical+conditions+that+no+longer+obtain?
+    concerns politics history
+
+xerogel-compacting written 02021-12-22
+    updated 02021-12-30
+    concerns anisotropic-fillers filled-systems waterglass solubility
+    concerns materials strength
+
+photoemissive-power written 02021-12-23
+    updated 02021-12-28
+    concerns solar energy photoemission physics space the-future
+
 spring-connector written 02021-12-28
+    updated 02021-12-31
+    titled Toggling+eccentrics+for+removing+preload+from+spring+clamps
+    concerns spreadtools physics flexures hand-tools mechanical contrivances
+
+filecoin-problem written 02021-12-30
     updated 02021-12-30
+    titled Safe+decentralized+cloud+storage
+    concerns security protocols sa programming incentives decentralization
+    concerns censorship politics
+
 # rejected because too incomplete:
 #transaction-upgrade written 02021-05-15
 #    updated 02021-12-30
-two-finger-multitouch written 02021-12-11
-    updated 02021-12-30
-xerogel-compacting written 02021-12-22
-    updated 02021-12-30
