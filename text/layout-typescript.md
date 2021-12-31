@@ -4,7 +4,7 @@ Aside from enjoying the printed-book typography of the user interface,
 I thought it might be worthwhile to jot down some notes about the
 interaction model.
 
-![(screenshot of Reti demonstrating a cat photo](reti-lispm-catpic.jpeg)
+![(screenshot of Reti demonstrating a cat photo](reti-lispm-catpic.png)
 
 
 
