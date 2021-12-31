@@ -25,7 +25,7 @@ dernocua version 020211230-2
 first-class-locations written 02021-01-04
     updated 02021-01-04
     concerns imgui hci end-user-programming c pascal post-teletype terminals
-    concerns programming programming-languages ownership
+    concerns programming programming-languages ownership safety
 imgui category-titled Immediate-mode+GUIs
 post-teletype category-titled Post-teletype+terminal+design
 hci category-titled Human-computer+interaction
@@ -43,7 +43,7 @@ principled-apl-redux written 02021-01-03
     updated 02021-01-27
     titled Principled+APL+redux
     concerns programming-languages arrays apl bicicleta caching performance
-    concerns compilers transactions datalog programming
+    concerns compilers transactions datalog programming safety
 
 fibonacci-scan written 02021-01-10
     updated 02021-01-15
@@ -55,7 +55,7 @@ relayout-with-heaps written 02021-01-10
 
 transactional-editor written 02021-01-14
     updated 02021-01-15
-    concerns emacs hci transactions editors lisp qemacs experiment-report programming
+    concerns emacs hci transactions editors lisp qemacs experiment-report programming safety
 
 trie-pegs written 02021-01-15
     updated 02021-01-15
@@ -151,6 +151,7 @@ unicode-graphics written 02021-02-10
 skew-tilesets written 02021-02-14
     updated 02021-02-24
     concerns ascii-art tiled graphics history basic python overstrike plato
+    concerns composability
 plato category-titled Illinois+PLATO
 basic category-titled BASIC
 tiled category-titled Tiled+graphics
@@ -158,7 +159,7 @@ ascii-art category-titled ASCII+art
 
 threechet written 02021-02-16
     updated 02021-02-24
-    concerns graphics art math history
+    concerns graphics art math history composability
 
 thumbraille written 02021-02-17
     updated 02021-02-24
@@ -176,12 +177,13 @@ microlisp written 02021-02-23
     updated 02021-08-18
     titled How+do+you+fit+a+high-level+language+into+a+microcontroller?+Let’s+look+at+BBN+Lisp
     concerns lisp programming microcontrollers history memory-models
-    concerns bytecode virtual-machines performance
+    concerns bytecode virtual-machines performance safety
+safety category-titled Safe+programming+languages
 
 panelization written 02021-02-25
     updated 02021-02-26
     titled Panelization+in+PCB+manufacturing
-    concerns electronics pricing contrivances manufacturing
+    concerns electronics pricing contrivances manufacturing composability
 
 
 ipl-vi written 02021-03-02
@@ -205,7 +207,7 @@ veskeno-exploration written 02021-03-02
     titled A+survey+of+imperative+programming+operations’+prevalence
     concerns experiment-report programming instruction-sets performance
     concerns c python scheme js java perl elisp lua sh tcl m4 forth bytecode
-    concerns veskeno virtual-machines
+    concerns veskeno virtual-machines safety
 veskeno category-titled The+Veskeno+virtual+machine
 sh category-titled The+Bourne+shell
 js category-titled The+JS+programming+language
@@ -254,19 +256,19 @@ brute-force-speech written 02021-03-21
 electron-speed written 02021-03-21
     updated 02021-03-22
     titled When+is+it+better+to+compute+by+moving+atoms+rather+than+electrons?
-    concerns physical-computation physics
+    concerns mechanical physical-computation physics
 
 fantasy-platform written 02021-03-21
     updated 02021-03-22
     concerns veskeno instruction-sets reproducibility emulation file-formats
-    concerns chip-8 history chifir brainfuck history virtual-machines
+    concerns chip-8 history chifir brainfuck history virtual-machines safety
     titled Veskeno+is+a+“fantasy+platform”+like+TIC-80
 chip-8 category-titled CHIP-8
 
 truffleruby written 02021-03-21
     updated 02021-03-22
     titled Some+notes+on+reading+Chris+Seaton’s+TruffleRuby+dissertation
-    concerns performance compilers gc virtual-machines
+    concerns performance compilers gc virtual-machines safety
 
 xosm written 02021-03-21
     updated 02021-03-24
@@ -286,7 +288,7 @@ opamp-oscillators written 02021-03-23
 
 framescript written 02021-03-23
     updated 02021-10-12
-    concerns hci real-time guis latency transactions allocation-performance
+    concerns hci real-time guis latency transactions allocation-performance safety
     titled Running+scripts+once+per+frame+for+guaranteed+GUI+responsivity
 guis category-titled GUIs
 
@@ -301,6 +303,87 @@ bitcoin-puzzling written 02021-03-31
     titled Why+Bitcoin+is+puzzling+to+people+in+rich+countries
     concerns bitcoin politics incentives history economics argentina
 
+
+wearable-ekg written 02021-04-07
+    updated 02021-07-27
+    titled A+bargain-basement+Holter+monitor+with+a+BOM+under+US$2.50
+    concerns contrivances electronics pricing microcontrollers
+    concerns energy healthcare manufacturing skin-electrodes stm32
+    concerns memory-hardware radio communication
+stm32 category-titled STM32+microcontrollers
+
+logarithmic-low-power-serdes written 02021-04-08
+    updated 02021-04-08
+    titled Logarithmic+low-power+SERDES
+    concerns electronics energy contrivances
+
+china-energy-future written 02021-04-01
+    updated 02021-04-08
+    titled Statistics+on+the+present+and+future+of+energy+in+the+People’s+Republic+of+China
+    concerns china energy solar the-future python
+
+geneva-wheel-stopwork written 02021-04-07
+    updated 02021-04-08
+    concerns physical-computation contrivances gears mechanical
+
+locking-telescope written 02021-04-07
+    updated 02021-12-30
+    concerns mechanical contrivances connectors
+
+normal-order-macro-expansion written 02021-04-09
+    updated 02021-07-27
+    concerns macros m4 programming-languages end-user-programming
+
+copper-forming written 02021-04-16
+    updated 02021-06-12
+    titled Forming+steel+with+copper+instead+of+vice+versa
+    concerns copper manufacturing steel contrivances strength
+    concerns physics self-replication
+strength category-titled Strength+of+materials
+
+oscopes written 02021-04-16
+    updated 02021-07-27
+    titled Notes+on+pricing+of+locally+available+oscilloscopes
+    concerns argentina electronics pricing
+
+pick-and-place written 02021-04-17
+    updated 02021-12-30
+    titled Can+you+get+JLCPCB+to+fabricate+a+CPU+for+you+affordably+from+“basic”+parts?
+    concerns electronics manufacturing digital-fabrication pricing
+    concerns jlcpcb independence bootstrapping
+jlcpcb category-titled JLCPCB+(JiaLiChuang)
+
+bounded-forth written 02021-04-21
+    updated 02021-06-12
+    titled Safe+FORTH+with+the+FORTRAN+memory+model?
+    concerns forth memory-models programming programming-languages safety
+
+human-ssa written 02021-04-21
+    updated 02021-06-12
+    titled Manually+writing+code+in+static+single+assignment+(SSA)+form,+inspired+by+Kemeny’s+DOPE,+isn’t+worth+it
+    concerns basic history assembly forth facepalm
+
+trailer-netstrings written 02021-04-21
+    updated 02021-07-27
+    titled Diskstrings:+Bernstein’s+netstrings+for+single-pass+streaming+output
+    concerns file-formats programming
+
+mesh-sonar written 02021-04-27
+    updated 02021-12-30
+    titled Phased-array+imaging+sonar+from+a+mesh+network+of+self-localizing+sensor+nodes
+    concerns contrivances sensors sonar audio dsp metrology cameras physics
+dsp category-titled Digital+signal+processing+(DSP)
+
+flash-boiler written 02021-04-28
+    updated 02021-12-30
+    titled A+boiler+for+submillisecond+steam+pulses
+    concerns mechanical contrivances thermodynamics electronics
+    concerns regenerators materials physics
+
+three-phase-logic written 02021-04-30
+    updated 02021-07-27
+    concerns jlcpcb electronics manufacturing pricing
+    concerns physical-computation falstad oscillators
 
 2d-cutting-workflow written 02021-10-15
     updated 02021-12-30
@@ -344,8 +427,6 @@ block-arguments written 02021-07-29
     updated 02021-12-30
 blowing-agents written 02021-09-29
     updated 02021-12-30
-bounded-forth written 02021-04-21
-    updated 02021-06-12
 broken-disks written 02021-06-02
     updated 02021-06-12
 cantbelievesort written 02021-10-05
@@ -356,8 +437,6 @@ carbohydrate-3d-printing written 02021-05-16
     updated 02021-12-30
 cheap-cutting-jig written 02021-05-06
     updated 02021-12-30
-china-energy-future written 02021-04-01
-    updated 02021-04-08
 china-nukes written 02021-11-09
     updated 02021-12-30
 chording-commands written 02021-11-26
@@ -378,8 +457,6 @@ constant-current-buck written 02021-08-10
     updated 02021-08-15
 constant-weight-dithering written 02021-10-28
     updated 02021-12-30
-copper-forming written 02021-04-16
-    updated 02021-06-12
 copper-sls written 02021-08-30
     updated 02021-12-30
 counter-rotating-side-milling written 02021-06-27
@@ -446,8 +523,6 @@ fire-mud written 02021-08-05
     updated 02021-08-15
 firing-talc written 02021-07-14
     updated 02021-12-30
-flash-boiler written 02021-04-28
-    updated 02021-12-30
 flexure-mount written 02021-10-18
     updated 02021-12-30
 flux-gate-downconversion written 02021-06-15
@@ -456,8 +531,6 @@ freezer-seacrete written 02021-09-01
     updated 02021-12-30
 fresnel-mirror-electropolishing written 02021-05-08
     updated 02021-12-30
-geneva-wheel-stopwork written 02021-04-07
-    updated 02021-04-08
 ghetto-edm written 02021-05-31
     updated 02021-12-30
 glass-foam written 02021-07-16
@@ -476,8 +549,6 @@ hash-consing-ropes written 02021-07-27
     updated 02021-07-27
 house-blocks written 02021-12-13
     updated 02021-12-30
-human-ssa written 02021-04-21
-    updated 02021-06-12
 ideal-workshop written 02021-07-16
     updated 02021-07-27
 inverse-perspective written 02021-10-11
@@ -504,10 +575,6 @@ leaf-vein-roof written 02021-07-16
     updated 02021-09-11
 literate-haskell-like written 02021-11-06
     updated 02021-12-30
-locking-telescope written 02021-04-07
-    updated 02021-12-30
-logarithmic-low-power-serdes written 02021-04-08
-    updated 02021-04-08
 lvdt-4d-matrix-keyboard written 02021-05-12
     updated 02021-12-30
 magnesia written 02021-07-25
@@ -519,8 +586,6 @@ material-observations written 02021-07-29
 mathematical-argument written 02021-05-27
     updated 02021-12-30
 memory-view written 02021-07-09
-    updated 02021-12-30
-mesh-sonar written 02021-04-27
     updated 02021-12-30
 metal-welding-fuel written 02021-05-23
     updated 02021-12-30
@@ -552,16 +617,12 @@ multicolor-filament written 02021-05-17
     updated 02021-12-30
 my-h8 written 02021-11-03
     updated 02021-12-30
-normal-order-macro-expansion written 02021-04-09
-    updated 02021-07-27
 nuclear-amiga written 02021-06-14
     updated 02021-07-27
 omnidirectional-wheels written 02021-05-30
     updated 02021-12-30
 orthogonal-rational-vectors written 02021-11-04
     updated 02021-12-30
-oscopes written 02021-04-16
-    updated 02021-07-27
 paeth-vq written 02021-11-06
     updated 02021-12-30
 palette-font-tile written 02021-11-18
@@ -578,8 +639,6 @@ phosphates-fraction written 02021-08-21
     updated 02021-12-30
 photoemissive-power written 02021-12-23
     updated 02021-12-28
-pick-and-place written 02021-04-17
-    updated 02021-12-30
 pinn-gan-rendering written 02021-11-11
     updated 02021-12-30
 pipelined-piece-chain-painting written 02021-10-10
@@ -698,10 +757,6 @@ thread-rolling-roller-screw written 02021-11-04
     updated 02021-12-30
 three-phase-differential-data written 02021-09-22
     updated 02021-12-30
-three-phase-logic written 02021-04-30
-    updated 02021-07-27
-trailer-netstrings written 02021-04-21
-    updated 02021-07-27
 transaction-upgrade written 02021-05-15
     updated 02021-12-30
 trickler written 02021-05-09
@@ -725,8 +780,6 @@ viscoelastic-probing written 02021-11-04
 waterglass-loctite written 02021-09-22
     updated 02021-12-30
 water-treatment written 02021-07-07
-    updated 02021-07-27
-wearable-ekg written 02021-04-07
     updated 02021-07-27
 weighing-balance-design written 02021-09-06
     updated 02021-12-30
