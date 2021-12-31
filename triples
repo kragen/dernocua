@@ -165,7 +165,7 @@ threechet written 02021-02-16
 
 thumbraille written 02021-02-17
     updated 02021-02-24
-    titled Thumbnail+views+in+a+terminal+with+Braille
+    titled Thumbnail+views+in+a+Unicode+character-cell+terminal+with+Braille
     concerns ascii-art temrinals unicode graphics
 
 energy-autonomous-computing written 02021-02-18
@@ -220,6 +220,7 @@ pratt-control-flow written 02021-03-04
     updated 02021-03-20
     titled Vaughan+Pratt+and+Henry+Baker’s+COMFY+control-flow+combinators
     concerns programming compilers control-flow lisp constraints history comfy
+    concerns program-calculator
 
 letter-frequencies written 02021-03-10
     updated 02021-03-22
@@ -504,7 +505,7 @@ aluminum-foil written 02021-05-24
 mathematical-argument written 02021-05-27
     updated 02021-12-30
     titled The+nature+of+mathematical+discourse
-    concerns epistemology math history reproducibility
+    concerns epistemology math history reproducibility ontology
 
 curiosity written 02021-05-30
     updated 02021-12-30
@@ -544,7 +545,7 @@ greek-operating-systems written 02021-06-04
 algebra-of-n-ary-relations written 02021-06-14
     updated 02021-07-27
     titled The+algebra+of+N-ary+relations
-    concerns math databases programming kleene-algebras
+    concerns math databases programming kleene-algebras program-calculator
 
 nuclear-amiga written 02021-06-14
     updated 02021-07-27
@@ -577,7 +578,7 @@ ps2-arduino written 02021-06-20
     updated 02021-12-30
     titled Notes+on+what+would+be+needed+to+drive+a+PS/2+keyboard+from+an+Arduino
     concerns arduino electronics input-devices keyboards
-    concerns experiment-report programming protocols
+    concerns experiment-report programming protocols encoding
 
 self-hosting-kernel written 02021-06-21
     updated 02021-12-30
@@ -595,7 +596,7 @@ bead-hypertext written 02021-06-22
 bitstuffing-attack written 02021-06-22
     updated 02021-12-31
     titled Does+USB+bitstuffing+create+a+timing-channel+vulnerability?
-    concerns protocols security
+    concerns protocols security encoding
 
 verstickulite written 02021-06-23
     updated 02021-07-27
@@ -651,7 +652,8 @@ super-ghetto-digital-fabrication written 02021-06-28
     concerns ghettobotics precision welding grinding machining manufacturing
     concerns bootstrapping control aluminum-foil foam cardboard clay ceramic
     concerns sandblasting oogoo silicone electroforming refractory materials
-    concerns carborundum sapphire control haplink
+    concerns carborundum sapphire haplink
+control category-titled Control+(cybernetics)
 
 glass-powder-bed-printing written 02021-06-29
     updated 02021-12-30
@@ -827,7 +829,7 @@ magnesium-silicate written 02021-07-25
 hash-consing-ropes written 02021-07-27
     updated 02021-07-27
     titled Ropes+with+constant-time+concatenation+and+equality+comparisons+with+monoidal+hash+consing
-    concerns programming algorithms performance
+    concerns programming algorithms performance hashing ropes
 
 block-arguments written 02021-07-29
     updated 02021-12-30
@@ -907,7 +909,7 @@ c-stack-bytecode written 02021-08-17
 
 wiki-models written 02021-08-19
     updated 02021-12-30
-    concerns end-user-programming calculation hci editors
+    concerns end-user-programming calculation hci editors numerical-modeling
 
 residual-stream-windowing written 02021-08-21
     updated 02021-09-11
@@ -928,7 +930,7 @@ phosphates-fraction written 02021-08-21
 
 lazy-heapsort written 02021-08-22
     updated 02021-09-11
-    concerns programming algorithms performance
+    concerns programming algorithms performance sorting
 
 recursive-bearings written 02021-08-23
     updated 02021-12-30
@@ -1016,7 +1018,7 @@ cli-tools written 02021-09-15
 
 three-phase-differential-data written 02021-09-22
     updated 02021-12-30
-    concerns electronics protocols setun physical-computation
+    concerns electronics protocols setun physical-computation encoding
 setun category-titled Setun+(Сетунь)
 
 waterglass-loctite written 02021-09-22
@@ -1045,23 +1047,163 @@ handrolled-capacitor written 02021-09-30
     titled Liquid+dielectrics+for+hand-rolled+self-healing+capacitors
     concerns electronics contrivances physics materials
 
+
+deriving-binary-search written 02021-10-01
+    updated 02021-12-30
+    concerns algorithms programming python term-rewriting
+
+latex-3dp written 02021-10-03
+    updated 02021-12-30
+    concerns materials digital-fabrication 3d-printing electrolysis plasma
+    titled The+sol-gel+transition+and+selective+gelling+for+3-D+printing
+
+spanish-phonology written 02021-10-05
+    updated 02021-12-31
+    concerns nlp speech-synthesis experiment-report python compression
+
+udanax-green-notes written 02021-10-05
+    updated 02021-10-08
+    titled Some+notes+on+perusing+the+Udanax+Green+codebase
+    concerns hypertext history c programming namespaces
+
+cantbelievesort written 02021-10-05
+    updated 02021-12-30
+    titled Fung’s+“I+can’t+believe+it+can+sort”+algorithm+and+others
+    concerns sorting algorithms performance small-is-beautiful assembly
+    concerns c programming
+
+rust-notes written 02021-10-06
+    updated 02021-10-10
+    titled Some+notes+on+learning+Rust
+    concerns rust programming
+
+pbkdf-content-addressing written 02021-10-08
+    updated 02021-10-08
+    concerns security namespaces ccn passwords hashing pricing crypto
+    concerns quantum-computing programming
+
+drama-word-list written 02021-10-08
+    updated 02021-12-30
+    titled Wordlists+for+maximum+drama
+    concerns passwords security randomness nlp pareidolia psychohazards
+    concerns programming
+
+spark-pen written 02021-10-10
+    updated 02021-10-12
+    concerns pulse input-devices audio sparks
+    titled The+spark-pen+pointing+device
+
+beyond-overstrike written 02021-10-10
+    updated 02021-12-30
+    concerns overstrike terminals post-teletype plato history memory-hardware
+    concerns pricing graphics hci
+
+pipelined-piece-chain-painting written 02021-10-10
+    updated 02021-12-30
+    concerns post-teletype tiled terminals history protocols plato fonts
+    concerns avr performance programming graphics
+
+statement-algebra-apl written 02021-10-10
+    updated 02021-12-30
+    titled An+algebra+of+partial+functions+for+interactively+composing+programs
+    concerns apl programming-languages composability programming program-calculator
+
+beyond-op-streams written 02021-10-11
+    updated 02021-12-30
+    concerns terminals post-teletype
+
+inverse-perspective written 02021-10-11
+    updated 02021-12-30
+    concerns hci cad
+cad category-titled Computer-aided+drafting+(CAD)
+
+mosfet-ranking written 02021-10-11
+    updated 02021-12-30
+    titled Ranking+MOSFETs+for,+say,+rapid+localized+electrolysis+to+make+optics
+    concerns electronics pricing power-supplies digital-fabrication electrolysis
+    concerns piezoelectrics optics pulse power-supplies
+
+solar-air-conditioned-trailer written 02021-10-11
+    updated 02021-12-30
+    titled The+relation+between+solar-panel+efficiency+for+air+conditioning+and+insulation+thickness
+    concerns solar energy life-support air-conditioning 
+
+simplest-power-supply written 02021-10-14
+    updated 02021-12-30
+    titled An+even+simpler+offline+power+supply+than+a+capacitive+dropper,+with+a+7¢+BOM
+    concerns power-supplies electronics pricing
+
 2d-cutting-workflow written 02021-10-15
     updated 02021-12-30
+    titled Trying+to+quantify+relative+speeds+of+different+digital+fabrication+processes+with+“matter+bandwidth”
+    concerns 2d-cutting digital-fabrication self-replication independence
+
+balanced-ropes written 02021-10-16
+    updated 02021-12-30
+    concerns ropes algorithms programming python tree-rotation
+
+flexure-mount written 02021-10-18
+    updated 02021-12-30
+    titled Flexural+mounts+for+self-aligning+bushings
+    concerns flexures mechanical 3d-printing
+
+spark-gap-exploding-wire written 02021-10-19
+    updated 02021-12-30
+    titled Triggering+a+spark+gap+with+an+exploding+wire
+    concerns pulse electronics bootstrapping sparks
+
+micro-marx written 02021-10-20
+    updated 02021-12-31
+    concerns pulse electronics leds avalanche-breakdown pricing lidar numerical-modeling
+    titled Implementation+and+applications+of+low-voltage+Marx+generators+with+solid-state+avalanche+breakdown?
+leds category-titled LEDs
+
+uv-led-triggered-spark-gap written 02021-10-20
+    updated 02021-10-23
+    titled Triggering+a+spark+gap+with+low+jitter+using+ultraviolet+LEDs?
+    concerns leds pulse sparks photoemission pricing electronics contrivances
+
+polynomial-pascal written 02021-10-20
+    updated 02021-12-30
+    titled Binomial+coefficients+and+the+dimensionality+of+spaces+of+polynomials
+    concerns math
+
+sparse-fem written 02021-10-20
+    updated 02021-12-30
+    titled Finite+element+analysis+with+sparse+approximations
+    concerns numerical-modeling fem sparsity math
+fem category-titled Finite-element+methods+(FEM)
+
+its-ddt written 02021-10-22
+    updated 02021-10-23
+    titled The+astounding+UI+responsivity+of+PDP-10+DDT+on+ITS
+    concerns history debugging hci end-user-programming assembly programming
+
+example-based-regexp written 02021-10-24
+    updated 02021-12-30
+    concerns hci programming kleene-algebras program-calculator control-flow
+    concerns comfy
+
 adversarial-control written 02021-10-25
     updated 02021-12-30
+    concerns control programming optimization dreaming anns gradient-descent
+    concerns digital-fabrication manufacturing
+
+constant-weight-dithering written 02021-10-28
+    updated 02021-12-30
+    concerns security communication programming encoding graphics dithering
+    concerns barcodes
+
+recursive-shingling written 02021-10-30
+    updated 02021-12-30
+    titled Hashing+text+with+recursive+shingling+to+find+duplication+efficiently
+    concerns hashing algorithms performance
+
 against-subjectivism written 02021-12-15
     updated 02021-12-30
 aluminum-refining written 02021-12-20
     updated 02021-12-30
 aqueous-scanning-probe-microscopy written 02021-11-12
-    updated 02021-12-30
-balanced-ropes written 02021-10-16
-    updated 02021-12-30
-beyond-op-streams written 02021-10-11
-    updated 02021-12-30
-beyond-overstrike written 02021-10-10
-    updated 02021-12-30
-cantbelievesort written 02021-10-05
     updated 02021-12-30
 capacitive-displacement written 02021-12-11
     updated 02021-12-30
@@ -1069,15 +1211,9 @@ china-nukes written 02021-11-09
     updated 02021-12-30
 chording-commands written 02021-11-26
     updated 02021-12-30
-constant-weight-dithering written 02021-10-28
-    updated 02021-12-30
 date-calc-dsl written 02021-11-14
     updated 02021-12-30
 democracy-stability written 02021-12-22
-    updated 02021-12-30
-deriving-binary-search written 02021-10-01
-    updated 02021-12-30
-drama-word-list written 02021-10-08
     updated 02021-12-30
 electrochromic-metals written 02021-12-16
     updated 02021-12-30
@@ -1087,8 +1223,6 @@ electrowinning written 02021-11-21
     updated 02021-12-30
 emm-book written 02021-11-25
     updated 02021-12-30
-example-based-regexp written 02021-10-24
-    updated 02021-12-30
 exotic-steels written 02021-12-01
     updated 02021-12-30
 exponential-forming written 02021-12-15
@@ -1097,29 +1231,17 @@ fet-geiger written 02021-12-17
     updated 02021-12-30
 filecoin-problem written 02021-12-30
     updated 02021-12-30
-flexure-mount written 02021-10-18
-    updated 02021-12-30
 house-blocks written 02021-12-13
     updated 02021-12-30
-inverse-perspective written 02021-10-11
-    updated 02021-12-30
 iron-marking-pencil written 02021-11-06
-    updated 02021-12-30
-its-ddt written 02021-10-22
-    updated 02021-10-23
-latex-3dp written 02021-10-03
     updated 02021-12-30
 layers-plus-electroforming written 02021-12-16
     updated 02021-12-30
 literate-haskell-like written 02021-11-06
     updated 02021-12-30
-micro-marx written 02021-10-20
-    updated 02021-10-22
 micro-ramjet written 02021-11-22
     updated 02021-12-30
 miranda-pins written 02021-11-11
-    updated 02021-12-30
-mosfet-ranking written 02021-10-11
     updated 02021-12-30
 my-h8 written 02021-11-03
     updated 02021-12-30
@@ -1131,47 +1253,23 @@ palette-font-tile written 02021-11-18
     updated 02021-12-30
 paper-scanning-notebook written 02021-12-18
     updated 02021-12-30
-pbkdf-content-addressing written 02021-10-08
-    updated 02021-10-08
 photoemissive-power written 02021-12-23
     updated 02021-12-28
 pinn-gan-rendering written 02021-11-11
-    updated 02021-12-30
-pipelined-piece-chain-painting written 02021-10-10
-    updated 02021-12-30
-polynomial-pascal written 02021-10-20
     updated 02021-12-30
 public-domain-02021 written 02021-11-20
     updated 02021-12-30
 pva-printing written 02021-12-15
     updated 02021-12-30
-recursive-shingling written 02021-10-30
-    updated 02021-12-30
 regenerative-muffle-kiln written 02021-12-21
     updated 02021-12-30
 reuleaux-constructor written 02021-11-17
     updated 02021-12-30
-rust-notes written 02021-10-06
-    updated 02021-10-10
 selfrep-redundancy written 02021-11-12
     updated 02021-12-30
 simplest-blinker written 02021-12-01
     updated 02021-12-30
-simplest-power-supply written 02021-10-14
-    updated 02021-12-30
-solar-air-conditioned-trailer written 02021-10-11
-    updated 02021-12-30
-spanish-phonology written 02021-10-05
-    updated 02021-10-05
-spark-gap-exploding-wire written 02021-10-19
-    updated 02021-12-30
-spark-pen written 02021-10-10
-    updated 02021-10-12
-sparse-fem written 02021-10-20
-    updated 02021-12-30
 spring-connector written 02021-12-28
-    updated 02021-12-30
-statement-algebra-apl written 02021-10-10
     updated 02021-12-30
 thread-rolling-roller-screw written 02021-11-04
     updated 02021-12-30
@@ -1180,10 +1278,6 @@ thread-rolling-roller-screw written 02021-11-04
 #    updated 02021-12-30
 two-finger-multitouch written 02021-12-11
     updated 02021-12-30
-udanax-green-notes written 02021-10-05
-    updated 02021-10-08
-uv-led-triggered-spark-gap written 02021-10-20
-    updated 02021-10-23
 vernier-indicator written 02021-11-22
     updated 02021-12-30
 viscoelastic-probing written 02021-11-04

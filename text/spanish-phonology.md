@@ -138,3 +138,228 @@ vowels [oiu], sonorants [lmnd], plosives [ɾtk], and the sibilant [s].
 (Spanish /d/ has a fricative allophone [ð] and a plosive allophone
 [d].)  There’s inevitably going to be significant tension between
 fluent writing and ease of learning.
+
+Here's the Python program:
+
+    #!/usr/bin/python3
+    """Analyze phonetics and phonotactics of Spanish text.
+
+    The syllabification is somewhere around 97% accurate on the text I
+    tried it on, but it does have problems, for example with “mayoría”
+    (should be ma-yo-ri-a; same problem with “podrían”, “amoníaco”, and
+    “biotecnología”) and “inusuales” (should be in-u-sua-les).  Also it
+    thinks “hay” and “muy” are two syllables each.  It fails on
+    “habitats”, “atmosférico”, “plancton”, and “sulfhidrico”.  And it
+    segments “aire” as “a-i-re”, which I think is wrong, and similarly
+    “causado” as “ca-u-sa-do”, "autodenominado" as “a-u-to-...”,
+    “contribuir” as “con-tri-bu-ir”, and “cuidadores” as “cu-i-da-do-res”.
+
+    No attempt is made to handle numbers, initialisms, or loanwords not
+    spelled using Spanish orthography.
+
+    It’s using a slightly deformed version of IPA.  For [tʃ] I’m using the
+    Esperanto “č”, in the interest of having it be one letter for the
+    purpose of frequency tabulation, and for [ɲ] I’m using the Spanish
+    “ñ”, in the interest of readability.  No attempt is made to select the
+    appropriate allophone for context (e.g., [ŋ] for /n/, [β] for /b/, [x]
+    for /s/).  “*” is output on error.  The pronunciation is mostly
+    Argentine.  Here’s some sample output, containing one error:
+
+    > divide.^[173]​ /di-bi-de/ Los /los/ detalles /de-ta-ʃes/ del /del/
+      ciclo /si-klo/ celular /se-lu-laɾ/ solo /so-lo/ han /an/ sido
+      /si-do/ investigados /in-bes-ti-ga-dos/ en /en/ el /el/ género
+      /xe-ne-ɾo/ Sulfolobus, /sul-fo-lo-bus/ siendo /sien-do/ similares
+      /si-mi-la-ɾes/ a /a/ los /los/ de /de/ bacterias /bak-te-ɾias/ y /i/
+      eucariontes: /e-u-ka-ɾion-tes/ los /los/ cromosomas /kɾo-mo-so-mas/
+      se /se/ replican /re-pli-kan/ desde /des-de/ múltiples /mul-ti-ples/
+      puntos /pun-tos/ de /de/ partida /paɾ-ti-da/ (origen /o-ɾi-xen/ de
+      /de/ replicación) /re-pli-ka-sion/ usando /u-san-do/ ADN /ad-*/
+      polimerasas /po-li-me-ɾa-sas/ que /ke/ son /son/ similares
+      /si-mi-la-ɾes/ a /a/ las /las/ enzimas /en-si-mas/ equivalentes
+      /e-ki-ba-len-tes/ eucarióticas.^[174]​ /e-u-ka-ɾio-ti-kas/ Sin /sin/
+      embargo, /em-baɾ-go/ las /las/ proteínas /pɾo-tei-nas/ que /ke/
+      dirigen /di-ɾi-xen/ la /la/ división /di-bi-sion/ celular,
+      /se-lu-laɾ/ como /ko-mo/ la /la/ proteína /pɾo-tei-na/ FtsZ
+      /*-*-*-*/
+
+    Here’s some more, containing three errors in 110 words:
+
+    > El /el/ hecho /e-čo/ tuvo /tu-bo/ tintes /tin-tes/ mafiosos
+      /ma-fio-sos/ y /i/ elementos /e-le-men-tos/ que /ke/ ya /ʃa/ se /se/
+      habían /a-bian/ visto. /bis-to/ Lo /lo/ protagonizó
+      /pɾo-ta-go-ni-so/ un /un/ grupo /gɾu-po/ de /de/ encapuchados
+      /en-ka-pu-ča-dos/ autodenominados /a-u-to-de-no-mi-na-dos/
+      “mapuches” /ma-pu-čes/ en /en/ Río /rio/ Negro, /ne-gɾo/ el /el/
+      domingo /do-min-go/ a /a/ la /la/ noche. /no-če/ Primero /pɾi-me-ɾo/
+      ataron /a-ta-ɾon/ a /a/ los /los/ cuidadores /ku-i-da-do-ɾes/ de
+      /de/ un /un/ predio /pɾe-dio/ de /de/ Vialidad /bia-li-dad/
+      provincial, /pɾo-bin-sial/ después /des-pues/ dejaron /de-xa-ɾon/
+      notas /no-tas/ intimidatorias /in-ti-mi-da-to-ɾias/ con /kon/
+      amenazas /a-me-na-sas/ y, /i/ antes /an-tes/ de /de/ escapar,
+      /es-ka-paɾ/ incendiaron /in-sen-dia-ɾon/ un /un/
+      depósito. /de-po-si-to/
+
+    > El /el/ Gobierno /go-bieɾ-no/ rionegrino /rio-ne-gɾi-no/ calificó
+      /ka-li-fi-ko/ como /ko-mo/ “un /un/ acto /ak-to/ terrorista”
+      /te-ro-ɾis-ta/ el /el/ ataque /a-ta-ke/ y /i/ prepara /pɾe-pa-ɾa/
+      una /u-na/ presentación /pɾe-sen-ta-sion/ ante /an-te/ la /la/
+      Justicia /xus-ti-sia/ federal. /fe-de-ɾal/ En /en/ paralelo
+      /pa-ɾa-le-lo/ pidió /pi-dio/ al /al/ Gobierno /go-bieɾ-no/ nacional
+      /na-sio-nal/ el /el/ envío /en-bio/ de /de/ fuerzas /fueɾ-sas/
+      federales /fe-de-ɾa-les/ para /pa-ɾa/ controlar /kon-tɾo-laɾ/ la
+      /la/ situación /si-tua-sion/ que /ke/ viene /bie-ne/ escalando
+      /es-ka-lan-do/ desde /des-de/ hace /a-se/ meses. /me-ses/ Se /se/
+      suma /su-ma/ el /el/ incendio /in-sen-dio/ provocado /pɾo-bo-ka-do/
+      en /en/ la /la/ Oficina /o-fi-si-na/ de /de/ Turismo /tu-ɾis-mo/ de
+      /de/ El /el/ Bolsón, /bol-son/ ocurrido /o-ku-ri-do/ el /el/ sábado
+      /sa-ba-do/ por /poɾ/ la /la/ noche. /no-če/
+
+    <https://www.clarin.com/sociedad/mapuches-incendiaron-campamento-vialidad-rio-negro-gobernadora-pidio-apoyo-gobierno-nacional_0_ByRHc8tKZ.html>
+
+    Despite the problems mentioned earlier, I think it’s accurate enough
+    for these statistics to be mostly right:
+
+      onsets:  : 19.17%  t: 11.42%  d:  9.20%  s:  8.86%  k:  8.68%  l:  7.93%
+              n:  6.30%  m:  6.02%  p:  5.56%  b:  4.21%  ɾ:  4.18%  f:  2.35%
+              g:  2.03%  x:  1.64%  r:  1.14%  č:  0.69%  ʃ:  0.48%  ñ:  0.14%
+     liquids:  : 94.46%  ɾ:  4.26%  l:  1.28% 
+      nuclei: e: 28.16%  a: 26.47%  o: 19.84%  i: 12.79%  u:  5.91% io:  2.16%
+             ia:  1.86% ie:  1.29% ue:  0.80% ua:  0.49% ei:  0.19% uo:  0.05%
+       codas:  : 62.14%  s: 15.65%  n: 10.11%  ɾ:  5.72%  l:  2.40%  m:  1.51%
+              k:  1.32% ks:  0.47%  d:  0.20%  p:  0.20% ns:  0.13%  g:  0.08%
+              b:  0.05% 
+      phones: e: 13.14%  a: 12.44%  s: 10.84%  o:  9.52%  i:  7.90%  n:  7.14%
+              ɾ:  6.11%  l:  5.01%  t:  4.93%  k:  4.52%  d:  4.06%  m:  3.25%
+              u:  3.13%  p:  2.49%  b:  1.84%  f:  1.01%  g:  0.91%  x:  0.71%
+              r:  0.49%  č:  0.30%  ʃ:  0.21%  ñ:  0.06% 
+    bits per phone 3.879586262782223
+    bits per letter 3.586046123445401
+
+    """
+    from __future__ import print_function, division
+    import collections, math, re, sys
+
+
+    syllable = re.compile(r'''
+        (?P<syllable>
+            (?P<onset>b|c|ch|d|f|[gq]u(?![lr])|g|h|j|k|ll|l
+                     |m|n(?![lr])|ñ|ph|p|rr|s|th|t|v|y|z|)
+            (?P<liquid>l|r|)
+            (?P<nucleus>a|ei|e|w|ia|io|ie|i|o|ua|ue|u|y)
+            # The negative lookahead assertions are a hack to keep
+            # from chomping up codas that really belong to the
+            # onset of a following syllable: na ve gac ion,
+            # en cic lo ped ia, etc.
+            (?P<coda>(?:b|c(?!h)|d|g|l|m|ns|r|p|s|z)(?![aeiouylr])|x|n(?![aeiouy])|)
+        )
+      | (?P<err> .)
+    ''', re.VERBOSE)
+
+    accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+               'ü': 'u'}
+
+    def syllabize(word):
+        w = ''.join(d for d in (accents.get(c, c)
+                                for c in word.lower())
+                    if d == 'ñ' or 'a' <= d <= 'z')
+        return list(syllable.finditer(w))
+
+    def pronounce(syllable, first):
+        if not syllable.group('syllable'):
+            yield '*'
+            return
+
+        onset = syllable.group('onset')
+        liquid = syllable.group('liquid')
+        nucleus = syllable.group('nucleus')
+        coda = syllable.group('coda')
+
+        mapped = {'ch': 'č', 'c': 'k', 'qu': 'ku', 'gu': 'gu', 'h': '',
+                  'll': 'ʃ', 'y': 'ʃ', 'ph': 'p', 'th': 't', 'v': 'b',
+                  'z': 's', 'rr': 'r', 'r': 'ɾ', 'j': 'x',
+                  }.get(onset, onset)
+
+        if nucleus[0] in 'ei' and not liquid:
+            yield {'c': 's', 'g': 'x', 'gu': 'g', 'qu': 'k'}.get(onset, mapped)
+        else:
+            # Treat “guas” from “aguas” as the same “ua” nucleus as “tuan”
+            # as “interactuando”:
+            if mapped.endswith('u'):
+                mapped = mapped[:-1]
+                nucleus = 'u' + nucleus
+
+            # Treat “rra” from “tierra” the same as “rra” from “rápido”:
+            if liquid and not onset:
+                mapped = 'r' if liquid == 'r' and first else 'ɾ' if liquid == 'r' else liquid
+                liquid = ''
+
+            yield mapped
+
+        if liquid == 'r':
+            yield 'ɾ'
+        else:
+            yield liquid
+
+        yield {'w': 'u', 'y': 'i'}.get(nucleus, nucleus)
+
+        yield {'c': 'k', 'z': 's', 'x': 'ks', 'r': 'ɾ', 'j': 'x'}.get(coda, coda)
+
+    def pronounce_word(word):
+        return [list(pronounce(s, i == 0))
+                for i, s in enumerate(syllabize(word))]
+
+    def print_counter(name, counter):
+        print("%8s:" % name, end='')
+        total = sum(v for k, v in counter.items())
+
+        nl = False
+        for i, (k, v) in enumerate(counter.most_common()):
+            if nl:
+                print(' ' * 9, end='')
+
+            nl = i % 6 == 5
+            print('%2s: %5.2f%%' % (k, 100 * v / total),
+                  end='\n' if nl else ' ')
+
+        if not nl:
+            print()
+
+
+    def main(stdin):
+        onsets = collections.Counter()
+        liquids = collections.Counter()
+        nuclei = collections.Counter()
+        codas = collections.Counter()
+        phones = collections.Counter()
+        letters = 0
+
+        for line in stdin:
+            for word in line.split():
+                p = pronounce_word(word)
+                print(word, '/%s/' % '-'.join(''.join(s) for s in p), end=' ')
+
+                if not any(s == ['*'] for s in p):
+                    for s in p:
+                        onsets[s[0]] += 1
+                        liquids[s[1]] += 1
+                        nuclei[s[2]] += 1
+                        codas[s[3]] += 1
+                        for c in ''.join(s):
+                            phones[c] += 1
+                    letters += len(word)
+
+            print()
+
+        print()
+        print_counter('onsets', onsets)
+        print_counter('liquids', liquids)
+        print_counter('nuclei', nuclei)
+        print_counter('codas', codas)
+        print_counter('phones', phones)
+        t = sum(v for v in phones.values())
+        entropy = sum(-phones[c]*math.log(phones[c]/t)/math.log(2) for c in phones)
+        print("bits per phone", entropy/t)
+        print("bits per letter", entropy/letters)
+
+    if __name__ == '__main__':
+        main(sys.stdin)

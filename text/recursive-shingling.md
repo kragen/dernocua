@@ -26,8 +26,8 @@ byte-misaligned.  Suppose that the misalignment is 1; then, the hashes
 in first-level summary #1 of the first copy of the motif will be found
 a second time in first-level summary #2 of the second copy, those of
 first-level summary #2 of the first copy will be found in first-level
-summary #3 of the second copy, while the hashes in first-level summary
-#1 of the second copy and first-level summary #3 of the first copy
+summary #3 of the second copy, while the hashes in first-level
+summary #1 of the second copy and first-level summary #3 of the first copy
 will not be found again.  The other possible misalignments, 2 and 3,
 have similar properties: two thirds of the hashes in the first-level
 summaries will occur twice.
@@ -39,8 +39,8 @@ motif to be entirely contained inside a single hash at the next level
 up.
 
 By starting at the topmost level summary and working down, we can
-efficiently detect duplicate text of any length anywhere in a corpus
---- in linear time, if we treat hash-table probing as constant time,
+efficiently detect duplicate text of any length anywhere in a
+corpus — in linear time, if we treat hash-table probing as constant time,
 or linearithmic time in a more realistic scenario.  This provides an
 efficient solution to the basic version of the sequence alignment
 problem, the rsync problem (without using sliding hashes), and, I
@@ -62,7 +62,7 @@ logic of f(i) = 4f(i-1) + 1: 5, 21, 85, 341, 1365, 5461, 21845, 87381,
 (There might be some way to stagger the skipping across summaries to
 get this series to increase a little slower.)
 
-I think that, by this scheme, you would add 15 level of summary to a
+I think that, by this scheme, you would add 15 levels of summary to a
 gibibyte of text, as follows:
 
 * 1,073,741,824 bytes of text;

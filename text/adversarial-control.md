@@ -6,9 +6,9 @@ the system.
 
 The reinforcement learning problem is in some sense more general, in
 the sense that in model predictive control, the control system is
-given a model of the system being controlled (the "plant") which is
+given a model of the system being controlled (the “plant”) which is
 presumed to be correct, so it can predict the effects of its actions,
-but a reinforcement learner doesn't initially know what behaviors will
+but a reinforcement learner doesn’t initially know what behaviors will
 have what effects; it must build that world model by observing the
 results of different behaviors.  This means that it benefits greatly
 from doing some undirected exploration, focusing its actions on the
@@ -19,23 +19,23 @@ This is somewhat disquieting for someone contemplating control systems
 for a chemical plant or a satellite, where incorrect control commands
 could end a million-dollar mission or cause a toxic-waste release into
 the neighborhood.  But of course it is not only undirected exploration
-of the system's parameter space that can cause such results; running a
+of the system’s parameter space that can cause such results; running a
 model predictive control system with an incorrect model can also cause
 them.
 
 The amount of undirected exploration that is needed diminishes over
 time as the control system solidifies its system model, a process
-sometimes called "system identification" in the literature on
+sometimes called “system identification” in the literature on
 dynamical systems modeling and control theory, so one way this can be
 handled is by initially training the control system in some sort of
-"sandbox" where its ability to cause damage is limited; the humans
-call this "childhood" when they provide it for their larvae.
+“sandbox” where its ability to cause damage is limited; the humans
+call this “childhood” when they provide it for their larvae.
 
 Another safety strategy is to focus experimentation on the
 possibilities that your existing system model tells you have low
 probability of causing significant harm, but which have high
-uncertainty in some other dimension that isn't so costly.  Call this
-"safe experiment design": a human might use high-powered lasers to can
+uncertainty in some other dimension that isn’t so costly.  Call this
+“safe experiment design”: a human might use high-powered lasers to can
 observe effects only observable with high-powered lasers, but wear the
 correct laser goggles to reduce the chance of being blinded in the
 process.
@@ -56,21 +56,21 @@ You alternately optimize these two networks, typically with some
 variant of gradient descent driven by automatic differentiation.  By
 carrying out automatic differentiation all the way through the
 generator and discriminator, we can find the gradient of the
-generator's parameters that would worsen the discriminator's ability
+generator’s parameters that would worsen the discriminator’s ability
 to discriminate, using that to drive an optimization algorithm like
 Adam; and by differentiating just through the discriminator, we can
-find the gradient of the discriminator's parameters that would improve
-its ability to discriminate.  It's important to optimize these
+find the gradient of the discriminator’s parameters that would improve
+its ability to discriminate.  It’s important to optimize these
 somewhat in lockstep; if either network gets too far ahead of the
 other, the loser will stop improving.  If done correctly, the
 generator produces inputs that are very, very difficult to distinguish
 from real inputs from the training set.
 
-(The typical "networks" here are standard ANNs, where matrix
+(The typical “networks” here are standard ANNs, where matrix
 multiplies and weight-vector additions alternate with ReLU and maybe
 convolutional and pooling stages, but almost any computational model
 could potentially be used.  Being differentiable enables the use of
-derivative-based optimization algorithms, and it's important to have
+derivative-based optimization algorithms, and it’s important to have
 enough expressivity to reasonably represent the distribution in
 question but not so much that you overfit the training set, but there
 is an enormous field of unexplored models here.)
@@ -78,7 +78,7 @@ is an enormous field of unexplored models here.)
 As far as I know, nobody is using GANs for system identification for
 control systems, much less model predictive control in particular.
 There are several particular ways I think it would be useful to apply
-such "adversarial control".
+such “adversarial control”.
 
 1. You can use a GAN to produce a black-box system model from the
     observed behavior, which you use in the usual model-predictive
@@ -89,17 +89,17 @@ such "adversarial control".
     to predict what would happen if each candidate strategy were
     followed.  The generator normally needs to be stochastic, since
     there are always unobserved variables driving the behavior seen in
-    the training set, and so it's possible to get estimates of
-    uncertainty --- at least by drawing several deviates from the
+    the training set, and so it’s possible to get estimates of
+    uncertainty — at least by drawing several deviates from the
     generator and looking at their spread.
 
-    It's fairly straightforward to use this to assess the "risk" of
-    the candidate strategy --- you just look at the spread of
+    It’s fairly straightforward to use this to assess the “risk” of
+    the candidate strategy — you just look at the spread of
     objective-function evaluations, or possibly even the derivative of
     the objective function with respect to the hidden variables that
-    you feed to the generator to make it act stochastic --- but I feel
-    like there's also some way to derive from this the "learning
-    value" of the proposed strategy as an experiment.  I think the
+    you feed to the generator to make it act stochastic — but I feel
+    like there’s also some way to derive from this the “learning
+    value” of the proposed strategy as an experiment.  I think the
     story is that you first differentiate the objective function (over
     the whole distribution the generator can generate), or possibly
     its derivative with respect to those hidden variables, with
@@ -107,25 +107,25 @@ such "adversarial control".
     that tells you which parameters of your generative model are most
     important to simulate accurately; and then you assess the learning
     value of the proposed control strategy by calculating how much
-    you're likely to update those parameters with that strategy.
+    you’re likely to update those parameters with that strategy.
 
-    That is, you're looking for parameters of your generator which the
+    That is, you’re looking for parameters of your generator which the
     outcome of this experiment would nudge in a way that makes a
     significant difference in your objective function in some
-    scenarios, but ideally not the scenario you're facing at the
+    scenarios, but ideally not the scenario you’re facing at the
     moment (the safe experiment design problem).  By dreaming of being
     chased by monsters (a scenario drawn from your generator in which
     a bad strategy results in you dying horribly) you learn which
     aspects of reality your generator needs to model better, and so
     what you should try to find out by taking actions in real life;
-    for example, you may want to look under your bed, because it's a
+    for example, you may want to look under your bed, because it’s a
     safe thing to do, but if there are monsters there, you will see
     them and can update your system model in a way that will greatly
     increase your utility.
 
-    This is not a metaphor; I'm proposing that the humans' neurology
-    actually works in the way similar to what I'm describing above,
-    [though it doesn't use automatic differentiation and
+    This is not a metaphor; I’m proposing that the humans’ neurology
+    actually works in the way similar to what I’m describing above,
+    [though it doesn’t use automatic differentiation and
     backprpagation][0], and that is why they literally look under
     their beds for monsters; or at least that this formalism is a good
     way to get similar kinds of intelligent behavior.
@@ -133,7 +133,7 @@ such "adversarial control".
 2. You can use a GAN to optimize a control network built out of
     whatever components are inexpensive in your deployment context,
     such as transistors, resistors, capacitors, and diodes, or Mark
-    Tilden's BEAM-robotics Nv neurons, or opamps, or FPGA LUTs and
+    Tilden’s BEAM-robotics Nv neurons, or opamps, or FPGA LUTs and
     flip-flops, or links and kinematic pairs, by simulating different
     such candidate control networks in a wide variety of scenarios and
     scoring their performance on an objective function.  The appeal of
@@ -154,30 +154,30 @@ such "adversarial control".
     from them: the discriminator tries to distinguish data measured
     from real circuits processing real signals from simulations
     generated by the generator, while the generator tries to simulate
-    the real circuit so faithfully that the discriminator can't tell
+    the real circuit so faithfully that the discriminator can’t tell
     the difference.
 
 4. In a further level of self-reference, if the discriminator is a
     recursive neural network or other dynamical system, we can give it
     another tool to beat the generator with: let it generate test
     signals to feed into the circuit and observe the response, thus
-    exploring corners of the circuit's behavior that the generator
-    hasn't yet succeeded in simulating.  (In some cases you will have
+    exploring corners of the circuit’s behavior that the generator
+    hasn’t yet succeeded in simulating.  (In some cases you will have
     to optimize the discriminator not to generate signals that your
     simulations suggest will damage the circuit.)
 
 5. If both your control network and your generator are themselves
     differentiable, you can differentiate not just your objective
-    system but the system's state vector with respect to *either* the
+    system but the system’s state vector with respect to *either* the
     initial system state vector *or* the hidden-variable inputs that
     make the generator stochastic, which has an established name that
-    I forget.  (Sometimes people talk about things like "the latent
-    space of faces", and though I think that's more a variational
-    autoencoder kind of thing than a GAN kind of thing, that's the
-    kind of hidden variables I'm talking about.)  One potential
+    I forget.  (Sometimes people talk about things like “the latent
+    space of faces”, and though I think that’s more a variational
+    autoencoder kind of thing than a GAN kind of thing, that’s the
+    kind of hidden variables I’m talking about.)  One potential
     benefit of this is that it allows you to make statements about the
     stability of your control-stabilized system in a way that you
-    can't with standard MPC.  Another is that it makes the kind of
+    can’t with standard MPC.  Another is that it makes the kind of
     experiment design that I described in point #1 above amenable to
     gradient-driven optimization, because you can tell how to tweak
     your control network so that it will spontaneously engage in safe
@@ -192,12 +192,12 @@ generally need some history to start from rather than just a single
 observed state vector, because they need to infer the state of some
 variables in the system that are not directly observable.  For
 example, if something has been warming up significantly even though
-you aren't applying heat, maybe there's an unobserved heat source in
+you aren’t applying heat, maybe there’s an unobserved heat source in
 contact with it; the generator needs to simulate this situation for
 the purpose of evaluating strategies, and the controller needs to take
 it into account when formulating them, applying less heat than it
-would otherwise.  And if you're planning a candidate toolpath or
-simulating its effects, you'll need to know at what height the tool
+would otherwise.  And if you’re planning a candidate toolpath or
+simulating its effects, you’ll need to know at what height the tool
 touched off on the touch-off sensor, even if that was several minutes
 ago.
 

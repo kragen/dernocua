@@ -1,10 +1,14 @@
 It occurred to me that a back-biased red or green LED or base-emitter
 junction might make an interesting substitute for a spark gap in a
 tiny Marx generator.  These often break down in avalanche mode with
-minimal or no damage to the semiconductor, often at voltages under 10
-volts.  So you could easily produce a pulse train at 100 volts or
+minimal or no damage to the semiconductor, often at voltages under
+10 volts.  So you could easily produce a pulse train at 100 volts or
 more, perhaps from a 5-volt source using only tiny surface-mount
-components.
+components.  This led me to dig a bit into the existing literature on
+similar devices.
+
+Possible characteristics of such LED-switched Marx generators
+-------------------------------------------------------------
 
 The average achievable power of the device probably will not be large,
 since especially base-emitter junctions are not optimized for power
@@ -49,7 +53,8 @@ harmonics go?  I’m guessing that they’re much faster than a
 corona-stabilized spark gap (≈20 kHz repetition rate) but I don’t know
 how much.  Even high-voltage SCRs typically manage 10 kHz.
 
-Possible applications:
+Possible applications
+---------------------
 
 - Pulsed power for operating LEDs at higher power without time for
   thermal runaway through current hogging.  Probably very inefficient.
