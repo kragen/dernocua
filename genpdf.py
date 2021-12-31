@@ -11,8 +11,8 @@ Missing pieces include:
 - tables
 - JS tables of contents for individual notes
 - chronological ordering
-- maybe making the output file less than 6.2 megabytes?? not using
-  base85 would fucking help
+- maybe making the output file less than 7.7 megabytes?? not using
+  base85 would fucking help, but the major problem is the links
 - colored titles
 - hyphenation and justification
 - properly making the first part of a link a link when it crosses pages;
