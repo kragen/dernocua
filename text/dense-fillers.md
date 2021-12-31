@@ -75,7 +75,7 @@ means he has scrap copper he can’t sell?
 I've made copper hydroxide in the past by electrolysis, mixed,
 probably, with cupric chloride and the acetate, both of which are
 water-soluble, which should make separation easy.  (Cuprous chloride
-is less water-soluble, but its K<sub>sp</sp> is still 1.72 × 10⁻⁷, 13
+is less water-soluble, but its K<sub>sp</sub> is still 1.72 × 10⁻⁷, 13
 orders of magnitude more than cupric hydroxide’s 2.20 × 10⁻²⁰, and at
 any rate it’s difficult to make.)  If my objective were to make a lot
 of pure cupric oxide, I could use a plain vinegar electrolyte or a

@@ -17,7 +17,7 @@ is the amount of boiling water to add, and indeed lerp(30°, 100°,
 of 30° water, though, it’s 921 kJ.
 
 But maybe we could use a much smaller heating unit using
-thermochemical energy storage, for example with muriate of lime (see
+TCES, for example with muriate of lime (see
 file `muriate-thermal-mass.md` in Derctuo) sealed in a sturdy plastic
 bag.  The idea is that you have some kind of “heat pack” that you dunk
 in the tank, then activate, and it adds 921 kJ of heat to the water,

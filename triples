@@ -719,6 +719,7 @@ smolsay written 02021-07-12
     titled Smolsay:+the+Ur-Lisp,+but+with+dicts+instead+of+conses
     concerns programming-languages lun js bytecode virtual-machines lisp
     concerns debugging gc programming luajit lua syntax dynamic-dispatch sa
+    concerns small-is-beautiful
 
 electrolytic-berlinite written 02021-07-12
     updated 02021-12-30
@@ -837,6 +838,130 @@ material-observations written 02021-07-29
     concerns pumice experiment-report argentina pricing phosphates oogoo
     concerns alabaster bootstrapping aluminum aluminum-foil
 
+
+dipropylene-glycol written 02021-08-01
+    updated 02021-08-15
+    concerns materials pricing
+
+fire-mud written 02021-08-05
+    updated 02021-08-15
+    titled The+ayurvedic+“fire+mud”+of+Bhudeb+Mookerji
+    concerns ayurveda contrivances refractory materials phosphates
+    concerns history clay ceramic strength pricing filled-systems
+
+arc-maker written 02021-08-07
+    updated 02021-12-30
+    concerns electronics welding contrivances microcontrollers
+    concerns power-supplies pricing
+
+pex-pipe written 02021-08-07
+    updated 02021-12-30
+    titled Argentine+pricing+of+PEX+pipe+and+alternatives+for+phase-change+fluids
+    concerns argentina pricing
+
+power-transistors written 02021-08-07
+    updated 02021-12-30
+    concerns power-supplies electronics pricing
+
+pocket-kiln written 02021-08-09
+    updated 02021-08-15
+    concerns refractory contrivances thermodynamics
+
+cola-flavor written 02021-08-10
+    updated 02021-08-15
+    concerns phosphates materials
+
+constant-current-buck written 02021-08-10
+    updated 02021-08-15
+    concerns power-supplies electronics
+
+methane-bag written 02021-08-10
+    updated 02021-08-15
+    concerns materials experiment-report flying physics pricing
+
+iodine-patterning written 02021-08-11
+    updated 02021-08-15
+    concerns digital-fabrication materials patterning
+
+shower-heating-tces written 02021-08-11
+    updated 02021-08-15
+    titled Heating+a+shower+tank+with+portable+TCES?
+    concerns enthalpy materials tces energy thermodynamics
+tces category-titled TCES+energy+storage
+
+minimal-c-subset written 02021-08-12
+    updated 02021-12-30
+    titled Subset+of+C+for+the+simplest+self-compiling+compiler
+    concerns c compilers small-is-beautiful bootstrapping
+
+c-stack-bytecode written 02021-08-17
+    updated 02021-09-13
+    titled A+compact+bytecode+sketch+that+should+average+about+3+bytes+per+line+of+C
+    concerns c compilers bytecode microcontrollers performance forth
+    concerns instruction-sets virtual-machines avr assembly
+
+wiki-models written 02021-08-19
+    updated 02021-12-30
+    concerns end-user-programming calculation hci editors
+
+residual-stream-windowing written 02021-08-21
+    updated 02021-09-11
+    concerns video compression algorithms paeth protocols
+
+sandwich-panel-optimization written 02021-08-21
+    updated 02021-09-11
+    concerns foam composites strength filled-systems
+
+glass-wood written 02021-08-21
+    updated 02021-12-30
+    concerns foam composites strength anisotropic-fillers cmcs shs filled-systems
+
+phosphates-fraction written 02021-08-21
+    updated 02021-12-30
+    titled Maximizing+phosphate+density+from+aqueous+reaction
+    concerns phosphates materials aluminum filled-systems composites vermiculite
+
+lazy-heapsort written 02021-08-22
+    updated 02021-09-11
+    concerns programming algorithms performance
+
+recursive-bearings written 02021-08-23
+    updated 02021-12-30
+    concerns mechanical contrivances pricing
+
+shs-construction-set written 02021-08-24
+    updated 02021-09-11
+    concerns shs materials composability 3d-printing digital-fabrication fasteners
+    titled A+construction+set+using+SHS
+
+sorption-pipeline written 02021-08-24
+    updated 02021-09-11
+    titled Sorption+vacuum+pumps+really+can’t+operate+continuously
+    concerns python physics vacuum contrivances
+
+electrodeposition-welding written 02021-08-25
+    updated 02021-09-11
+    concerns electrolysis welding manufacturing
+
+screw-heads written 02021-08-25
+    updated 02021-09-11
+    titled Better+screw+head+designs?
+    concerns mechanical contrivances fasteners
+
+dense-fillers written 02021-08-25
+    updated 02021-12-30
+    concerns filled-systems manufacturing pricing argentina copper
+
+copper-sls written 02021-08-30
+    updated 02021-12-30
+    titled Selective+laser+sintering+of+copper
+    concerns powder-bed 3d-printing copper physics
+
+mig-printing-feedback written 02021-08-30
+    updated 02021-12-30
+    titled Negative+feedback+control+to+prevent+runaway+positive+feedback+in+3-D+MIG+welding+printing
+    concerns 3d-printing welding control digital-fabrication
+
 2d-cutting-workflow written 02021-10-15
     updated 02021-12-30
 adversarial-control written 02021-10-25
@@ -846,8 +971,6 @@ against-subjectivism written 02021-12-15
 aluminum-refining written 02021-12-20
     updated 02021-12-30
 aqueous-scanning-probe-microscopy written 02021-11-12
-    updated 02021-12-30
-arc-maker written 02021-08-07
     updated 02021-12-30
 balanced-ropes written 02021-10-16
     updated 02021-12-30
@@ -867,34 +990,20 @@ chording-commands written 02021-11-26
     updated 02021-12-30
 cli-tools written 02021-09-15
     updated 02021-09-16
-cola-flavor written 02021-08-10
-    updated 02021-08-15
 compliance-spectroscopy written 02021-09-29
     updated 02021-12-30
-constant-current-buck written 02021-08-10
-    updated 02021-08-15
 constant-weight-dithering written 02021-10-28
     updated 02021-12-30
-copper-sls written 02021-08-30
-    updated 02021-12-30
-c-stack-bytecode written 02021-08-17
-    updated 02021-09-13
 date-calc-dsl written 02021-11-14
     updated 02021-12-30
 democracy-stability written 02021-12-22
     updated 02021-12-30
-dense-fillers written 02021-08-25
-    updated 02021-12-30
 deriving-binary-search written 02021-10-01
     updated 02021-12-30
-dipropylene-glycol written 02021-08-01
-    updated 02021-08-15
 drama-word-list written 02021-10-08
     updated 02021-12-30
 electrochromic-metals written 02021-12-16
     updated 02021-12-30
-electrodeposition-welding written 02021-08-25
-    updated 02021-09-11
 electrolytic-2d-cutting written 02021-12-16
     updated 02021-12-30
 electrowinning written 02021-11-21
@@ -915,13 +1024,9 @@ fet-geiger written 02021-12-17
     updated 02021-12-30
 filecoin-problem written 02021-12-30
     updated 02021-12-30
-fire-mud written 02021-08-05
-    updated 02021-08-15
 flexure-mount written 02021-10-18
     updated 02021-12-30
 freezer-seacrete written 02021-09-01
-    updated 02021-12-30
-glass-wood written 02021-08-21
     updated 02021-12-30
 handrolled-capacitor written 02021-09-30
     updated 02021-12-30
@@ -929,8 +1034,6 @@ house-blocks written 02021-12-13
     updated 02021-12-30
 inverse-perspective written 02021-10-11
     updated 02021-12-30
-iodine-patterning written 02021-08-11
-    updated 02021-08-15
 iron-marking-pencil written 02021-11-06
     updated 02021-12-30
 its-ddt written 02021-10-22
@@ -941,19 +1044,11 @@ latex-3dp written 02021-10-03
     updated 02021-12-30
 layers-plus-electroforming written 02021-12-16
     updated 02021-12-30
-lazy-heapsort written 02021-08-22
-    updated 02021-09-11
 literate-haskell-like written 02021-11-06
     updated 02021-12-30
-methane-bag written 02021-08-10
-    updated 02021-08-15
 micro-marx written 02021-10-20
     updated 02021-10-22
 micro-ramjet written 02021-11-22
-    updated 02021-12-30
-mig-printing-feedback written 02021-08-30
-    updated 02021-12-30
-minimal-c-subset written 02021-08-12
     updated 02021-12-30
 miranda-pins written 02021-11-11
     updated 02021-12-30
@@ -971,10 +1066,6 @@ paper-scanning-notebook written 02021-12-18
     updated 02021-12-30
 pbkdf-content-addressing written 02021-10-08
     updated 02021-10-08
-pex-pipe written 02021-08-07
-    updated 02021-12-30
-phosphates-fraction written 02021-08-21
-    updated 02021-12-30
 photoemissive-power written 02021-12-23
     updated 02021-12-28
 pinn-gan-rendering written 02021-11-11
@@ -983,11 +1074,7 @@ pipelined-piece-chain-painting written 02021-10-10
     updated 02021-12-30
 planning-apples written 02021-09-29
     updated 02021-12-30
-pocket-kiln written 02021-08-09
-    updated 02021-08-15
 polynomial-pascal written 02021-10-20
-    updated 02021-12-30
-power-transistors written 02021-08-07
     updated 02021-12-30
 public-domain-02021 written 02021-11-20
     updated 02021-12-30
@@ -995,38 +1082,24 @@ pva-printing written 02021-12-15
     updated 02021-12-30
 qfitzah-internals written 02021-09-24
     updated 02021-12-30
-recursive-bearings written 02021-08-23
-    updated 02021-12-30
 recursive-shingling written 02021-10-30
     updated 02021-12-30
 regenerative-muffle-kiln written 02021-12-21
     updated 02021-12-30
-residual-stream-windowing written 02021-08-21
-    updated 02021-09-11
 reuleaux-constructor written 02021-11-17
     updated 02021-12-30
 rockwool written 02021-09-03
     updated 02021-12-30
 rust-notes written 02021-10-06
     updated 02021-10-10
-sandwich-panel-optimization written 02021-08-21
-    updated 02021-09-11
-screw-heads written 02021-08-25
-    updated 02021-09-11
 selfrep-redundancy written 02021-11-12
     updated 02021-12-30
-shower-heating-tces written 02021-08-11
-    updated 02021-08-15
-shs-construction-set written 02021-08-24
-    updated 02021-09-11
 simplest-blinker written 02021-12-01
     updated 02021-12-30
 simplest-power-supply written 02021-10-14
     updated 02021-12-30
 solar-air-conditioned-trailer written 02021-10-11
     updated 02021-12-30
-sorption-pipeline written 02021-08-24
-    updated 02021-09-11
 spanish-phonology written 02021-10-05
     updated 02021-10-05
 spark-gap-exploding-wire written 02021-10-19
@@ -1063,8 +1136,6 @@ viscoelastic-probing written 02021-11-04
 waterglass-loctite written 02021-09-22
     updated 02021-12-30
 weighing-balance-design written 02021-09-06
-    updated 02021-12-30
-wiki-models written 02021-08-19
     updated 02021-12-30
 wire-brush-microscope written 02021-11-06
     updated 02021-12-30
