@@ -119,8 +119,8 @@ cases where no cached results are possible, for example when a program
 starts, if there’s no risk to termination behavior, we can run all the
 fields peremptorily in sequence, one after the other.  In other cases,
 it may be sensible to do a slightly modified version of the same
-thing: concatenate the code, put a conditional jump past the
-computation of each field, based on, for example, a bitmap of fields
+thing: concatenate the code and put a conditional jump past the
+computation of each field.  The jump can be based on, for example, a bitmap of fields
 whose computation is desired: the abjunction of the dependencies of a
 desired-fields bitmap and an already-computed-fields bitmap.  In many
 cases, we can jump directly to the first not-yet-computed field, and

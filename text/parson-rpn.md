@@ -28,8 +28,6 @@ needed for Parson to compile an infix grammar to a sequence of
 stack-machine operations, although it will go wrong if you use “add”,
 “mul”, “fetch”, or “store” as variable names.
 
-XXX
-
 Review of standard properties of Kleene algebras
 ------------------------------------------------
 

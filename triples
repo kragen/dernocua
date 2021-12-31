@@ -1,4 +1,4 @@
-dernocua version 020211231-0
+dernocua version 020211231-1
     by Kragen+Javier+Sitaker
 
 # Popular categories from Dercuano:
@@ -41,7 +41,7 @@ layout-typescript written 02021-01-04
     concerns lisp emacs programming oses
 
 principled-apl-redux written 02021-01-03
-    updated 02021-01-27
+    updated 02021-12-31
     titled Principled+APL+redux
     concerns programming-languages arrays apl bicicleta caching performance
     concerns compilers transactions datalog programming safety
@@ -75,7 +75,7 @@ transactions-n%2B1 written 02021-01-16
     titled Can+transactions+solve+the+N%2B1+performance+problem+on+web+pages?
 
 parson-rpn written 02021-01-15
-    updated 02021-06-12
+    updated 02021-12-31
     titled Some+notes+on+compiling+and+notations+for+grammars,+starting+from+the+inspiring+RPN+example+in+Parson
     concerns parsing compilers kleene-algebras math syntax dsls
 
@@ -241,7 +241,7 @@ luajit category-titled LuaJIT
 lao-yuxi written 02021-03-19
     updated 02021-04-14
     titled How+Lao+Yuxi+painted+a+cock
-    concerns fiction learning
+    concerns fiction learning art
 
 bench-supply written 02021-03-19
     updated 02021-12-30
@@ -280,9 +280,10 @@ mup21 category-titled MuP21
 
 open-coded-primitives written 02021-03-22
     updated 02021-03-22
-    concerns compilers performance asm sbcl lisp ocaml gc
+    concerns compilers performance asm sbcl lisp ocaml gc ur-scheme
     concerns allocation-performance comfy experiment-report
 comfy category-titled COMFY-*
+ur-scheme category-titled Ur-Scheme
 
 opamp-oscillators written 02021-03-23
     updated 02021-03-24
@@ -425,7 +426,7 @@ ecm category-titled ECM
 
 leaf-hypertext written 02021-05-08
     updated 02021-12-30
-    concerns hypertext archival virtual-machines reproducibility
+    concerns hypertext archival virtual-machines reproducibility wiki
     concerns end-user-programming hci guis caching higher-order-programming
 
 microscale written 02021-05-08
@@ -439,6 +440,7 @@ trickler written 02021-05-09
     titled Precisely+measuring+out+particulates+with+a+trickler
     concerns digital-fabrication powder-bed 3d-printing materials particulates
 3d-printing category-titled 3-D+printing
+powder-bed category-titled Powder-bed+3-D+printing+processes
 
 lvdt-4d-matrix-keyboard written 02021-05-12
     updated 02021-12-30
@@ -527,12 +529,12 @@ edm category-titled Electrical+discharge+machining+(EDM)
 broken-disks written 02021-06-02
     updated 02021-06-12
     titled Broken+hard+disks+are+the+cheapest+source+of+ultraprecision+components
-    concerns precision ghettobotics contrivances pricing electronics
+    concerns precision ghettobotics contrivances pricing electronics lasers
 
 micro-impact-driver written 02021-06-02
     updated 02021-06-12
     concerns mechanical electronics contrivances sonic-screwdrivers
-    concerns pulse hand-tools
+    concerns pulse hand-tools lasers
 
 minkowski-deconvolution written 02021-06-02
     updated 02021-12-30
@@ -701,7 +703,8 @@ sonic-screwdriver-resonance written 02021-07-06
 thermochromic-scan written 02021-07-06
     updated 02021-12-30
     titled Subnanosecond+thermochromic+light+modulation+for+real-time+holography+and+displays
-    concerns displays vanadia slms lidar holography communication contrivances optics
+    concerns displays vanadia slms lidar holography communication contrivances
+    concerns lasers optics
 lidar category-titled LiDAR
 slms category-titled Spatial+light+modulators+(SLMs)
 
@@ -843,7 +846,7 @@ material-observations written 02021-07-29
     updated 02021-12-30
     concerns materials borax waterglass vermiculite foam glass pva refractory
     concerns pumice experiment-report argentina pricing phosphates oogoo
-    concerns alabaster bootstrapping aluminum aluminum-foil
+    concerns alabaster bootstrapping aluminum aluminum-foil heating
 
 
 dipropylene-glycol written 02021-08-01
@@ -872,7 +875,7 @@ power-transistors written 02021-08-07
 
 pocket-kiln written 02021-08-09
     updated 02021-08-15
-    concerns refractory contrivances thermodynamics
+    concerns refractory contrivances thermodynamics heating
 
 cola-flavor written 02021-08-10
     updated 02021-08-15
@@ -880,20 +883,20 @@ cola-flavor written 02021-08-10
 
 constant-current-buck written 02021-08-10
     updated 02021-08-15
-    concerns power-supplies electronics
+    concerns power-supplies electronics lasers
 
 methane-bag written 02021-08-10
     updated 02021-08-15
-    concerns materials experiment-report flying physics pricing
+    concerns materials experiment-report flying physics pricing batteries azane
 
 iodine-patterning written 02021-08-11
     updated 02021-08-15
-    concerns digital-fabrication materials patterning
+    concerns digital-fabrication materials patterning lasers
 
 shower-heating-tces written 02021-08-11
     updated 02021-08-15
     titled Heating+a+shower+tank+with+portable+TCES?
-    concerns enthalpy materials tces energy thermodynamics
+    concerns enthalpy materials tces energy thermodynamics heating
 tces category-titled TCES+energy+storage
 
 minimal-c-subset written 02021-08-12
@@ -905,15 +908,19 @@ c-stack-bytecode written 02021-08-17
     updated 02021-09-13
     titled A+compact+bytecode+sketch+that+should+average+about+3+bytes+per+line+of+C
     concerns c compilers bytecode microcontrollers performance forth
-    concerns instruction-sets virtual-machines avr asm
+    concerns instruction-sets virtual-machines avr asm lisp history pascal
+    concerns arduino ambiq sorting
+avr category-titled AVR8+microcontrollers
 
 wiki-models written 02021-08-19
     updated 02021-12-30
     concerns end-user-programming calculation hci editors numerical-modeling
+    concerns wiki
 
 residual-stream-windowing written 02021-08-21
     updated 02021-09-11
     concerns video compression algorithms paeth protocols
+paeth category-titled The+Paeth+predictor
 
 sandwich-panel-optimization written 02021-08-21
     updated 02021-09-11
@@ -962,7 +969,7 @@ dense-fillers written 02021-08-25
 copper-sls written 02021-08-30
     updated 02021-12-30
     titled Selective+laser+sintering+of+copper
-    concerns powder-bed 3d-printing copper physics
+    concerns powder-bed 3d-printing copper physics lasers
 
 mig-printing-feedback written 02021-08-30
     updated 02021-12-30
@@ -980,6 +987,7 @@ laser-marking-metal written 02021-09-03
     updated 02021-12-30
     titled Patterning+metal+surfaces+by+coating+decomposition+with+lasers+or+plasma?
     concerns lasers patterning materials toxicology plasma digital-fabrication
+lasers category-titled Frrickin’+lasers!
 
 rockwool written 02021-09-03
     updated 02021-12-30
@@ -1006,10 +1014,10 @@ spot-welding written 02021-09-09
     concerns welding manufacturing physics thermodynamics pulse pricing
 
 term-rewriting-micro-interpreter written 02021-09-10
-    updated 02021-09-15
+    updated 02021-12-31
     concerns qfitzah term-rewriting small-is-beautiful aardappel scheme lisp
     concerns syntax bootstrapping asm performance bytecode dynamic-dispatch
-    concerns higher-order-programming
+    concerns higher-order-programming programming-languages
 
 cli-tools written 02021-09-15
     updated 02021-09-16
@@ -1033,7 +1041,7 @@ qfitzah-internals written 02021-09-24
 
 blowing-agents written 02021-09-29
     updated 02021-12-30
-    concerns foam materials manufacturing
+    concerns foam materials manufacturing azane
 
 compliance-spectroscopy written 02021-09-29
     updated 02021-12-30
@@ -1041,6 +1049,7 @@ compliance-spectroscopy written 02021-09-29
 
 planning-apples written 02021-09-29
     updated 02021-12-30
+    titled Planning+Apples+to+Apples,+instead+of+Planning+Poker
     concerns employment incentives
 
 handrolled-capacitor written 02021-09-30
@@ -1055,7 +1064,7 @@ deriving-binary-search written 02021-10-01
 
 latex-3dp written 02021-10-03
     updated 02021-12-30
-    concerns materials digital-fabrication 3d-printing electrolysis plasma
+    concerns materials digital-fabrication 3d-printing electrolysis plasma lasers
     titled The+sol-gel+transition+and+selective+gelling+for+3-D+printing
 
 spanish-phonology written 02021-10-05
@@ -1137,7 +1146,7 @@ simplest-power-supply written 02021-10-14
 2d-cutting-workflow written 02021-10-15
     updated 02021-12-30
     titled Trying+to+quantify+relative+speeds+of+different+digital+fabrication+processes+with+“matter+bandwidth”
-    concerns 2d-cutting digital-fabrication self-replication independence
+    concerns 2d-cutting digital-fabrication self-replication independence lasers
 
 balanced-ropes written 02021-10-16
     updated 02021-12-30
@@ -1188,7 +1197,7 @@ example-based-regexp written 02021-10-24
 adversarial-control written 02021-10-25
     updated 02021-12-30
     concerns control programming optimization dreaming anns gradient-descent
-    concerns digital-fabrication manufacturing gans
+    concerns digital-fabrication manufacturing gans lasers
 
 constant-weight-dithering written 02021-10-28
     updated 02021-12-30
@@ -1287,7 +1296,7 @@ electrowinning written 02021-11-21
     updated 02021-12-30
     titled At+small+scales,+electrowinning+may+be+cheaper+than+smelting
     concerns small-things materials refining minerals steel aluminum copper
-    concerns electrolysis
+    concerns electrolysis lasers
 
 micro-ramjet written 02021-11-22
     updated 02021-12-30
@@ -1332,7 +1341,7 @@ house-blocks written 02021-12-13
 
 against-subjectivism written 02021-12-15
     updated 02021-12-30
-    concerns ontology
+    concerns ontology flying galileo
 
 exponential-forming written 02021-12-15
     updated 02021-12-30
@@ -1355,7 +1364,7 @@ electrolytic-2d-cutting written 02021-12-16
     updated 02021-12-30
     titled Electrolytic+2-D+cutting+and+related+electrolytic+digital+fabrication+processes
     concerns 2d-cutting digital-fabrication electrolysis patterning composites
-    concerns pva anisotropic-fillers glutaraldehyde codeposition filled-systems
+    concerns pva anisotropic-fillers glutaraldehyde codeposition filled-systems lasers
 
 layers-plus-electroforming written 02021-12-16
     updated 02021-12-30
@@ -1377,7 +1386,7 @@ aluminum-refining written 02021-12-20
 
 regenerative-muffle-kiln written 02021-12-21
     updated 02021-12-30
-    concerns regenerators thermodynamics contrivances energy clay ceramic
+    concerns regenerators thermodynamics contrivances energy clay ceramic heating
 
 democracy-stability written 02021-12-22
     updated 02021-12-30

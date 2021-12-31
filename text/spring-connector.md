@@ -1,8 +1,13 @@
-Watched an Abom79 video I’d seen before tonight which featured a
+[Watched an Abom79 video I’d seen before][2] tonight which featured a
 parting blade with replaceable inserts.  A parting blade doesn’t have
 a lot of space for holding down an insert; you can’t put a big screw
 in there, for example.  So the insert was wedged into a sort of
 two-tine fork, which flexes elastically to admit it.
+
+[2]: https://youtu.be/PbFLW0_HIAU
+
+The parting-blade setup
+-----------------------
 
 This means the force clamping the insert into the blade, perpendicular
 to the friction surface, is the same force you need to apply to force
@@ -13,7 +18,13 @@ fit into the holes.  One of the dowel pins is machined on an eccentric
 with a handle to rotate it relative to the spacer, moving it nearer to
 and farther from the other dowel pin, thus forcing the tines open.
 It’s sort of similar to circlip pliers in how it engages with the
-fork, although not in how it works.
+fork, and in the fact that it consists of three revolute joints on
+parallel axes (one between the two links of the tool, the other two
+connecting the tool to the workpiece), but it has much greater
+mechanical advantage.
+
+Why this is awesome
+-------------------
 
 This is a really appealing concept for a couple of reasons.
 
@@ -71,6 +82,13 @@ process, probably only a little bit more if the spring clamp (which
 you are expanding) is more compliant than the thing being clamped.  So
 that would require about a joule, plus frictional losses.
 
+(Many cheap digital fabrication processes have imprecision on the
+order of 0.1 mm: laser-cutting MDF, laser-cutting acrylic,
+laser-cutting steel, CNC plasma tables, CNC oxy cutting tables, RepRap
+FDM, etc.  You need to be able to flex the spring by more than the
+fabrication error or in some cases you’ll get no clamping and in other
+cases you won’t be able to insert the thing to be clamped.)
+
 The compliance of the elastic part of the setup (the workpiece, in
 this case the clamp) can be reduced almost arbitrarily, as long as the
 compliance of the tool is smaller or at least not too much greater.
@@ -127,6 +145,7 @@ clamped, and the tool rotation experiences about half as much
 friction.
 
 How big *are* those frictional losses?
+--------------------------------------
 
 Suppose that we are applying, again, 10kN of force with the tool, over
 a whole half turn, using a handle which cannot be more than 1 m long
@@ -147,8 +166,8 @@ the clip by 40 mm, for a total useful work of 200 J.
 That bronze is rated as having a frictional coefficient of 0.10,
 presumably on steel (though [in 02001 Purcek et al. measured 0.68 when
 dry][1], so maybe 0.10 is with an oil film), so the pin rotating in
-the workpiece hole ramps up to 1 kN of friction.  Half a turn is 62
-mm, so we have 31 J of frictional losses rotating in the workpiece,
+the workpiece hole ramps up to 1 kN of friction.  Half a turn is
+62 mm, so we have 31 J of frictional losses rotating in the workpiece,
 and probably another 31 J of frictional losses where the shaft rotates
 inside the tool, for a total of 62 J losses, 76% efficiency.  Ball
 bearings or similar could reduce these losses by about an order of
@@ -196,4 +215,123 @@ reduce the pin diameter by a factor of 2 or more without losing shear
 strength.  Tool steels normally have (tensile yield) strengths of 1
 GPa or higher.
 
-XXX starting almost toggled?
+In the case where we start almost “toggled” — in the sense that the
+eccentric pin is nearly at its furthest distance from the other pin
+when you insert the tool into the holes — the mechanical advantage is
+very much greater, being limited only by the compliance of the tool.
+
+Variations
+----------
+
+A couple of slight variations on the tool configuration are worth
+mentioning.  Shear and flexural loading on the pins can be eliminated
+if they are only *half* cylinders, with the pivoting bushing inside of
+the eccentric pin, which can be longer than the workpiece; this makes
+the loading on the pins entirely compressive, but requires the “holes”
+in the workpiece to be two circular notches facing each other, between
+which the tool is inserted.  This permits a much smaller hole radius
+and thus dramatically reduces frictional moments and thus losses.  In
+this configuration it is advisable for the handle to be roughly
+perpendicular to the line between the two notches in the workpiece,
+and to collide with the other pin when rotated just past the toggled
+position in order to lock the pins *ε* less than their furthest
+distance apart.
+
+Such a tool can be cut out of a thick sheet in a single piece with 2-D
+cutting processes; it consists of two quasi-rigid parts (the handle
+and eccentric pin being one part, the other being either the Minkowski
+sum of a circle and a line, or a rhombus with rounded corners) which
+meet in a cylindrical sliding contact, held in roughly the right
+position during insertion by a compliant spring that runs along the
+handle, but which exerts forces that are insignificant compared to the
+forces encountered during use.
+
+The sheet needs to be thick to prevent it from twisting out of plane.
+
+This pivoting bushing can be split in two to allow the workpiece (or
+what it is clamping) to protrude past the notches, reintroducing half
+the shear loading but not the flexural load.
+
+If such a tool is used to push apart jaws on one side of a flexural
+pivot, those jaws can pivot to come closer together on the other side,
+with potentially some additional mechanical advantage; when the tool
+is removed, they will spring back apart, at which point they can bear
+on the inside of one or more holes, forming a fastener.  (However, you
+need some way to hold the fastener in place as you’re applying the
+tool, or it will just rotate along with the tool instead of flexing;
+see below.)  Such a fastener can also be fabricated by 2-D cutting, in
+which case the hole or holes can be just a slot.  If the hole is
+tapered to widen away from the surface, withdrawing the fastener from
+the hole will require adding energy to the flexural pivot, so
+vibration will tend to seat the fastener deeper in the hole, similar
+to flexural clips and very much contrary to the situation with screw
+fasteners.
+
+A fastener containing a double flexural pivot can be used in the same
+way to convert the opening of jaws, on the side where the tool is
+inserted, into compression in the middle of the piece, into the
+opening of another set of jaws on the opposite side, with potentially
+another layer of mechanical advantage, permitting clamping with truly
+enormous forces.
+
+(And, of course, the full range of clip-connector techniques is
+available for these jaws: they can be smooth, serrated, or hooked,
+potentially mating with matching features on the part they grasp.)
+
+These pivoting-flexure connectors allow the same tool to be used for a
+variety of sizes of fastener, because the jaw spacing on the tool side
+of the fastener need not be the same as the jaw spacing on the
+clamping or expanding side.
+
+In cases where both locating and friction are desired, because the
+fastener does not have to rotate, it can have a second tab that slips
+into a second hole or slot in the workpieces to locate them relative
+to one another, thus unifying in a single part functions similar to
+those of a screw and a dowel pin.  If this second tab is longer than
+the flexural parts, it can be inserted before applying force to the
+tool, thus holding the fastener in place while force is being applied.
+
+If the eccentric pin on the tool is replaced by a concave partial
+cylindrical bearing surface, in which a convex cylindrical part of the
+flexible workpiece can slide to form a revolute joint (or, really, a
+cylindrical joint) then the tool can be used to compress the workpiece
+rather than to expand it.  The effective lever arm is still the
+distance between the center of this cylindrical surface and that of
+the cylindrical bearing surface on which the other part of the tool
+pivots.
+
+If the fastener includes a parallel-movement flexure, a single tool
+action can engage many hooks, inserted into many slots, in a single
+motion.  This is probably not useful for clamping as such (the
+clamping load would be distributed among the slots, and in an
+unpredictable way unless the fabrication tolerances are much smaller
+than the parts’ compliance), but with hook fasteners it allows you to
+“stitch” two or more parts together along a whole line in a single
+action.  Such a long fastener allows you the leverage to prevent the
+fastener from rotating along with the tool just by holding it in your
+other hand.
+
+Contrast with bolts
+-------------------
+
+You need to rotate the bolt through the nut through some 6 turns
+against the thread friction, which ought to be negligible but usually
+is on the order of a tenth of the tightening load.  Then you crank
+down on the bolt to preload it in tension; for a 10-mm-head bolt that
+torque might be 25 foot-pounds or 30 newton meters, applied over maybe
+a third of a turn, or about 30 J (would be 60 J but the torque goes up
+almost linearly as you snug it up).  Maybe ⅓ of that energy goes into
+the elastic clamping energy, 10 J; the other ⅔ is lost in friction,
+20 J, on top of the ≈3 N m times six turns you lost in just getting
+the bolt into the nut, which is another 110 J.  So you had to spend
+140 J and six turns of the wrench to get 10 J of elastic clamping
+energy, which might be the same 10 kN we were calculating with above.
+Six turns of the wrench is a real PITA in a confined space, because
+you have to slip the wrench on and off of the head between 12 times
+and 72 times.
+
+And then only stiction stabilizes the connection; enough vibration
+will loosen it unless you apply loctite or lockwire or something.  And
+manufacturing the threads requires a lathe, taps and dies, or a
+thread-rolling machine, rather than a simple digital 2-D cutting
+setup.
