@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 """Parse HTML output to generate a PDF.
 
-This was surprisingly adequate PDF generation for Dercuano;
-now I’m trying to use it for Derctuo, tu.
+This was surprisingly adequate PDF generation for Dercuano and Derctuo;
+now I’m trying to use it for Dernocua.
 Missing pieces include:
 
 - a layout engine capable of handling varying font sizes in a line
@@ -11,7 +11,7 @@ Missing pieces include:
 - tables
 - JS tables of contents for individual notes
 - chronological ordering
-- maybe making the output file less than 12.4 megabytes?? not using
+- maybe making the output file less than 6.2 megabytes?? not using
   base85 would fucking help
 - colored titles
 - hyphenation and justification
@@ -628,7 +628,7 @@ def render(pagenos, corpus, bookmark, c, xml, fonts, base, filename):
                            max(0.2*em, 0.7071 * font_size))
 
             if obj.tag == 'title':
-                title = re.compile(r'\s*Derctuo\s*$').sub('', obj.text).strip()
+                title = re.compile(r'\s*Dernocua\s*$').sub('', obj.text).strip()
             if get_link(obj):
                 link_dest = resolve_link(corpus, get_link(obj), base)
                 push_style(stack, current_style, 'link destination', link_dest)
@@ -765,17 +765,17 @@ def main(path):
     fast = False
     fonts = load_fonts(path)
 
-    pdf_filename = 'derctuo.tmp.fast.pdf' if fast else 'derctuo.tmp.pdf'
+    pdf_filename = 'dernocua.tmp.fast.pdf' if fast else 'dernocua.tmp.pdf'
     canvas = Canvas(pdf_filename, invariant=True, pageCompression=True,
                     pagesize=pagesize)
     # Avoid horking our page number database with fast debugging runs
-    pagenos = (Pagenos('derctuo.fast.pagenos') if fast else
-               Pagenos('derctuo.tmp.pagenos'))
+    pagenos = (Pagenos('dernocua.fast.pagenos') if fast else
+               Pagenos('dernocua.tmp.pagenos'))
     pagenos.load()
 
     # pdf.js, gv, MuPDF Mini, and Evince display this:
-    canvas.setTitle('Derctuo ' + os.path.basename(path)
-                    + ', by Kragen Javier Sitaker, 02020')
+    canvas.setTitle('Dernocua ' + os.path.basename(path)
+                    + ', by Kragen Javier Sitaker, 02021')
     canvas.setAuthor('Kragen Javier Sitaker')
 
     index_filename = path + '/index.html'
